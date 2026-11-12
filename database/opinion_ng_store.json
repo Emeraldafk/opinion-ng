@@ -107,6 +107,38 @@
       "lockedKobo": 0,
       "creatorEarningsKobo": 0,
       "updatedAt": "2026-11-12T18:50:28.930Z"
+    },
+    "wlt_usr_mwdwznf9": {
+      "id": "wlt_usr_mwdwznf9",
+      "userId": "usr_mwdwznf9",
+      "availableKobo": 0,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T19:01:56.271Z"
+    },
+    "wlt_usr_mwdx49ya": {
+      "id": "wlt_usr_mwdx49ya",
+      "userId": "usr_mwdx49ya",
+      "availableKobo": 0,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T19:05:32.032Z"
+    },
+    "wlt_usr_mwdx529g": {
+      "id": "wlt_usr_mwdx529g",
+      "userId": "usr_mwdx529g",
+      "availableKobo": 0,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T19:06:08.758Z"
+    },
+    "wlt_usr_mwdx5l9i": {
+      "id": "wlt_usr_mwdx5l9i",
+      "userId": "usr_mwdx5l9i",
+      "availableKobo": 0,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T19:06:33.378Z"
     }
   },
   "ledgerEntries": [
@@ -528,7 +560,35 @@
       "noCondition": "INEC regulations retain manual bypass.",
       "evidenceSource": "https://inecnigeria.org",
       "createdAt": "2026-11-12T18:04:57.878Z",
-      "updatedAt": "2026-11-12T18:04:57.878Z"
+      "updatedAt": "2026-11-12T19:05:49.597Z",
+      "comments": [
+        {
+          "id": "cmt-1794510349591-qufu6",
+          "author": "Amosemmy2000",
+          "authorHandle": "@amosemmy2000",
+          "authorAvatar": "https://api.dicebear.com/7.x/identicon/svg?seed=amosemmy2000%40gmail.com",
+          "side": "YES",
+          "sharesHeld": 10729,
+          "text": "Well, it all depends on a lot of factors",
+          "createdAt": 1794510349591,
+          "timestamp": "Just now",
+          "likes": 0,
+          "hasLiked": false
+        },
+        {
+          "id": "cmt-1794510277877-f2byz",
+          "author": "Amosemmanuel2000",
+          "authorHandle": "@amosemmanuel2000",
+          "authorAvatar": "https://api.dicebear.com/7.x/identicon/svg?seed=amosemmanuel2000%40gmail.com",
+          "side": "YES",
+          "sharesHeld": 10729,
+          "text": "I don't thik so",
+          "createdAt": 1794510277877,
+          "timestamp": "Just now",
+          "likes": 0,
+          "hasLiked": false
+        }
+      ]
     },
     "6": {
       "id": 6,
