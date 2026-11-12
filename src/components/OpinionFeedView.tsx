@@ -192,7 +192,7 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
       await onQuickTrade(marketId, isYes, 0.001);
       setVoteFeedbackMap((prev) => ({
         ...prev,
-        [marketId]: `✓ Voted ${isYes ? 'YES' : 'NO'} (Confirmed on Robinhood Chain)`,
+        [marketId]: `✓ Voted ${isYes ? 'YES' : 'NO'} (Confirmed on OpinionNG Ledger)`,
       }));
       setTimeout(() => {
         setVoteFeedbackMap((prev) => ({ ...prev, [marketId]: null }));
@@ -390,7 +390,7 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
                     rows={2}
                     value={newOpinionText}
                     onChange={(e) => setNewOpinionText(e.target.value)}
-                    placeholder="What's your conviction? Challenge public consensus on Robinhood Chain..."
+                    placeholder="What's your conviction? Challenge public consensus on Nigerian culture, politics & economy..."
                     className="w-full resize-none bg-transparent text-sm text-white placeholder-[#7a7a8c] focus:outline-none"
                   />
 

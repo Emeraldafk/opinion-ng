@@ -16,15 +16,15 @@ import { infraManager } from './indexerService';
 import { FeeClaimRecord } from '../components/CreatorEconomicsView';
 
 const STORAGE_KEYS = {
-  MARKETS: 'nullhood_db_markets_v5',
-  ACTIVITIES: 'nullhood_db_activities_v3',
-  COMMENTS: 'nullhood_db_comments_v3',
-  LIKES: 'nullhood_db_likes_v4',
+  MARKETS: 'opinion_ng_markets_v2',
+  ACTIVITIES: 'opinion_ng_activities_v2',
+  COMMENTS: 'opinion_ng_comments_v2',
+  LIKES: 'opinion_ng_likes_v2',
   LEGACY_LIKES: 'nullhood_db_likes_v3',
-  REPOSTS: 'nullhood_db_reposts_v3',
-  CLAIMS: 'nullhood_db_claims_v3',
-  HOLDINGS: 'nullhood_db_holdings_v3',
-  PREFERENCES: 'nullhood_db_preferences_v3',
+  REPOSTS: 'opinion_ng_reposts_v2',
+  CLAIMS: 'opinion_ng_claims_v2',
+  HOLDINGS: 'opinion_ng_holdings_v2',
+  PREFERENCES: 'opinion_ng_preferences_v2',
 };
 
 export interface MarketLikeEntry {
@@ -66,10 +66,18 @@ export class TiredFunDatabaseService {
       if (data) {
         const parsed = JSON.parse(data);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Merge newly added fallback markets that aren't yet in saved database
-          const existingIds = new Set(parsed.map((m: any) => m.id));
-          const missingFallback = fallback.filter((f) => !existingIds.has(f.id));
-          loadedMarkets = [...parsed, ...missingFallback];
+          // Filter out legacy crypto / Robinhood Chain markets if any were persisted
+          const cleaned = parsed.filter(
+            (m: any) =>
+              !m.question?.includes('Robinhood Chain') &&
+              !m.question?.includes('Ethereum L1') &&
+              !m.question?.includes('Base and Robinhood')
+          );
+          if (cleaned.length > 0) {
+            const existingIds = new Set(cleaned.map((m: any) => m.id));
+            const missingFallback = fallback.filter((f) => !existingIds.has(f.id));
+            loadedMarkets = [...cleaned, ...missingFallback];
+          }
         }
       }
 

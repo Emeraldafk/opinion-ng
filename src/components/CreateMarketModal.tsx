@@ -42,13 +42,12 @@ interface CreateMarketModalProps {
 }
 
 const PRESET_CATEGORIES: Exclude<MarketCategory, 'All'>[] = [
-  'Crypto',
-  'AI',
-  'DeFi',
-  'Culture',
+  'Economy',
   'Politics',
+  'Culture',
   'Sports',
-  'Robinhood',
+  'Tech',
+  'Markets',
   'Other',
 ];
 
@@ -220,26 +219,26 @@ export const PRESET_THUMBNAILS: PresetThumbnail[] = [
     url: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&auto=format&fit=crop&q=80',
   },
 
-  // --- ROBINHOOD (Robinhood Bull, Stock Market Floor, App) ---
+  // --- ECONOMY (Central Bank, Oil & Gas, Lagos Infrastructure) ---
   {
-    id: 'rh-1',
-    category: 'Robinhood',
-    label: 'Robinhood Green Candlesticks',
-    tag: '🏹 Robinhood Chain',
+    id: 'ec-1',
+    category: 'Economy',
+    label: 'Central Bank & Financial Markets',
+    tag: '🏦 Banking & FX',
     url: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop&q=80',
   },
   {
-    id: 'rh-2',
-    category: 'Robinhood',
-    label: 'Stock Exchange Trading Floor',
-    tag: '📊 Equities',
+    id: 'ec-2',
+    category: 'Economy',
+    label: 'Refinery & Energy Infrastructure',
+    tag: '⛽ Energy / Petrol',
     url: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&auto=format&fit=crop&q=80',
   },
   {
-    id: 'rh-3',
-    category: 'Robinhood',
-    label: 'Mobile Retail Trading',
-    tag: '📱 Retail SocialFi',
+    id: 'ec-3',
+    category: 'Economy',
+    label: 'Lagos City & Rail Transit',
+    tag: '🚆 Transit / Infrastructure',
     url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&auto=format&fit=crop&q=80',
   },
 
@@ -517,8 +516,8 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
               onChange={(e) => setQuestion(e.target.value)}
               placeholder={
                 marketType === 'RESOLVABLE_PREDICTION'
-                  ? 'e.g., Will Robinhood Chain mainnet TVL surpass $500M before November 2026?'
-                  : 'e.g., Will Robinhood Chain become the top consumer L2 this cycle?'
+                  ? 'e.g., Will Dangote Refinery petrol price drop below ₦850/L before Q4 2026?'
+                  : 'e.g., Will Burna Boy or Wizkid headline the 2026 World Cup Closing Ceremony?'
               }
               className="w-full rounded-2xl border border-[#232330] bg-[#0c0c11] px-4 py-3 text-sm font-semibold text-white placeholder-[#7a7a8c] focus:border-[#227c9d] focus:outline-none transition"
             />

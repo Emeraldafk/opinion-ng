@@ -6,7 +6,7 @@
       "avatarUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150",
       "kycTier": 2,
       "bvnNinVerified": true,
-      "createdAt": "2026-11-12T14:49:57.823Z"
+      "createdAt": "2026-11-12T18:04:57.877Z"
     },
     "usr_demo_893240": {
       "id": "usr_demo_893240",
@@ -18,7 +18,7 @@
       "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
       "kycTier": 1,
       "bvnNinVerified": true,
-      "createdAt": "2026-11-12T14:49:57.824Z"
+      "createdAt": "2026-11-12T18:04:57.877Z"
     },
     "usr_creator_burna": {
       "id": "usr_creator_burna",
@@ -28,37 +28,37 @@
       "avatarUrl": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150",
       "kycTier": 1,
       "bvnNinVerified": true,
-      "createdAt": "2026-11-12T14:49:57.824Z"
+      "createdAt": "2026-11-12T18:04:57.877Z"
     }
   },
   "wallets": {
     "wlt_opinion_platform_treasury": {
       "id": "wlt_opinion_platform_treasury",
       "userId": "usr_opinion_platform_treasury",
-      "availableKobo": 327438,
+      "availableKobo": 1500,
       "lockedKobo": 0,
       "creatorEarningsKobo": 0,
-      "updatedAt": "2026-11-12T17:28:22.338Z"
+      "updatedAt": "2026-11-12T18:12:13.184Z"
     },
     "wlt_demo_893240": {
       "id": "wlt_demo_893240",
       "userId": "usr_demo_893240",
-      "availableKobo": 35344623,
+      "availableKobo": 900000,
       "lockedKobo": 0,
-      "creatorEarningsKobo": 23048,
+      "creatorEarningsKobo": 25000,
       "virtualAccountNumber": "9920194821",
       "virtualAccountBank": "Wema Bank (OpinionNG)",
-      "updatedAt": "2026-11-12T17:28:22.338Z"
+      "updatedAt": "2026-11-12T18:12:13.184Z"
     },
     "wlt_creator_burna": {
       "id": "wlt_creator_burna",
       "userId": "usr_creator_burna",
       "availableKobo": 5000000,
       "lockedKobo": 0,
-      "creatorEarningsKobo": 1250831,
+      "creatorEarningsKobo": 1251500,
       "virtualAccountNumber": "9920198834",
       "virtualAccountBank": "Wema Bank (OpinionNG)",
-      "updatedAt": "2026-11-12T14:52:21.287Z"
+      "updatedAt": "2026-11-12T18:12:13.184Z"
     }
   },
   "ledgerEntries": [
@@ -72,1253 +72,378 @@
       "metadata": {
         "note": "Initial Demo User ₦10,000 Wallet Balance"
       },
-      "createdAt": "2026-11-12T14:49:57.825Z"
+      "createdAt": "2026-11-12T18:04:57.877Z"
     },
     {
-      "id": "ldg_trd_buy_1794495122174_ci62b_buyer",
+      "id": "ldg_trd_buy_1794507133184_4bocr_buyer",
       "walletId": "wlt_demo_893240",
-      "amountKobo": -50000,
-      "balanceAfterKobo": 950000,
+      "amountKobo": -100000,
+      "balanceAfterKobo": 900000,
       "entryType": "TRADE_BUY",
-      "referenceId": "trd_buy_1794495122174_ci62b",
+      "referenceId": "trd_buy_1794507133184_4bocr",
       "metadata": {
         "marketId": 1,
         "side": "YES",
-        "shares": 928,
-        "avgPriceKobo": 5221,
-        "grossAmountKobo": 50000,
-        "netAmountKobo": 48500,
-        "feeKobo": 1500
+        "shares": 1478,
+        "avgPriceKobo": 6559,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
       },
-      "createdAt": "2026-11-12T14:52:02.174Z"
+      "createdAt": "2026-11-12T18:12:13.184Z"
     },
     {
-      "id": "ldg_trd_buy_1794495122174_ci62b_creator",
+      "id": "ldg_trd_buy_1794507133184_4bocr_creator",
       "walletId": "wlt_creator_burna",
-      "amountKobo": 750,
-      "balanceAfterKobo": 1250750,
+      "amountKobo": 1500,
+      "balanceAfterKobo": 1251500,
       "entryType": "CREATOR_FEE",
-      "referenceId": "trd_buy_1794495122174_ci62b",
+      "referenceId": "trd_buy_1794507133184_4bocr",
       "metadata": {
         "marketId": 1,
         "feeBps": 150,
-        "tradeVolumeKobo": 50000,
+        "tradeVolumeKobo": 100000,
         "creatorId": "usr_creator_burna"
       },
-      "createdAt": "2026-11-12T14:52:02.174Z"
+      "createdAt": "2026-11-12T18:12:13.184Z"
     },
     {
-      "id": "ldg_trd_buy_1794495122174_ci62b_platform",
+      "id": "ldg_trd_buy_1794507133184_4bocr_platform",
       "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 750,
-      "balanceAfterKobo": 750,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_buy_1794495122174_ci62b",
-      "metadata": {
-        "marketId": 1,
-        "feeBps": 150,
-        "tradeVolumeKobo": 50000
-      },
-      "createdAt": "2026-11-12T14:52:02.174Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794495141277_r7vpi_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 5278,
-      "balanceAfterKobo": 955278,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794495141277_r7vpi",
-      "metadata": {
-        "marketId": 1,
-        "side": "YES",
-        "sharesSold": 100,
-        "grossProceedsKobo": 5440,
-        "netProceedsKobo": 5278,
-        "feeKobo": 162
-      },
-      "createdAt": "2026-11-12T14:52:21.287Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794495141277_r7vpi_creator",
-      "walletId": "wlt_creator_burna",
-      "amountKobo": 81,
-      "balanceAfterKobo": 1250831,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794495141277_r7vpi",
-      "metadata": {
-        "marketId": 1,
-        "tradeVolumeKobo": 5440,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T14:52:21.287Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794495141277_r7vpi_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 81,
-      "balanceAfterKobo": 831,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794495141277_r7vpi",
-      "metadata": {
-        "marketId": 1,
-        "tradeVolumeKobo": 5440,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T14:52:21.287Z"
-    },
-    {
-      "id": "ldg_mkt_create_4_1794495141448_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 855278,
-      "entryType": "MARKET_CREATION_FEE",
-      "referenceId": "mkt_create_4_1794495141448",
-      "metadata": {
-        "marketId": 4,
-        "antiSpamOption": "fee",
-        "question": "Will Nigeria launch a CBDC stablecoin on L2 before 2027?"
-      },
-      "createdAt": "2026-11-12T14:52:21.448Z"
-    },
-    {
-      "id": "ldg_mkt_create_4_1794495141448_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 100000,
-      "balanceAfterKobo": 100831,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "mkt_create_4_1794495141448",
-      "metadata": {
-        "marketId": 4,
-        "feeType": "MARKET_CREATION_FEE"
-      },
-      "createdAt": "2026-11-12T14:52:21.448Z"
-    },
-    {
-      "id": "ldg_mkt_create_5_1794495141480_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 755278,
-      "entryType": "MARKET_CREATION_FEE",
-      "referenceId": "mkt_create_5_1794495141480",
-      "metadata": {
-        "marketId": 5,
-        "antiSpamOption": "fee",
-        "question": "Will Dangote Refinery export jet fuel across Africa by Q4?"
-      },
-      "createdAt": "2026-11-12T14:52:21.480Z"
-    },
-    {
-      "id": "ldg_mkt_create_5_1794495141480_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 100000,
-      "balanceAfterKobo": 200831,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "mkt_create_5_1794495141480",
-      "metadata": {
-        "marketId": 5,
-        "feeType": "MARKET_CREATION_FEE"
-      },
-      "createdAt": "2026-11-12T14:52:21.480Z"
-    },
-    {
-      "id": "ldg_clm_usr_demo_893240_1794495187106",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 25000,
-      "balanceAfterKobo": 780278,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "clm_usr_demo_893240_1794495187106",
-      "metadata": {
-        "type": "CLAIM_TO_AVAILABLE",
-        "claimedKobo": 25000
-      },
-      "createdAt": "2026-11-12T14:53:07.106Z"
-    },
-    {
-      "id": "ldg_stl_1_1794495187160_usr_demo_893240",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 8780000,
-      "balanceAfterKobo": 9560278,
-      "entryType": "MARKET_PAYOUT",
-      "referenceId": "stl_1_1794495187160",
-      "metadata": {
-        "marketId": 1,
-        "winningOutcome": "YES",
-        "winningShares": 878,
-        "payoutPerShareKobo": 10000
-      },
-      "createdAt": "2026-11-12T14:53:07.160Z"
-    },
-    {
-      "id": "ldg_mkt_create_6_1794495930450_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 9460278,
-      "entryType": "MARKET_CREATION_FEE",
-      "referenceId": "mkt_create_6_1794495930450",
-      "metadata": {
-        "marketId": 6,
-        "antiSpamOption": "fee",
-        "question": "Will Nigeria launch national identity digital credentials on blockchain in 2026?"
-      },
-      "createdAt": "2026-11-12T15:05:30.450Z"
-    },
-    {
-      "id": "ldg_mkt_create_6_1794495930450_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 100000,
-      "balanceAfterKobo": 300831,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "mkt_create_6_1794495930450",
-      "metadata": {
-        "marketId": 6,
-        "feeType": "MARKET_CREATION_FEE"
-      },
-      "createdAt": "2026-11-12T15:05:30.450Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794495930464_4j992_buyer",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -200000,
-      "balanceAfterKobo": 9260278,
-      "entryType": "TRADE_BUY",
-      "referenceId": "trd_buy_1794495930464_4j992",
-      "metadata": {
-        "marketId": 6,
-        "side": "YES",
-        "shares": 3113,
-        "avgPriceKobo": 6231,
-        "grossAmountKobo": 200000,
-        "netAmountKobo": 194000,
-        "feeKobo": 6000
-      },
-      "createdAt": "2026-11-12T15:05:30.464Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794495930464_4j992_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 3000,
-      "balanceAfterKobo": 3000,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_buy_1794495930464_4j992",
-      "metadata": {
-        "marketId": 6,
-        "feeBps": 150,
-        "tradeVolumeKobo": 200000,
-        "creatorId": "usr_demo_893240"
-      },
-      "createdAt": "2026-11-12T15:05:30.464Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794495930464_4j992_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 3000,
-      "balanceAfterKobo": 303831,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_buy_1794495930464_4j992",
-      "metadata": {
-        "marketId": 6,
-        "feeBps": 150,
-        "tradeVolumeKobo": 200000
-      },
-      "createdAt": "2026-11-12T15:05:30.464Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794495930480_32u6z_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 36182,
-      "balanceAfterKobo": 9296460,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794495930480_32u6z",
-      "metadata": {
-        "marketId": 6,
-        "side": "YES",
-        "sharesSold": 500,
-        "grossProceedsKobo": 37300,
-        "netProceedsKobo": 36182,
-        "feeKobo": 1118
-      },
-      "createdAt": "2026-11-12T15:05:30.480Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794495930480_32u6z_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 559,
-      "balanceAfterKobo": 3559,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794495930480_32u6z",
-      "metadata": {
-        "marketId": 6,
-        "tradeVolumeKobo": 37300,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T15:05:30.480Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794495930480_32u6z_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 559,
-      "balanceAfterKobo": 304390,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794495930480_32u6z",
-      "metadata": {
-        "marketId": 6,
-        "tradeVolumeKobo": 37300,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T15:05:30.480Z"
-    },
-    {
-      "id": "ldg_clm_usr_demo_893240_1794495930486",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 3559,
-      "balanceAfterKobo": 9300019,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "clm_usr_demo_893240_1794495930486",
-      "metadata": {
-        "type": "CLAIM_TO_AVAILABLE",
-        "claimedKobo": 3559
-      },
-      "createdAt": "2026-11-12T15:05:30.486Z"
-    },
-    {
-      "id": "ldg_stl_6_1794495930501_usr_demo_893240",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 26130000,
-      "balanceAfterKobo": 35430019,
-      "entryType": "MARKET_PAYOUT",
-      "referenceId": "stl_6_1794495930501",
-      "metadata": {
-        "marketId": 6,
-        "winningOutcome": "YES",
-        "winningShares": 2613,
-        "payoutPerShareKobo": 10000
-      },
-      "createdAt": "2026-11-12T15:05:30.501Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504451448_5zjqi_buyer",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 35330019,
-      "entryType": "TRADE_BUY",
-      "referenceId": "trd_buy_1794504451448_5zjqi",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "shares": 1667,
-        "avgPriceKobo": 5817,
-        "grossAmountKobo": 100000,
-        "netAmountKobo": 97000,
-        "feeKobo": 3000
-      },
-      "createdAt": "2026-11-12T17:27:31.448Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504451448_5zjqi_creator",
-      "walletId": "wlt_demo_893240",
       "amountKobo": 1500,
       "balanceAfterKobo": 1500,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_buy_1794504451448_5zjqi",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000,
-        "creatorId": "usr_demo_893240"
-      },
-      "createdAt": "2026-11-12T17:27:31.448Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504451448_5zjqi_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 305890,
       "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_buy_1794504451448_5zjqi",
+      "referenceId": "trd_buy_1794507133184_4bocr",
       "metadata": {
-        "marketId": 5,
+        "marketId": 1,
         "feeBps": 150,
         "tradeVolumeKobo": 100000
       },
-      "createdAt": "2026-11-12T17:27:31.448Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504455336_fn4co_buyer",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 35230019,
-      "entryType": "TRADE_BUY",
-      "referenceId": "trd_buy_1794504455336_fn4co",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "shares": 1376,
-        "avgPriceKobo": 7046,
-        "grossAmountKobo": 100000,
-        "netAmountKobo": 97000,
-        "feeKobo": 3000
-      },
-      "createdAt": "2026-11-12T17:27:35.336Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504455336_fn4co_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 3000,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_buy_1794504455336_fn4co",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000,
-        "creatorId": "usr_demo_893240"
-      },
-      "createdAt": "2026-11-12T17:27:35.336Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504455336_fn4co_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 307390,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_buy_1794504455336_fn4co",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000
-      },
-      "createdAt": "2026-11-12T17:27:35.336Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504457840_b24x6_buyer",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 35130019,
-      "entryType": "TRADE_BUY",
-      "referenceId": "trd_buy_1794504457840_b24x6",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "shares": 1257,
-        "avgPriceKobo": 7712,
-        "grossAmountKobo": 100000,
-        "netAmountKobo": 97000,
-        "feeKobo": 3000
-      },
-      "createdAt": "2026-11-12T17:27:37.840Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504457840_b24x6_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 4500,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_buy_1794504457840_b24x6",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000,
-        "creatorId": "usr_demo_893240"
-      },
-      "createdAt": "2026-11-12T17:27:37.840Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504457840_b24x6_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 308890,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_buy_1794504457840_b24x6",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000
-      },
-      "createdAt": "2026-11-12T17:27:37.840Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504459459_tt47z_buyer",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 35030019,
-      "entryType": "TRADE_BUY",
-      "referenceId": "trd_buy_1794504459459_tt47z",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "shares": 1193,
-        "avgPriceKobo": 8130,
-        "grossAmountKobo": 100000,
-        "netAmountKobo": 97000,
-        "feeKobo": 3000
-      },
-      "createdAt": "2026-11-12T17:27:39.459Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504459459_tt47z_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 6000,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_buy_1794504459459_tt47z",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000,
-        "creatorId": "usr_demo_893240"
-      },
-      "createdAt": "2026-11-12T17:27:39.459Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504459459_tt47z_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 310390,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_buy_1794504459459_tt47z",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000
-      },
-      "createdAt": "2026-11-12T17:27:39.459Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504461786_dkbf6_buyer",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 34930019,
-      "entryType": "TRADE_BUY",
-      "referenceId": "trd_buy_1794504461786_dkbf6",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "shares": 1152,
-        "avgPriceKobo": 8420,
-        "grossAmountKobo": 100000,
-        "netAmountKobo": 97000,
-        "feeKobo": 3000
-      },
-      "createdAt": "2026-11-12T17:27:41.786Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504461786_dkbf6_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 7500,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_buy_1794504461786_dkbf6",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000,
-        "creatorId": "usr_demo_893240"
-      },
-      "createdAt": "2026-11-12T17:27:41.786Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504461786_dkbf6_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 311890,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_buy_1794504461786_dkbf6",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000
-      },
-      "createdAt": "2026-11-12T17:27:41.786Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504468185_kofuz_buyer",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 34830019,
-      "entryType": "TRADE_BUY",
-      "referenceId": "trd_buy_1794504468185_kofuz",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "shares": 1123,
-        "avgPriceKobo": 8631,
-        "grossAmountKobo": 100000,
-        "netAmountKobo": 97000,
-        "feeKobo": 3000
-      },
-      "createdAt": "2026-11-12T17:27:48.185Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504468185_kofuz_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 9000,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_buy_1794504468185_kofuz",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000,
-        "creatorId": "usr_demo_893240"
-      },
-      "createdAt": "2026-11-12T17:27:48.185Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504468185_kofuz_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 313390,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_buy_1794504468185_kofuz",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000
-      },
-      "createdAt": "2026-11-12T17:27:48.185Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504469295_rnkca_buyer",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 34730019,
-      "entryType": "TRADE_BUY",
-      "referenceId": "trd_buy_1794504469295_rnkca",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "shares": 1103,
-        "avgPriceKobo": 8791,
-        "grossAmountKobo": 100000,
-        "netAmountKobo": 97000,
-        "feeKobo": 3000
-      },
-      "createdAt": "2026-11-12T17:27:49.295Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504469295_rnkca_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 10500,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_buy_1794504469295_rnkca",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000,
-        "creatorId": "usr_demo_893240"
-      },
-      "createdAt": "2026-11-12T17:27:49.295Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504469295_rnkca_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 314890,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_buy_1794504469295_rnkca",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000
-      },
-      "createdAt": "2026-11-12T17:27:49.295Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504470345_7c0fl_buyer",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": -100000,
-      "balanceAfterKobo": 34630019,
-      "entryType": "TRADE_BUY",
-      "referenceId": "trd_buy_1794504470345_7c0fl",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "shares": 1087,
-        "avgPriceKobo": 8918,
-        "grossAmountKobo": 100000,
-        "netAmountKobo": 97000,
-        "feeKobo": 3000
-      },
-      "createdAt": "2026-11-12T17:27:50.345Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504470345_7c0fl_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 12000,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_buy_1794504470345_7c0fl",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000,
-        "creatorId": "usr_demo_893240"
-      },
-      "createdAt": "2026-11-12T17:27:50.345Z"
-    },
-    {
-      "id": "ldg_trd_buy_1794504470345_7c0fl_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1500,
-      "balanceAfterKobo": 316390,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_buy_1794504470345_7c0fl",
-      "metadata": {
-        "marketId": 5,
-        "feeBps": 150,
-        "tradeVolumeKobo": 100000
-      },
-      "createdAt": "2026-11-12T17:27:50.345Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504482412_215rj_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 87106,
-      "balanceAfterKobo": 34717125,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794504482412_215rj",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "sharesSold": 1000,
-        "grossProceedsKobo": 89800,
-        "netProceedsKobo": 87106,
-        "feeKobo": 2694
-      },
-      "createdAt": "2026-11-12T17:28:02.412Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504482412_215rj_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1347,
-      "balanceAfterKobo": 13347,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794504482412_215rj",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 89800,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:02.412Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504482412_215rj_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1347,
-      "balanceAfterKobo": 317737,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794504482412_215rj",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 89800,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:02.412Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504483732_ltzwu_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 86040,
-      "balanceAfterKobo": 34803165,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794504483732_ltzwu",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "sharesSold": 1000,
-        "grossProceedsKobo": 88700,
-        "netProceedsKobo": 86040,
-        "feeKobo": 2660
-      },
-      "createdAt": "2026-11-12T17:28:03.732Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504483732_ltzwu_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1330,
-      "balanceAfterKobo": 14677,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794504483732_ltzwu",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 88700,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:03.732Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504483732_ltzwu_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1330,
-      "balanceAfterKobo": 319067,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794504483732_ltzwu",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 88700,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:03.732Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504485951_h3oxk_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 84876,
-      "balanceAfterKobo": 34888041,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794504485951_h3oxk",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "sharesSold": 1000,
-        "grossProceedsKobo": 87500,
-        "netProceedsKobo": 84876,
-        "feeKobo": 2624
-      },
-      "createdAt": "2026-11-12T17:28:05.951Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504485951_h3oxk_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1312,
-      "balanceAfterKobo": 15989,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794504485951_h3oxk",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 87500,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:05.951Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504485951_h3oxk_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1312,
-      "balanceAfterKobo": 320379,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794504485951_h3oxk",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 87500,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:05.951Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504488641_aptji_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 83324,
-      "balanceAfterKobo": 34971365,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794504488641_aptji",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "sharesSold": 1000,
-        "grossProceedsKobo": 85900,
-        "netProceedsKobo": 83324,
-        "feeKobo": 2576
-      },
-      "createdAt": "2026-11-12T17:28:08.641Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504488641_aptji_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1288,
-      "balanceAfterKobo": 17277,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794504488641_aptji",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 85900,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:08.641Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504488641_aptji_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1288,
-      "balanceAfterKobo": 321667,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794504488641_aptji",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 85900,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:08.641Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504496138_vqcyl_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 81480,
-      "balanceAfterKobo": 35052845,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794504496138_vqcyl",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "sharesSold": 1000,
-        "grossProceedsKobo": 84000,
-        "netProceedsKobo": 81480,
-        "feeKobo": 2520
-      },
-      "createdAt": "2026-11-12T17:28:16.138Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504496138_vqcyl_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1260,
-      "balanceAfterKobo": 18537,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794504496138_vqcyl",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 84000,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:16.138Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504496138_vqcyl_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1260,
-      "balanceAfterKobo": 322927,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794504496138_vqcyl",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 84000,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:16.138Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504497724_9jw5v_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 79056,
-      "balanceAfterKobo": 35131901,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794504497724_9jw5v",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "sharesSold": 1000,
-        "grossProceedsKobo": 81500,
-        "netProceedsKobo": 79056,
-        "feeKobo": 2444
-      },
-      "createdAt": "2026-11-12T17:28:17.724Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504497724_9jw5v_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1222,
-      "balanceAfterKobo": 19759,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794504497724_9jw5v",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 81500,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:17.724Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504497724_9jw5v_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1222,
-      "balanceAfterKobo": 324149,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794504497724_9jw5v",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 81500,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:17.724Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504499061_btcy5_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 75854,
-      "balanceAfterKobo": 35207755,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794504499061_btcy5",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "sharesSold": 1000,
-        "grossProceedsKobo": 78200,
-        "netProceedsKobo": 75854,
-        "feeKobo": 2346
-      },
-      "createdAt": "2026-11-12T17:28:19.061Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504499061_btcy5_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1173,
-      "balanceAfterKobo": 20932,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794504499061_btcy5",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 78200,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:19.061Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504499061_btcy5_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1173,
-      "balanceAfterKobo": 325322,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794504499061_btcy5",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 78200,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:19.061Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504500116_t9vxu_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 71490,
-      "balanceAfterKobo": 35279245,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794504500116_t9vxu",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "sharesSold": 1000,
-        "grossProceedsKobo": 73700,
-        "netProceedsKobo": 71490,
-        "feeKobo": 2210
-      },
-      "createdAt": "2026-11-12T17:28:20.116Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504500116_t9vxu_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1105,
-      "balanceAfterKobo": 22037,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794504500116_t9vxu",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 73700,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:20.116Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504500116_t9vxu_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1105,
-      "balanceAfterKobo": 326427,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794504500116_t9vxu",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 73700,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:20.116Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504502338_gn6e8_seller",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 65378,
-      "balanceAfterKobo": 35344623,
-      "entryType": "TRADE_SELL",
-      "referenceId": "trd_sell_1794504502338_gn6e8",
-      "metadata": {
-        "marketId": 5,
-        "side": "YES",
-        "sharesSold": 1000,
-        "grossProceedsKobo": 67400,
-        "netProceedsKobo": 65378,
-        "feeKobo": 2022
-      },
-      "createdAt": "2026-11-12T17:28:22.338Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504502338_gn6e8_creator",
-      "walletId": "wlt_demo_893240",
-      "amountKobo": 1011,
-      "balanceAfterKobo": 23048,
-      "entryType": "CREATOR_FEE",
-      "referenceId": "trd_sell_1794504502338_gn6e8",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 67400,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:22.338Z"
-    },
-    {
-      "id": "ldg_trd_sell_1794504502338_gn6e8_platform",
-      "walletId": "wlt_opinion_platform_treasury",
-      "amountKobo": 1011,
-      "balanceAfterKobo": 327438,
-      "entryType": "PLATFORM_FEE",
-      "referenceId": "trd_sell_1794504502338_gn6e8",
-      "metadata": {
-        "marketId": 5,
-        "tradeVolumeKobo": 67400,
-        "feeBps": 150
-      },
-      "createdAt": "2026-11-12T17:28:22.338Z"
+      "createdAt": "2026-11-12T18:12:13.184Z"
     }
   ],
   "markets": {
     "1": {
       "id": 1,
       "creatorId": "usr_creator_burna",
-      "question": "Will Burna Boy win a 2027 Grammy Award?",
-      "category": "Culture",
-      "imageUri": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600",
-      "sourceHandle": "@BurnaBoyFanClub",
-      "yesPoolKobo": 293060,
-      "noPoolKobo": 250000,
-      "totalVolumeKobo": 555440,
-      "creatorFeeBps": 150,
-      "platformFeeBps": 150,
-      "status": "RESOLVED",
-      "proposedOutcome": "YES",
-      "finalOutcome": "YES",
-      "closingTime": "2026-11-26T14:49:57.825Z",
-      "resolutionDeadline": "2026-11-27T14:49:57.825Z",
-      "yesCondition": "Burna Boy is officially announced as winner at 69th Grammy Awards",
-      "noCondition": "Any other artist wins or no award granted",
-      "evidenceSource": "https://www.grammy.com",
-      "createdAt": "2026-11-12T14:49:57.825Z",
-      "updatedAt": "2026-11-12T14:53:07.160Z",
-      "disputeEndsAt": "2026-11-12T16:53:07.150Z",
-      "proposedEvidence": "https://www.grammy.com/winners"
-    },
-    "2": {
-      "id": 2,
-      "creatorId": "usr_demo_893240",
-      "question": "Will CBN lower the Monetary Policy Rate (MPR) before Q3 2026?",
-      "category": "Markets",
+      "question": "Will Dangote Refinery petrol pump price drop below ₦850/L across Lagos before Q4 2026?",
+      "category": "Economy",
       "imageUri": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600",
-      "sourceHandle": "@OpinionNG",
-      "yesPoolKobo": 600000,
-      "noPoolKobo": 400000,
-      "totalVolumeKobo": 1000000,
+      "sourceHandle": "@DangoteGroup",
+      "yesPoolKobo": 737000,
+      "noPoolKobo": 360000,
+      "totalVolumeKobo": 1900000,
       "creatorFeeBps": 150,
       "platformFeeBps": 150,
       "status": "ACTIVE",
       "proposedOutcome": "UNRESOLVED",
       "finalOutcome": "UNRESOLVED",
-      "closingTime": "2026-12-12T14:49:57.825Z",
-      "resolutionDeadline": "2026-12-13T14:49:57.825Z",
-      "yesCondition": "CBN MPC communique specifies an MPR reduction below 26.75%",
-      "noCondition": "MPR remains unchanged or is increased",
-      "evidenceSource": "https://www.cbn.gov.ng",
-      "createdAt": "2026-11-12T14:49:57.825Z",
-      "updatedAt": "2026-11-12T14:49:57.825Z"
+      "closingTime": "2026-12-27T18:04:57.877Z",
+      "resolutionDeadline": "2026-12-28T18:04:57.877Z",
+      "yesCondition": "Retail pump prices for PMS from Dangote Refinery at registered major filling stations in Lagos fall below ₦850/L.",
+      "noCondition": "Retail PMS prices remain at or above ₦850/L at closing deadline.",
+      "evidenceSource": "https://majoroilmarketers.com",
+      "createdAt": "2026-11-12T18:04:57.877Z",
+      "updatedAt": "2026-11-12T18:12:13.184Z"
+    },
+    "2": {
+      "id": 2,
+      "creatorId": "usr_creator_burna",
+      "question": "Will Burna Boy, Wizkid or Davido headline the 2026 FIFA World Cup Closing Ceremony?",
+      "category": "Culture",
+      "imageUri": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600",
+      "sourceHandle": "@burnaboy",
+      "yesPoolKobo": 720000,
+      "noPoolKobo": 280000,
+      "totalVolumeKobo": 2200000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2027-02-10T18:04:57.877Z",
+      "resolutionDeadline": "2027-02-11T18:04:57.877Z",
+      "yesCondition": "Burna Boy, Wizkid, or Davido is officially billed and performs as headline act at 2026 World Cup final.",
+      "noCondition": "None of the three headline the official closing ceremony.",
+      "evidenceSource": "https://www.fifa.com/worldcup",
+      "createdAt": "2026-11-12T18:04:57.877Z",
+      "updatedAt": "2026-11-12T18:04:57.877Z"
     },
     "3": {
       "id": 3,
       "creatorId": "usr_demo_893240",
-      "question": "Will Super Eagles qualify for the 2026 FIFA World Cup semi-finals?",
+      "question": "Will the Super Eagles reach the Quarter-Finals or better at the 2026 FIFA World Cup?",
       "category": "Sports",
       "imageUri": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600",
-      "sourceHandle": "@SuperEaglesNG",
-      "yesPoolKobo": 300000,
-      "noPoolKobo": 700000,
+      "sourceHandle": "@NGSuperEagles",
+      "yesPoolKobo": 550000,
+      "noPoolKobo": 450000,
+      "totalVolumeKobo": 1500000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2027-03-12T18:04:57.877Z",
+      "resolutionDeadline": "2027-03-13T18:04:57.877Z",
+      "yesCondition": "Nigeria senior national team qualifies for Quarter-Finals or better in 2026 World Cup.",
+      "noCondition": "Nigeria is eliminated in prior rounds or fails to participate.",
+      "evidenceSource": "https://www.fifa.com",
+      "createdAt": "2026-11-12T18:04:57.877Z",
+      "updatedAt": "2026-11-12T18:04:57.877Z"
+    },
+    "4": {
+      "id": 4,
+      "creatorId": "usr_demo_893240",
+      "question": "Will official NAFEM USD/NGN exchange rate strengthen below ₦1,400/$ in 2026?",
+      "category": "Economy",
+      "imageUri": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600",
+      "sourceHandle": "@cenbank",
+      "yesPoolKobo": 510000,
+      "noPoolKobo": 490000,
+      "totalVolumeKobo": 1600000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2027-01-11T18:04:57.877Z",
+      "resolutionDeadline": "2027-01-12T18:04:57.877Z",
+      "yesCondition": "Official NAFEM closing weighted-average FX rate prints below ₦1,400.00/USD on any trading day.",
+      "noCondition": "NAFEM rate remains above ₦1,400.00/USD throughout.",
+      "evidenceSource": "https://fmdqgroup.com",
+      "createdAt": "2026-11-12T18:04:57.877Z",
+      "updatedAt": "2026-11-12T18:04:57.877Z"
+    },
+    "5": {
+      "id": 5,
+      "creatorId": "usr_creator_burna",
+      "question": "Will INEC mandate 100% digital voter accreditation and real-time portal upload for the 2027 General Elections?",
+      "category": "Politics",
+      "imageUri": "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=600",
+      "sourceHandle": "@inecnigeria",
+      "yesPoolKobo": 620000,
+      "noPoolKobo": 380000,
+      "totalVolumeKobo": 1200000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2027-02-10T18:04:57.878Z",
+      "resolutionDeadline": "2027-02-11T18:04:57.878Z",
+      "yesCondition": "INEC formally issues electoral guidelines making electronic accreditation mandatory.",
+      "noCondition": "INEC regulations retain manual bypass.",
+      "evidenceSource": "https://inecnigeria.org",
+      "createdAt": "2026-11-12T18:04:57.878Z",
+      "updatedAt": "2026-11-12T18:04:57.878Z"
+    },
+    "6": {
+      "id": 6,
+      "creatorId": "usr_demo_893240",
+      "question": "Will Moniepoint or OPay execute an IPO listing on the Nigerian Exchange (NGX) before 2027?",
+      "category": "Tech",
+      "imageUri": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600",
+      "sourceHandle": "@MoniepointNG",
+      "yesPoolKobo": 580000,
+      "noPoolKobo": 420000,
+      "totalVolumeKobo": 1400000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2027-01-31T18:04:57.878Z",
+      "resolutionDeadline": "2027-02-01T18:04:57.878Z",
+      "yesCondition": "Moniepoint or OPay shares commence official public trading on NGX.",
+      "noCondition": "Neither firm executes an NGX public listing before closing date.",
+      "evidenceSource": "https://ngxgroup.com",
+      "createdAt": "2026-11-12T18:04:57.878Z",
+      "updatedAt": "2026-11-12T18:04:57.878Z"
+    },
+    "7": {
+      "id": 7,
+      "creatorId": "usr_creator_burna",
+      "question": "Will Victor Osimhen win the 2026 CAF African Footballer of the Year award?",
+      "category": "Sports",
+      "imageUri": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600",
+      "sourceHandle": "@victorosimhen9",
+      "yesPoolKobo": 670000,
+      "noPoolKobo": 330000,
+      "totalVolumeKobo": 1700000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2027-01-21T18:04:57.878Z",
+      "resolutionDeadline": "2027-01-22T18:04:57.878Z",
+      "yesCondition": "CAF officially names Victor Osimhen Men Player of the Year 2026.",
+      "noCondition": "Any other nominee wins the award.",
+      "evidenceSource": "https://www.cafonline.com",
+      "createdAt": "2026-11-12T18:04:57.878Z",
+      "updatedAt": "2026-11-12T18:04:57.878Z"
+    },
+    "8": {
+      "id": 8,
+      "creatorId": "usr_demo_893240",
+      "question": "Will Big Brother Naija Season 10 set an all-time voting record exceeding 1.5 Billion votes?",
+      "category": "Culture",
+      "imageUri": "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=600",
+      "sourceHandle": "@BBNaija",
+      "yesPoolKobo": 630000,
+      "noPoolKobo": 370000,
+      "totalVolumeKobo": 1300000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2027-01-01T18:04:57.878Z",
+      "resolutionDeadline": "2027-01-02T18:04:57.878Z",
+      "yesCondition": "MultiChoice audit figures verify total cast votes for BBNaija Season 10 exceed 1.5B.",
+      "noCondition": "Total verified votes remain under 1.5B.",
+      "evidenceSource": "https://www.dstv.com/africamagic",
+      "createdAt": "2026-11-12T18:04:57.878Z",
+      "updatedAt": "2026-11-12T18:04:57.878Z"
+    },
+    "9": {
+      "id": 9,
+      "creatorId": "usr_demo_893240",
+      "question": "Will the Central Bank of Nigeria (CBN) cut the Monetary Policy Rate (MPR) below 25% in 2026?",
+      "category": "Economy",
+      "imageUri": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600",
+      "sourceHandle": "@cenbank",
+      "yesPoolKobo": 470000,
+      "noPoolKobo": 530000,
+      "totalVolumeKobo": 1100000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2026-12-22T18:04:57.878Z",
+      "resolutionDeadline": "2026-12-23T18:04:57.878Z",
+      "yesCondition": "CBN MPC communique announces an official MPR reduction below 25.00%.",
+      "noCondition": "MPR remains at 25.00% or higher at all 2026 MPC sessions.",
+      "evidenceSource": "https://www.cbn.gov.ng",
+      "createdAt": "2026-11-12T18:04:57.878Z",
+      "updatedAt": "2026-11-12T18:04:57.878Z"
+    },
+    "10": {
+      "id": 10,
+      "creatorId": "usr_creator_burna",
+      "question": "Will Lagos Rail Mass Transit Red Line surpass 500,000 daily passenger trips before end of 2026?",
+      "category": "Economy",
+      "imageUri": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600",
+      "sourceHandle": "@followlasg",
+      "yesPoolKobo": 540000,
+      "noPoolKobo": 460000,
       "totalVolumeKobo": 1000000,
       "creatorFeeBps": 150,
       "platformFeeBps": 150,
       "status": "ACTIVE",
       "proposedOutcome": "UNRESOLVED",
       "finalOutcome": "UNRESOLVED",
-      "closingTime": "2026-12-27T14:49:57.825Z",
-      "resolutionDeadline": "2026-12-28T14:49:57.825Z",
-      "yesCondition": "Nigeria officially reaches the semi-final round of the tournament",
-      "noCondition": "Nigeria is eliminated prior to the semi-finals",
-      "evidenceSource": "https://www.fifa.com",
-      "createdAt": "2026-11-12T14:49:57.825Z",
-      "updatedAt": "2026-11-12T14:49:57.825Z"
+      "closingTime": "2027-01-06T18:04:57.878Z",
+      "resolutionDeadline": "2027-01-07T18:04:57.878Z",
+      "yesCondition": "LAMATA publishes verified ridership exceeding 500k daily trips on Red Line.",
+      "noCondition": "Red Line ridership remains below 500,000.",
+      "evidenceSource": "https://lamata-ng.com",
+      "createdAt": "2026-11-12T18:04:57.878Z",
+      "updatedAt": "2026-11-12T18:04:57.878Z"
     },
-    "4": {
-      "id": 4,
-      "creatorId": "usr_demo_893240",
-      "question": "Will Nigeria launch a CBDC stablecoin on L2 before 2027?",
-      "category": "Crypto",
-      "imageUri": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600",
-      "sourceHandle": "@OpinionNG",
-      "yesPoolKobo": 100000,
-      "noPoolKobo": 100000,
-      "totalVolumeKobo": 0,
-      "creatorFeeBps": 150,
-      "platformFeeBps": 150,
-      "status": "ACTIVE",
-      "proposedOutcome": "UNRESOLVED",
-      "finalOutcome": "UNRESOLVED",
-      "closingTime": "2026-11-19T14:52:21.449Z",
-      "resolutionDeadline": "2026-11-20T14:52:21.449Z",
-      "yesCondition": "Event occurs as stated",
-      "noCondition": "Event does not occur",
-      "evidenceSource": "https://news.google.com",
-      "createdAt": "2026-11-12T14:52:21.448Z",
-      "updatedAt": "2026-11-12T14:52:21.448Z"
-    },
-    "5": {
-      "id": 5,
-      "creatorId": "usr_demo_893240",
-      "question": "Will Dangote Refinery export jet fuel across Africa by Q4?",
+    "11": {
+      "id": 11,
+      "creatorId": "usr_creator_burna",
+      "question": "Will a Nollywood theatrical release gross over ₦2 Billion at the West African box office in 2026?",
       "category": "Culture",
-      "imageUri": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600",
-      "sourceHandle": "@opinion_trader",
-      "yesPoolKobo": 139300,
-      "noPoolKobo": 100000,
-      "totalVolumeKobo": 1536700,
+      "imageUri": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600",
+      "sourceHandle": "@FilmhouseCinema",
+      "yesPoolKobo": 690000,
+      "noPoolKobo": 310000,
+      "totalVolumeKobo": 1400000,
       "creatorFeeBps": 150,
       "platformFeeBps": 150,
       "status": "ACTIVE",
       "proposedOutcome": "UNRESOLVED",
       "finalOutcome": "UNRESOLVED",
-      "closingTime": "2026-11-19T14:52:21.481Z",
-      "resolutionDeadline": "2026-11-20T14:52:21.481Z",
-      "yesCondition": "Event occurs as stated",
-      "noCondition": "Event does not occur",
-      "evidenceSource": "https://news.google.com",
-      "createdAt": "2026-11-12T14:52:21.480Z",
-      "updatedAt": "2026-11-12T17:28:22.338Z"
+      "closingTime": "2027-01-16T18:04:57.878Z",
+      "resolutionDeadline": "2027-01-17T18:04:57.878Z",
+      "yesCondition": "CEAN confirms a domestic production crossing ₦2B gross box office.",
+      "noCondition": "No release reaches ₦2B gross.",
+      "evidenceSource": "https://ceanigeria.com",
+      "createdAt": "2026-11-12T18:04:57.878Z",
+      "updatedAt": "2026-11-12T18:04:57.878Z"
     },
-    "6": {
-      "id": 6,
+    "12": {
+      "id": 12,
       "creatorId": "usr_demo_893240",
-      "question": "Will Nigeria launch national identity digital credentials on blockchain in 2026?",
-      "category": "AI & Tech",
-      "imageUri": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600",
-      "sourceHandle": "@OpinionNG",
-      "yesPoolKobo": 256700,
-      "noPoolKobo": 100000,
-      "totalVolumeKobo": 237300,
+      "question": "Will Starlink Nigeria active high-speed satellite broadband subscriptions exceed 250,000 before 2027?",
+      "category": "Tech",
+      "imageUri": "https://images.unsplash.com/photo-1517976487507-5b3a4a0346a0?w=600",
+      "sourceHandle": "@SpaceXStarlink",
+      "yesPoolKobo": 620000,
+      "noPoolKobo": 380000,
+      "totalVolumeKobo": 950000,
       "creatorFeeBps": 150,
       "platformFeeBps": 150,
-      "status": "RESOLVED",
-      "proposedOutcome": "YES",
-      "finalOutcome": "YES",
-      "closingTime": "2026-11-19T15:05:30.451Z",
-      "resolutionDeadline": "2026-11-20T15:05:30.451Z",
-      "yesCondition": "Event occurs as stated",
-      "noCondition": "Event does not occur",
-      "evidenceSource": "https://news.google.com",
-      "createdAt": "2026-11-12T15:05:30.450Z",
-      "updatedAt": "2026-11-12T15:05:30.501Z",
-      "disputeEndsAt": "2026-11-12T17:05:30.495Z",
-      "proposedEvidence": "https://techpoint.africa/identity"
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2027-01-26T18:04:57.878Z",
+      "resolutionDeadline": "2027-01-27T18:04:57.878Z",
+      "yesCondition": "NCC quarterly reports verify active Starlink connections > 250,000.",
+      "noCondition": "Active subscriptions remain under 250,000.",
+      "evidenceSource": "https://ncc.gov.ng",
+      "createdAt": "2026-11-12T18:04:57.878Z",
+      "updatedAt": "2026-11-12T18:04:57.878Z"
+    },
+    "13": {
+      "id": 13,
+      "creatorId": "usr_creator_burna",
+      "question": "Will Nigeria officially secure UNESCO Intangible Cultural Heritage status for Jollof Rice before 2027?",
+      "category": "Culture",
+      "imageUri": "https://images.unsplash.com/photo-1558865869-c93f6f8482af?w=600",
+      "sourceHandle": "@UNESCO",
+      "yesPoolKobo": 590000,
+      "noPoolKobo": 410000,
+      "totalVolumeKobo": 1200000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2027-02-05T18:04:57.878Z",
+      "resolutionDeadline": "2027-02-06T18:04:57.878Z",
+      "yesCondition": "UNESCO Intergovernmental Committee formally inscribes Nigerian Jollof Rice.",
+      "noCondition": "Inscription is deferred or not granted.",
+      "evidenceSource": "https://ich.unesco.org",
+      "createdAt": "2026-11-12T18:04:57.878Z",
+      "updatedAt": "2026-11-12T18:04:57.878Z"
+    },
+    "14": {
+      "id": 14,
+      "creatorId": "usr_demo_893240",
+      "question": "Will Anthony Joshua fight an officially sanctioned heavyweight championship bout in Nigeria before end of 2027?",
+      "category": "Sports",
+      "imageUri": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600",
+      "sourceHandle": "@anthonyjoshua",
+      "yesPoolKobo": 560000,
+      "noPoolKobo": 440000,
+      "totalVolumeKobo": 1400000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2027-03-02T18:04:57.878Z",
+      "resolutionDeadline": "2027-03-03T18:04:57.878Z",
+      "yesCondition": "Officially sanctioned professional heavyweight bout featuring Anthony Joshua is staged in Nigeria.",
+      "noCondition": "No official bout takes place in Nigeria.",
+      "evidenceSource": "https://boxrec.com",
+      "createdAt": "2026-11-12T18:04:57.878Z",
+      "updatedAt": "2026-11-12T18:04:57.878Z"
     }
   },
   "positions": {
@@ -1327,30 +452,10 @@
       "userId": "usr_demo_893240",
       "marketId": 1,
       "side": "YES",
-      "sharesCount": 0,
-      "totalCostKobo": 294560,
-      "avgPriceKobo": 307,
-      "updatedAt": "2026-11-12T14:53:07.160Z"
-    },
-    "usr_demo_893240_6_YES": {
-      "id": "pos_trd_buy_1794495930464_4j992",
-      "userId": "usr_demo_893240",
-      "marketId": 6,
-      "side": "YES",
-      "sharesCount": 0,
-      "totalCostKobo": 162700,
-      "avgPriceKobo": 6231,
-      "updatedAt": "2026-11-12T15:05:30.501Z"
-    },
-    "usr_demo_893240_5_YES": {
-      "id": "pos_trd_buy_1794504451448_5zjqi",
-      "userId": "usr_demo_893240",
-      "marketId": 5,
-      "side": "YES",
-      "sharesCount": 958,
-      "totalCostKobo": 63300,
-      "avgPriceKobo": 80,
-      "updatedAt": "2026-11-12T17:28:22.338Z"
+      "sharesCount": 1528,
+      "totalCostKobo": 350000,
+      "avgPriceKobo": 229,
+      "updatedAt": "2026-11-12T18:12:13.184Z"
     }
   }
 }

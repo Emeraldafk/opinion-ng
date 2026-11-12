@@ -714,25 +714,8 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
 
             {/* Right: Currency Indicator & Desktop Close */}
             <div className="flex items-center gap-2.5">
-              <div className="hidden sm:flex items-center rounded-full border border-[#2e2e40] bg-[#1a1a26] p-1 font-mono text-xs">
-                <button
-                  type="button"
-                  onClick={() => setInputCurrency('NGN')}
-                  className={`px-2.5 py-0.5 rounded-full font-bold transition ${
-                    inputCurrency === 'NGN' ? 'bg-[#227c9d] text-white' : 'text-zinc-400'
-                  }`}
-                >
-                  NGN
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setInputCurrency('ETH')}
-                  className={`px-2.5 py-0.5 rounded-full font-bold transition ${
-                    inputCurrency === 'ETH' ? 'bg-[#227c9d] text-white' : 'text-zinc-400'
-                  }`}
-                >
-                  ETH
-                </button>
+              <div className="hidden sm:flex items-center rounded-full border border-[#227c9d]/40 bg-[#227c9d]/10 px-3 py-1 font-mono text-xs font-bold text-[#53b3d4]">
+                ₦ NGN
               </div>
 
               <button
@@ -1032,7 +1015,7 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
                           fontWeight="bold"
                           fontFamily="monospace"
                         >
-                          YES ({market.yesCurve.realEth.toFixed(3)}Ξ)
+                          YES ({formatNGN(yesPoolKobo)})
                         </text>
 
                         <circle cx={bondingCurvePoints.noDot.x} cy={bondingCurvePoints.noDot.y} r="7" fill="#FF6B00" stroke="#fff" strokeWidth="2" />
@@ -1045,7 +1028,7 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
                           fontWeight="bold"
                           fontFamily="monospace"
                         >
-                          NO ({market.noCurve.realEth.toFixed(3)}Ξ)
+                          NO ({formatNGN(noPoolKobo)})
                         </text>
                       </>
                     )}
@@ -1089,30 +1072,30 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
                 {infoTab === 'description' ? (
                   <div className="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
                     <p>
-                      This market explores the conviction topic: <strong>&quot;{market.question}&quot;</strong>. Traders participate by taking a financial and reputational stake on the continuous YES or NO bonding curve, locking real ETH reserves on Robinhood Chain.
+                      This market explores the conviction topic: <strong>&quot;{market.question}&quot;</strong>. Traders participate by taking a financial and reputational stake on the continuous YES or NO bonding curve, settled atomically via OpinionNG's NGN double-entry ledger.
                     </p>
                     <p>
-                      Taking the &quot;yes&quot; side reflects confidence that this thesis will manifest or hold true. Taking &quot;no&quot; reflects a contrarian position. Every trade directly moves the market sentiment and rewards early participants through dynamic curve pricing.
+                      Taking the &quot;yes&quot; side reflects confidence that this thesis will manifest or hold true. Taking &quot;no&quot; reflects a contrarian position. Every trade directly moves the market sentiment and rewards creators and early participants.
                     </p>
                   </div>
                 ) : (
                   <div className="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
                     <div className="rounded-xl border border-[#232330] bg-[#0c0c11] p-3 space-y-1.5 font-mono text-xs">
                       <div className="flex justify-between">
-                        <span className="text-[#8c8c9e]">Contract Model:</span>
-                        <span className="text-white font-bold">Dual Independent Bonding Curves (Robinhood Chain)</span>
+                        <span className="text-[#8c8c9e]">Pricing Engine:</span>
+                        <span className="text-white font-bold">Dual AMM Curves (₦1 – ₦100 / share)</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#8c8c9e]">Invariant:</span>
-                        <span className="text-emerald-400 font-bold">V_E × V_S = K (250,000 ETH·Shares)</span>
+                        <span className="text-[#8c8c9e]">Settlement Model:</span>
+                        <span className="text-emerald-400 font-bold">Atomic NGN Double-Entry Ledger</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#8c8c9e]">Anti-Dust Minimum:</span>
-                        <span className="text-white">0.0001 ETH (~$0.26)</span>
+                        <span className="text-white">₦100 (10,000 Kobo)</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#8c8c9e]">Creator Fee (Automatic):</span>
-                        <span className="text-[#FF8A33]">1.0% per trade</span>
+                        <span className="text-[#8c8c9e]">Trading Fee (Automatic):</span>
+                        <span className="text-[#FF8A33]">3.0% (1.5% Creator + 1.5% Platform)</span>
                       </div>
                     </div>
                     {isPrediction && market.prediction && (
@@ -1448,7 +1431,7 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
                   {txStatus === 'SIMULATING' || txStatus === 'SIGNING' ? (
                     <span className="flex items-center justify-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      Executing on Robinhood Chain...
+                      Executing Atomic Trade...
                     </span>
                   ) : (
                     `${tradeMode === 'BUY' ? 'Buy' : 'Sell'} ${selectedSide}`

@@ -186,94 +186,94 @@ export function App() {
       {
         id: 'act-init-1',
         marketId: 1,
-        marketQuestion: 'Will Robinhood Chain flip Base in daily retail opinion & socialFi transactions this cycle?',
-        category: 'Robinhood',
-        trader: '0x94A1...3F10',
+        marketQuestion: 'Will Dangote Refinery petrol pump price drop below ₦850/L across Lagos before Q4 2026?',
+        category: 'Economy',
+        trader: 'Tunde Afolabi',
         isYes: true,
         isBuy: true,
-        ethAmount: 0.045,
-        sharesAmount: 432,
-        yesSentimentAfter: 51.6,
-        sentimentDeltaPct: 1.6,
+        ethAmount: 0.048,
+        sharesAmount: 640,
+        yesSentimentAfter: 64.2,
+        sentimentDeltaPct: 2.2,
         eventType: 'STANDARD_TRADE',
         timestamp: Date.now() - 1000 * 60 * 18,
         isOnChain: false,
       },
       {
         id: 'act-init-2',
-        marketId: 15,
-        marketQuestion: 'Will Grand Theft Auto VI generate more than $1.2 Billion in worldwide gross retail sales within 48 hours?',
+        marketId: 2,
+        marketQuestion: 'Will Burna Boy, Wizkid or Davido headline the 2026 FIFA World Cup Closing Ceremony?',
         category: 'Culture',
-        trader: '0x19D4...C002',
+        trader: 'Chioma Adebayo',
         isYes: true,
         isBuy: true,
-        ethAmount: 0.098,
+        ethAmount: 0.072,
         sharesAmount: 890,
-        yesSentimentAfter: 76.2,
-        sentimentDeltaPct: 3.2,
+        yesSentimentAfter: 71.8,
+        sentimentDeltaPct: 3.5,
         eventType: 'STANDARD_TRADE',
         timestamp: Date.now() - 1000 * 60 * 42,
         isOnChain: false,
       },
       {
         id: 'act-init-3',
-        marketId: 12,
-        marketQuestion: 'Will perpetual opinion markets with dual bonding curves surpass traditional CLOB prediction volume by Q4 2026?',
-        category: 'DeFi',
-        trader: '0x62F0...99A1',
+        marketId: 3,
+        marketQuestion: 'Will the Super Eagles reach the Quarter-Finals or better at the 2026 FIFA World Cup?',
+        category: 'Sports',
+        trader: 'Emeka Nwosu',
         isYes: true,
         isBuy: true,
-        ethAmount: 0.082,
+        ethAmount: 0.055,
         sharesAmount: 760,
-        yesSentimentAfter: 69.2,
-        sentimentDeltaPct: 2.1,
+        yesSentimentAfter: 54.8,
+        sentimentDeltaPct: 1.8,
         eventType: 'STANDARD_TRADE',
         timestamp: Date.now() - 1000 * 60 * 75,
         isOnChain: false,
       },
       {
         id: 'act-init-4',
-        marketId: 3,
-        marketQuestion: 'Will Bitcoin cross $150,000 before the end of the current post-halving macroeconomic cycle?',
-        category: 'Crypto',
-        trader: '0x55C2...10E8',
-        isYes: true,
+        marketId: 4,
+        marketQuestion: 'Will official NAFEM USD/NGN exchange rate strengthen below ₦1,400/$ in 2026?',
+        category: 'Economy',
+        trader: 'Dapo Oladipo',
+        isYes: false,
         isBuy: true,
-        ethAmount: 0.071,
+        ethAmount: 0.061,
         sharesAmount: 680,
-        yesSentimentAfter: 68.4,
-        sentimentDeltaPct: 2.4,
+        yesSentimentAfter: 51.2,
+        sentimentDeltaPct: 1.2,
         eventType: 'STANDARD_TRADE',
         timestamp: Date.now() - 1000 * 60 * 120,
         isOnChain: false,
       },
       {
         id: 'act-init-5',
-        marketId: 18,
-        marketQuestion: 'Will the US SEC approve in-kind redemptions and staking rewards for US-listed Ethereum spot ETFs in 2026?',
+        marketId: 5,
+        marketQuestion: 'Will INEC mandate 100% digital voter accreditation and real-time portal upload for the 2027 General Elections?',
         category: 'Politics',
-        trader: '0x3E12...B741',
+        trader: 'Amina Bello',
         isYes: true,
         isBuy: true,
-        ethAmount: 0.065,
+        ethAmount: 0.062,
         sharesAmount: 620,
-        yesSentimentAfter: 63.8,
-        sentimentDeltaPct: 1.8,
+        yesSentimentAfter: 61.9,
+        sentimentDeltaPct: 2.1,
         eventType: 'STANDARD_TRADE',
         timestamp: Date.now() - 1000 * 60 * 180,
         isOnChain: false,
       },
       {
         id: 'act-init-6',
-        marketId: 8,
-        marketQuestion: 'Will Robinhood launch native 24/7 tokenized US equities trading directly on Robinhood Chain in 2026?',
-        category: 'Robinhood',
-        trader: '0x71C9...89A4',
+        marketId: 6,
+        marketQuestion: 'Will Moniepoint or OPay execute an IPO listing on the Nigerian Exchange (NGX) before 2027?',
+        category: 'Tech',
+        trader: 'Kelechi Okafor',
         isYes: true,
         isBuy: true,
-        ethAmount: 0.076,
+        ethAmount: 0.058,
         sharesAmount: 710,
-        yesSentimentAfter: 71.8,
+        yesSentimentAfter: 57.8,
         sentimentDeltaPct: 2.5,
         eventType: 'STANDARD_TRADE',
         timestamp: Date.now() - 1000 * 60 * 240,
@@ -1392,10 +1392,10 @@ export function App() {
   const filteredMarkets = useMemo(() => {
     const list = markets.filter((m) => {
       if (selectedCategory !== 'All') {
-        if (selectedCategory === 'AI') {
-          if (m.category !== 'AI' && m.category !== 'AI & Tech') return false;
-        } else if (selectedCategory === 'DeFi') {
-          if (m.category !== 'DeFi' && m.category !== 'Markets') return false;
+        if (selectedCategory === 'Economy') {
+          if (m.category !== 'Economy' && m.category !== 'Markets') return false;
+        } else if (selectedCategory === 'Tech') {
+          if (m.category !== 'Tech' && m.category !== 'AI') return false;
         } else if (m.category !== selectedCategory) {
           return false;
         }
@@ -1458,14 +1458,13 @@ export function App() {
 
   const CATEGORIES_LIST: { id: MarketCategory; label: string; symbol: string }[] = [
     { id: 'All', label: 'All', symbol: '⊞' },
-    { id: 'AI', label: 'AI', symbol: '✦' },
-    { id: 'Crypto', label: 'Crypto', symbol: '◎' },
-    { id: 'Culture', label: 'Culture', symbol: '⚡' },
-    { id: 'DeFi', label: 'DeFi', symbol: '❖' },
-    { id: 'Other', label: 'Other', symbol: '💬' },
+    { id: 'Economy', label: 'Economy', symbol: '₦' },
     { id: 'Politics', label: 'Politics', symbol: '🏛' },
+    { id: 'Culture', label: 'Culture', symbol: '⚡' },
     { id: 'Sports', label: 'Sports', symbol: '⚽' },
-    { id: 'Robinhood', label: 'Robinhood', symbol: '🏹' },
+    { id: 'Tech', label: 'Tech', symbol: '✦' },
+    { id: 'Markets', label: 'Markets', symbol: '❖' },
+    { id: 'Other', label: 'Other', symbol: '💬' },
   ];
 
   return (
@@ -1481,7 +1480,7 @@ export function App() {
         isLiveOnChainMode={isLiveOnChainMode}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        onConnectWallet={() => promptConnectWallet('Connecting Robinhood Chain Wallet')}
+        onConnectWallet={() => promptConnectWallet('Connecting OpinionNG Account')}
         onDisconnectWallet={handleDisconnectWallet}
         onSwitchNetwork={handleSwitchNetwork}
         onOpenCreateModal={() => setIsCreateModalOpen(true)}
@@ -1528,7 +1527,7 @@ export function App() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search markets..."
+                  placeholder="Search Nigerian markets..."
                   className="w-full rounded-full border border-[#232330] bg-[#14141c] pl-9 pr-8 py-2 text-xs text-white placeholder-[#7a7a8c] focus:border-[#227c9d] focus:outline-none transition"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 font-mono text-[10px] text-[#555566] bg-[#1e1e2b] px-1.5 py-0.5 rounded">
@@ -1540,7 +1539,7 @@ export function App() {
             {/* IF "ALL" CATEGORY IS SELECTED: Render Hero Banner + Featured Markets + Subcategory Showcase */}
             {selectedCategory === 'All' ? (
               <>
-                {/* Tired.Fun Hero Banner with pov.co Styling & Spacing */}
+                {/* Hero Banner with pov.co Styling & Spacing */}
                 <div className="relative overflow-hidden rounded-[24px] sm:rounded-[28px] border border-[#232330] bg-gradient-to-r from-[#101a22] via-[#14141c] to-[#0f0f15] p-4 sm:p-8">
                   <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#227c9d]/15 blur-3xl" />
                   <div className="pointer-events-none absolute -bottom-24 left-1/3 h-56 w-56 rounded-full bg-[#FF6B00]/10 blur-3xl" />
@@ -1549,22 +1548,21 @@ export function App() {
                     <div className="lg:col-span-7">
                       <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-[#227c9d]/30 bg-[#227c9d]/10 px-3 py-1 text-[11px] sm:text-xs font-bold text-[#53b3d4]">
                         <Sparkles className="h-3.5 w-3.5 text-[#227c9d]" />
-                        <span>HYBRID OPINION & PREDICTION MARKETS • ROBINHOOD CHAIN (46630)</span>
+                        <span>HYBRID OPINION & PREDICTION MARKETS • NIGERIAN NAIRA (NGN)</span>
                       </div>
 
                       <h1 className="font-fun text-2xl sm:text-4xl font-black tracking-tight text-white">
-                        Trade Public Conviction.{' '}
+                        Trade Nigerian Conviction.{' '}
                         <span className="text-white">
-                          No Oracles. No Expiry.
+                          No Limits. Instant Payouts.
                         </span>
                       </h1>
 
                       <p className="mt-2 max-w-xl text-xs sm:text-sm leading-relaxed text-[#8c8c9e]">
-                        Tired.Fun brings perpetual opinion & prediction market dynamics to{' '}
-                        <span className="text-white font-semibold">Robinhood Chain Testnet</span>. Every
-                        YES and NO token trades on its own independent bonding curve with instant
-                        liquidity, and creators earn{' '}
-                        <span className="text-[#FF6B00] font-bold">1% volume fees</span> forever.
+                        OpinionNG brings continuous sentiment & prediction market dynamics to Nigerian retail. Every
+                        YES and NO share trades on an AMM bonding curve with instant
+                        liquidity in ₦, and creators earn{' '}
+                        <span className="text-[#FF6B00] font-bold">1.5% fee share</span> on every trade.
                       </p>
 
                       {/* Spawn Bar */}
@@ -1593,21 +1591,19 @@ export function App() {
                           Cumulative Volume
                         </span>
                         <div className="mt-1 font-mono text-lg sm:text-xl font-black text-white">
-                          {globalStats.totalVolume.toFixed(1)}{' '}
-                          <span className="text-xs text-[#53b3d4]">ETH</span>
+                          {formatNGN(Math.round(globalStats.totalVolume * 4_200_000 * 100))}
                         </div>
                         <span className="mt-0.5 inline-block font-mono text-[9px] sm:text-[10px] text-[#227c9d]">
-                          Chain ID 46630
+                          Atomic NGN Engine
                         </span>
                       </div>
 
                       <div className="rounded-[18px] sm:rounded-[20px] border border-[#232330] bg-[#101a22]/80 p-3 sm:p-4">
                         <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#7a7a8c]">
-                          Real ETH Locked (TVL)
+                          Total Reserves (NGN)
                         </span>
                         <div className="mt-1 font-mono text-lg sm:text-xl font-black text-white">
-                          {globalStats.totalTvl.toFixed(2)}{' '}
-                          <span className="text-xs text-[#53b3d4]">ETH</span>
+                          {formatNGN(Math.round(globalStats.totalTvl * 4_200_000 * 100))}
                         </div>
                         <span className="mt-0.5 inline-block font-mono text-[9px] sm:text-[10px] text-[#7a7a8c]">
                           100% Instant Exit
@@ -1619,11 +1615,10 @@ export function App() {
                           Creator Fees Accrued
                         </span>
                         <div className="mt-1 font-mono text-lg sm:text-xl font-black text-[#FF6B00]">
-                          {globalStats.totalCreatorFees.toFixed(3)}{' '}
-                          <span className="text-xs">ETH</span>
+                          {formatNGN(Math.round(globalStats.totalCreatorFees * 4_200_000 * 100))}
                         </div>
                         <span className="mt-0.5 inline-block font-mono text-[9px] sm:text-[10px] text-[#7a7a8c]">
-                          1.00% Share
+                          1.50% Fee Share
                         </span>
                       </div>
 
@@ -1727,31 +1722,31 @@ export function App() {
                   </div>
                 </div>
 
-                {/* Sub-Category Showcase: Crypto > */}
+                {/* Sub-Category Showcase: Economy > */}
                 <div className="pt-6 border-t border-[#1e1e28]">
                   <div className="mb-4 flex items-center justify-between">
                     <button
-                      onClick={() => setSelectedCategory('Crypto')}
+                      onClick={() => setSelectedCategory('Economy')}
                       className="group flex items-center gap-2 font-fun text-xl font-bold text-white hover:text-[#53b3d4] transition"
                     >
-                      <span>Crypto</span>
+                      <span>Economy & Markets</span>
                       <span className="text-[#8c8c9e] text-lg font-mono transition group-hover:translate-x-0.5">›</span>
                     </button>
                     <button
-                      onClick={() => setSelectedCategory('Crypto')}
+                      onClick={() => setSelectedCategory('Economy')}
                       className="text-xs font-bold text-[#53b3d4] hover:underline"
                     >
-                      View all {markets.filter((m) => m.category === 'Crypto').length}
+                      View all {markets.filter((m) => m.category === 'Economy' || m.category === 'Markets').length}
                     </button>
                   </div>
 
                   <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                     {markets
-                      .filter((m) => m.category === 'Crypto')
+                      .filter((m) => m.category === 'Economy' || m.category === 'Markets')
                       .slice(0, 3)
                       .map((market) => (
                         <MarketCard
-                          key={`sub-crypto-${market.id}`}
+                          key={`sub-economy-${market.id}`}
                           market={market}
                           variant="vertical"
                           userYesShares={holdings[market.id]?.yesShares || 0}
@@ -1768,31 +1763,31 @@ export function App() {
                   </div>
                 </div>
 
-                {/* Sub-Category Showcase: AI > */}
+                {/* Sub-Category Showcase: Culture > */}
                 <div className="pt-6 border-t border-[#1e1e28]">
                   <div className="mb-4 flex items-center justify-between">
                     <button
-                      onClick={() => setSelectedCategory('AI')}
+                      onClick={() => setSelectedCategory('Culture')}
                       className="group flex items-center gap-2 font-fun text-xl font-bold text-white hover:text-[#53b3d4] transition"
                     >
-                      <span>AI</span>
+                      <span>Culture & Entertainment</span>
                       <span className="text-[#8c8c9e] text-lg font-mono transition group-hover:translate-x-0.5">›</span>
                     </button>
                     <button
-                      onClick={() => setSelectedCategory('AI')}
+                      onClick={() => setSelectedCategory('Culture')}
                       className="text-xs font-bold text-[#53b3d4] hover:underline"
                     >
-                      View all {markets.filter((m) => m.category === 'AI' || m.category === 'AI & Tech').length}
+                      View all {markets.filter((m) => m.category === 'Culture').length}
                     </button>
                   </div>
 
                   <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                     {markets
-                      .filter((m) => m.category === 'AI' || m.category === 'AI & Tech')
+                      .filter((m) => m.category === 'Culture')
                       .slice(0, 3)
                       .map((market) => (
                         <MarketCard
-                          key={`sub-ai-${market.id}`}
+                          key={`sub-culture-${market.id}`}
                           market={market}
                           variant="vertical"
                           userYesShares={holdings[market.id]?.yesShares || 0}

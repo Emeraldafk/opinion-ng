@@ -28,6 +28,7 @@ import {
   MarketStatus,
 } from '../lib/bondingCurve';
 import { shortenAddress, ROBINHOOD_EXPLORER_URL } from '../config/robinhoodChain';
+import { formatNGN } from '../lib/currency';
 
 interface AdminResolutionDashboardProps {
   markets: OpinionMarket[];
@@ -199,7 +200,7 @@ export const AdminResolutionDashboard: React.FC<AdminResolutionDashboardProps> =
                 <span>Phase 4 • Prediction Adjudication</span>
               </span>
               <span className="rounded-full bg-[#20202c] px-3 py-1 font-mono text-[11px] sm:text-xs text-slate-300">
-                Robinhood Chain • 46630
+                OpinionNG NGN Adjudication Engine
               </span>
             </div>
             <h1 className="font-fun text-xl sm:text-3xl font-black text-white">
@@ -415,7 +416,7 @@ export const AdminResolutionDashboard: React.FC<AdminResolutionDashboardProps> =
                       </td>
 
                       <td className="px-4 py-4 whitespace-nowrap font-mono text-xs">
-                        <span className="font-bold text-white">{poolEth.toFixed(4)} ETH</span>
+                        <span className="font-bold text-white">{formatNGN(Math.round(poolEth * 4_200_000 * 100))}</span>
                         <span className="block text-[10px] text-[#8c8c9e]">
                           {m.totalTrades} trades
                         </span>
@@ -634,7 +635,7 @@ export const AdminResolutionDashboard: React.FC<AdminResolutionDashboardProps> =
                     className="w-full rounded-xl border border-[#232330] bg-[#0c0c11] px-3.5 py-2.5 text-xs text-white focus:border-red-500 focus:outline-none"
                   />
                   <p className="mt-1 text-[10px] text-amber-300">
-                    Voiding enables 100% proportional refunds of locked ETH reserves to all shareholders.
+                    Voiding enables 100% proportional refunds of locked NGN reserves to all shareholders.
                   </p>
                 </div>
               )}
@@ -656,7 +657,7 @@ export const AdminResolutionDashboard: React.FC<AdminResolutionDashboardProps> =
                     : 'bg-[#FF6B00] hover:bg-[#EA580C] text-black shadow-md shadow-[#FF6B00]/25'
                 }`}
               >
-                {isSubmitting ? 'Confirming on Robinhood Chain...' : 'Confirm Action'}
+                {isSubmitting ? 'Confirming Resolution...' : 'Confirm Action'}
               </button>
             </form>
           </div>

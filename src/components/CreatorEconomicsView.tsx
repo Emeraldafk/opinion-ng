@@ -256,7 +256,7 @@ export const CreatorEconomicsView: React.FC<CreatorEconomicsViewProps> = ({
             Connect Wallet to View Portfolio & Creator Earnings
           </h2>
           <p className="mt-2 max-w-md text-xs sm:text-sm text-[#8c8c9e]">
-            Your personal holdings, 1% volume fee earnings, and custom creator profile are bound to your Robinhood Chain address. Connect your wallet to manage your identity and claim rewards.
+            Your personal holdings, 1.5% creator fee earnings, and custom creator profile are bound to your OpinionNG account. Sign in to manage your identity and claim rewards.
           </p>
           <button
             type="button"
@@ -264,7 +264,7 @@ export const CreatorEconomicsView: React.FC<CreatorEconomicsViewProps> = ({
             className="mt-6 flex items-center gap-2 rounded-full bg-[#FF6B00] px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-[#FF6B00]/25 transition hover:bg-[#EA580C] active:scale-95 cursor-pointer"
           >
             <Wallet className="h-4 w-4" />
-            <span>Connect Robinhood Wallet</span>
+            <span>Sign In / Connect Wallet</span>
           </button>
         </div>
       </div>
@@ -499,7 +499,7 @@ export const CreatorEconomicsView: React.FC<CreatorEconomicsViewProps> = ({
                 </div>
 
                 <span className="text-[10px] sm:text-[11px] font-bold text-[#227c9d]">
-                  Robinhood Chain (46630)
+                  OpinionNG Account
                 </span>
               </div>
             </div>
@@ -522,7 +522,7 @@ export const CreatorEconomicsView: React.FC<CreatorEconomicsViewProps> = ({
           <div className="mt-4 flex items-center gap-2 rounded-xl bg-emerald-950/60 border border-emerald-500/40 px-4 py-2.5 text-xs font-bold text-emerald-300">
             <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
             <span>
-              Profile and PFP successfully bound to your Robinhood Chain address! This identity will be displayed across all Feeds, Comments, and Markets.
+              Profile and PFP successfully updated! This identity will be displayed across all Feeds, Comments, and Markets.
             </span>
           </div>
         )}
@@ -768,10 +768,10 @@ export const CreatorEconomicsView: React.FC<CreatorEconomicsViewProps> = ({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-sm text-white">Robinhood Chain Smart Contract</span>
+                <span className="font-bold text-sm text-white">OpinionNG NGN Engine</span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 text-[10px] font-bold text-emerald-400">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  LIVE ON-CHAIN (46630)
+                  ATOMIC NGN LEDGER
                 </span>
               </div>
               <div className="mt-1 flex items-center gap-2 font-mono text-xs text-[#53b3d4]">
@@ -814,7 +814,7 @@ export const CreatorEconomicsView: React.FC<CreatorEconomicsViewProps> = ({
         </div>
 
         <p className="mt-3.5 text-xs text-slate-300 leading-relaxed border-t border-[#1e2f38] pt-3">
-          ✓ <strong>Live Continuous Bonding Curves Active</strong>: Every purchase of YES or NO, selling of shares, and spawning of opinions broadcasts directly to the <strong>Robinhood Chain Testnet</strong> with real on-chain transaction receipts and 1% creator fee routing.
+          ✓ <strong>Live Continuous AMM Curves Active</strong>: Every purchase of YES or NO, selling of shares, and creation of markets executes atomically via the <strong>OpinionNG Double-Entry Ledger</strong> with 1.5% creator fee routing directly into your available balance.
         </p>
       </div>
 
