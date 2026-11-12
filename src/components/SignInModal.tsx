@@ -8,8 +8,13 @@ import {
   ShieldCheck,
   CheckCircle2,
   Lock,
+  User,
+  KeyRound,
+  AlertCircle,
+  Loader2,
 } from 'lucide-react';
 import { useAppAuth } from '../hooks/useAppAuth';
+import { PRESET_ACCOUNTS } from '../context/AuthContext';
 
 interface SignInModalProps {
   isOpen: boolean;
@@ -17,6 +22,7 @@ interface SignInModalProps {
   pendingActionTitle?: string;
 }
 
+type AuthMode = 'signin' | 'signup';
 type AuthTab = 'email' | 'phone' | 'x';
 
 export const SignInModal: React.FC<SignInModalProps> = ({
@@ -24,13 +30,23 @@ export const SignInModal: React.FC<SignInModalProps> = ({
   onClose,
   pendingActionTitle = 'Trade & Predict Opinions',
 }) => {
-  const { loginWithEmail, loginWithPhone, loginWithX, loginDemoUser } = useAppAuth();
+  const { loginWithEmail, loginWithPhone, loginWithX, signUp, switchUserAccount, loginDemoUser } = useAppAuth();
+  const [mode, setMode] = useState<AuthMode>('signin');
   const [tab, setTab] = useState<AuthTab>('email');
+
+  // Sign in fields
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [xHandle, setXHandle] = useState('');
   const [otpSent, setOtpSent] = useState(false);
+
+  // Sign up fields
+  const [signUpFullName, setSignUpFullName] = useState('');
+  const [signUpContact, setSignUpContact] = useState('');
+  const [signUpPin, setSignUpPin] = useState('');
+  const [signUpXHandle, setSignUpXHandle] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -73,11 +89,41 @@ export const SignInModal: React.FC<SignInModalProps> = ({
     setIsLoading(true);
     setError(null);
     try {
-      const handle = xHandle.trim() || 'opinion_ng';
+      const handle = xHandle.trim() || 'opinion_trader';
       await loginWithX(handle);
       onClose();
     } catch (err: any) {
       setError(err?.message || 'X authentication failed.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignUpSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    if (!signUpFullName.trim()) {
+      setError('Please enter your full legal name.');
+      return;
+    }
+
+    if (!signUpContact.trim()) {
+      setError('Please enter your email or Nigerian phone number.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await signUp({
+        fullName: signUpFullName,
+        emailOrPhone: signUpContact,
+        password: signUpPin,
+        xHandle: signUpXHandle,
+      });
+      onClose();
+    } catch (err: any) {
+      setError(err?.message || 'Sign up failed.');
     } finally {
       setIsLoading(false);
     }
@@ -97,7 +143,9 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                 <Sparkles className="w-5 h-5 text-[#53b3d4]" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white tracking-tight">Sign In to OpinionNG</h3>
+                <h3 className="text-lg font-bold text-white tracking-tight">
+                  {mode === 'signup' ? 'Create Account' : 'Welcome to OpinionNG'}
+                </h3>
                 <p className="text-xs text-zinc-400">Nigeria's NGN Opinion & Prediction Market</p>
               </div>
             </div>
@@ -113,47 +161,33 @@ export const SignInModal: React.FC<SignInModalProps> = ({
         {/* Action Prompt */}
         <div className="mx-6 mt-4 p-3 rounded-xl bg-[#227c9d]/10 border border-[#227c9d]/30 flex items-center gap-2.5 text-xs text-[#53b3d4]">
           <ShieldCheck className="w-4 h-4 text-[#53b3d4] shrink-0" />
-          <span>Sign in required for <strong>{pendingActionTitle}</strong> with your NGN balance.</span>
+          <span>Account required for <strong>{pendingActionTitle}</strong> with live Naira settlements.</span>
         </div>
 
-        {/* Tab Selection */}
-        <div className="px-6 pt-4">
-          <div className="grid grid-cols-3 gap-1 p-1 bg-[#181824] rounded-2xl border border-[#232334]">
+        {/* Mode Switcher: Sign In vs Sign Up */}
+        <div className="px-6 pt-3">
+          <div className="grid grid-cols-2 gap-1 p-1 bg-[#181824] rounded-2xl border border-[#232334]">
             <button
               type="button"
-              onClick={() => { setTab('email'); setOtpSent(false); setError(null); }}
-              className={`flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all ${
-                tab === 'email'
+              onClick={() => { setMode('signin'); setError(null); }}
+              className={`py-2 rounded-xl text-xs font-bold transition-all ${
+                mode === 'signin'
                   ? 'bg-[#227c9d] text-white shadow-md'
-                  : 'text-zinc-400 hover:text-zinc-200'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
-              <Mail className="w-3.5 h-3.5" />
-              Email OTP
+              Sign In
             </button>
             <button
               type="button"
-              onClick={() => { setTab('phone'); setOtpSent(false); setError(null); }}
-              className={`flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all ${
-                tab === 'phone'
+              onClick={() => { setMode('signup'); setError(null); }}
+              className={`py-2 rounded-xl text-xs font-bold transition-all ${
+                mode === 'signup'
                   ? 'bg-[#227c9d] text-white shadow-md'
-                  : 'text-zinc-400 hover:text-zinc-200'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
-              <Phone className="w-3.5 h-3.5" />
-              Phone OTP
-            </button>
-            <button
-              type="button"
-              onClick={() => { setTab('x'); setOtpSent(false); setError(null); }}
-              className={`flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all ${
-                tab === 'x'
-                  ? 'bg-[#227c9d] text-white shadow-md'
-                  : 'text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              <span className="font-bold">𝕏</span>
-              Twitter
+              Create Account
             </button>
           </div>
         </div>
@@ -161,174 +195,321 @@ export const SignInModal: React.FC<SignInModalProps> = ({
         {/* Form Body */}
         <div className="p-6 pt-4">
           {error && (
-            <div className="mb-4 p-3 rounded-xl bg-red-950/40 border border-red-800/50 text-xs text-red-300">
-              {error}
+            <div className="mb-4 flex items-center gap-2 rounded-xl bg-red-500/10 border border-red-500/30 p-3 text-xs text-red-300">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+              <span>{error}</span>
             </div>
           )}
 
-          {tab === 'email' && (
-            !otpSent ? (
-              <form onSubmit={handleSendOtp} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">Email Address</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="e.g. tunde@gmail.com"
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
-                >
-                  Send One-Time Code
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </form>
-            ) : (
-              <form onSubmit={handleVerifyOtp} className="space-y-4">
-                <div>
-                  <div className="flex justify-between items-center mb-1.5">
-                    <label className="text-xs font-medium text-zinc-300">Enter 6-Digit Code</label>
-                    <button
-                      type="button"
-                      onClick={() => setOtpSent(false)}
-                      className="text-xs text-[#53b3d4] hover:underline"
-                    >
-                      Change email
-                    </button>
-                  </div>
+          {/* SIGN UP FLOW */}
+          {mode === 'signup' ? (
+            <form onSubmit={handleSignUpSubmit} className="space-y-3.5">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1">
+                  Full Legal Name
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                   <input
                     type="text"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    placeholder="123456"
-                    maxLength={6}
+                    value={signUpFullName}
+                    onChange={(e) => setSignUpFullName(e.target.value)}
+                    placeholder="e.g. Babatunde Afolabi"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-center tracking-widest text-lg font-mono focus:outline-none focus:border-[#227c9d] placeholder-zinc-600"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
                   />
-                  <p className="text-[11px] text-zinc-500 mt-1">Code sent to {email} (use 123456 for demo)</p>
                 </div>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] disabled:opacity-50 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
-                >
-                  {isLoading ? 'Verifying...' : 'Verify & Sign In'}
-                </button>
-              </form>
-            )
-          )}
+              </div>
 
-          {tab === 'phone' && (
-            !otpSent ? (
-              <form onSubmit={handleSendOtp} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1">
+                  Email or Nigerian Phone (+234)
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                  <input
+                    type="text"
+                    value={signUpContact}
+                    onChange={(e) => setSignUpContact(e.target.value)}
+                    placeholder="e.g. tunde@gmail.com or 08012345678"
+                    required
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">Nigerian Mobile Number</label>
-                  <div className="flex gap-2">
-                    <span className="px-3.5 py-3 rounded-xl bg-[#181824] border border-[#272738] text-zinc-400 text-sm font-mono flex items-center">
-                      🇳🇬 +234
-                    </span>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1">
+                    4-Digit PIN / Pass
+                  </label>
+                  <div className="relative">
+                    <KeyRound className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                     <input
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="801 234 5678"
-                      required
-                      className="flex-1 px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
+                      type="password"
+                      maxLength={6}
+                      value={signUpPin}
+                      onChange={(e) => setSignUpPin(e.target.value)}
+                      placeholder="••••"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
                     />
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
-                >
-                  Send SMS Code (Termii)
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </form>
-            ) : (
-              <form onSubmit={handleVerifyOtp} className="space-y-4">
-                <div>
-                  <div className="flex justify-between items-center mb-1.5">
-                    <label className="text-xs font-medium text-zinc-300">Enter SMS Code</label>
-                    <button
-                      type="button"
-                      onClick={() => setOtpSent(false)}
-                      className="text-xs text-[#53b3d4] hover:underline"
-                    >
-                      Change number
-                    </button>
-                  </div>
-                  <input
-                    type="text"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    placeholder="123456"
-                    maxLength={6}
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-center tracking-widest text-lg font-mono focus:outline-none focus:border-[#227c9d] placeholder-zinc-600"
-                  />
-                  <p className="text-[11px] text-zinc-500 mt-1">SMS sent to +234 {phone} (use 123456 for demo)</p>
-                </div>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] disabled:opacity-50 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
-                >
-                  {isLoading ? 'Verifying...' : 'Verify & Sign In'}
-                </button>
-              </form>
-            )
-          )}
 
-          {tab === 'x' && (
-            <form onSubmit={handleXLogin} className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5">Twitter / X Handle</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-3 text-zinc-500 text-sm">@</span>
-                  <input
-                    type="text"
-                    value={xHandle}
-                    onChange={(e) => setXHandle(e.target.value)}
-                    placeholder="yourhandle"
-                    required
-                    className="w-full pl-8 pr-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
-                  />
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1">
+                    X / Twitter (Optional)
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 font-bold text-xs">𝕏</span>
+                    <input
+                      type="text"
+                      value={signUpXHandle}
+                      onChange={(e) => setSignUpXHandle(e.target.value)}
+                      placeholder="@handle"
+                      className="w-full pl-8 pr-4 py-2.5 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
+                    />
+                  </div>
                 </div>
-                <p className="text-[11px] text-zinc-500 mt-1.5">
-                  Links your X account to automatically credit 1.5% creator fees for your viral market topics.
-                </p>
               </div>
+
+              <div className="rounded-xl bg-[#161622] border border-[#232332] p-2.5 text-[11px] text-zinc-400">
+                ⚡ Automatically generates your dedicated <strong>Wema Bank Virtual NUBAN</strong> for instant 24/7 bank funding.
+              </div>
+
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3.5 rounded-xl bg-black hover:bg-zinc-900 border border-zinc-700 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl bg-[#FF6B00] hover:bg-[#EA580C] disabled:opacity-50 text-black font-extrabold text-sm transition shadow-lg shadow-[#FF6B00]/25 flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span className="font-bold text-base">𝕏</span>
-                {isLoading ? 'Connecting...' : 'Authorize with 𝕏'}
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Creating Account...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Register & Open NGN Wallet</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </button>
             </form>
+          ) : (
+            /* SIGN IN FLOW */
+            <>
+              {/* Method Subtabs */}
+              <div className="grid grid-cols-3 gap-1 p-1 bg-[#181824] rounded-2xl border border-[#232334] mb-4">
+                <button
+                  type="button"
+                  onClick={() => { setTab('email'); setOtpSent(false); setError(null); }}
+                  className={`flex items-center justify-center gap-1.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                    tab === 'email' ? 'bg-[#227c9d] text-white shadow-md' : 'text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  Email
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setTab('phone'); setOtpSent(false); setError(null); }}
+                  className={`flex items-center justify-center gap-1.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                    tab === 'phone' ? 'bg-[#227c9d] text-white shadow-md' : 'text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  Phone
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setTab('x'); setOtpSent(false); setError(null); }}
+                  className={`flex items-center justify-center gap-1.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                    tab === 'x' ? 'bg-[#227c9d] text-white shadow-md' : 'text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  <span className="font-bold">𝕏</span>
+                  Twitter
+                </button>
+              </div>
+
+              {tab === 'email' && (
+                !otpSent ? (
+                  <form onSubmit={handleSendOtp} className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-medium text-zinc-300 mb-1.5">Email Address</label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="e.g. trader@opinion.ng"
+                        required
+                        className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] disabled:opacity-50 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Continue with Email</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </form>
+                ) : (
+                  <form onSubmit={handleVerifyOtp} className="space-y-4">
+                    <div>
+                      <div className="flex justify-between items-center mb-1.5">
+                        <label className="text-xs font-medium text-zinc-300">Enter OTP</label>
+                        <button
+                          type="button"
+                          onClick={() => setOtpSent(false)}
+                          className="text-xs text-[#53b3d4] hover:underline"
+                        >
+                          Change Email
+                        </button>
+                      </div>
+                      <input
+                        type="text"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        placeholder="123456"
+                        maxLength={6}
+                        required
+                        className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-center tracking-widest text-lg font-mono focus:outline-none focus:border-[#227c9d] placeholder-zinc-600"
+                      />
+                      <p className="text-[11px] text-zinc-500 mt-1">Check {email} (or use 123456 for instant login)</p>
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] disabled:opacity-50 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      {isLoading ? 'Verifying...' : 'Verify & Log In'}
+                    </button>
+                  </form>
+                )
+              )}
+
+              {tab === 'phone' && (
+                !otpSent ? (
+                  <form onSubmit={handleSendOtp} className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-medium text-zinc-300 mb-1.5">Nigerian Mobile Number</label>
+                      <div className="relative">
+                        <span className="absolute left-4 top-3 text-zinc-400 text-sm font-mono">+234</span>
+                        <input
+                          type="tel"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          placeholder="801 234 5678"
+                          required
+                          className="w-full pl-16 pr-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm font-mono focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
+                        />
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] disabled:opacity-50 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Send Verification Code</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </form>
+                ) : (
+                  <form onSubmit={handleVerifyOtp} className="space-y-4">
+                    <div>
+                      <div className="flex justify-between items-center mb-1.5">
+                        <label className="text-xs font-medium text-zinc-300">Enter SMS Code</label>
+                        <button
+                          type="button"
+                          onClick={() => setOtpSent(false)}
+                          className="text-xs text-[#53b3d4] hover:underline"
+                        >
+                          Change Number
+                        </button>
+                      </div>
+                      <input
+                        type="text"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        placeholder="123456"
+                        maxLength={6}
+                        required
+                        className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-center tracking-widest text-lg font-mono focus:outline-none focus:border-[#227c9d] placeholder-zinc-600"
+                      />
+                      <p className="text-[11px] text-zinc-500 mt-1">SMS sent to +234 {phone} (use 123456 for instant login)</p>
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] disabled:opacity-50 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      {isLoading ? 'Verifying...' : 'Verify & Log In'}
+                    </button>
+                  </form>
+                )
+              )}
+
+              {tab === 'x' && (
+                <form onSubmit={handleXLogin} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-medium text-zinc-300 mb-1.5">Twitter / X Handle</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-3 text-zinc-500 text-sm">@</span>
+                      <input
+                        type="text"
+                        value={xHandle}
+                        onChange={(e) => setXHandle(e.target.value)}
+                        placeholder="opinion_trader"
+                        required
+                        className="w-full pl-8 pr-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
+                      />
+                    </div>
+                    <p className="text-[11px] text-zinc-500 mt-1.5">
+                      Links your X account to automatically credit 1.5% creator fees for your viral market topics.
+                    </p>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full py-3.5 rounded-xl bg-black hover:bg-zinc-900 border border-zinc-700 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <span className="font-bold text-base">𝕏</span>
+                    {isLoading ? 'Connecting...' : 'Authorize with 𝕏'}
+                  </button>
+                </form>
+              )}
+            </>
           )}
 
-          {/* Quick Demo Login Option */}
-          <div className="mt-5 pt-4 border-t border-[#1e1e2d] text-center">
-            <button
-              type="button"
-              onClick={loginDemoUser}
-              className="w-full py-2.5 rounded-xl bg-[#1a1a28] hover:bg-[#232338] border border-[#2c2c42] text-xs font-medium text-zinc-300 hover:text-white transition flex items-center justify-center gap-2"
-            >
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              Quick Demo Access (Preloaded with ₦10,000 NGN)
-            </button>
+          {/* Quick Verified Profiles Switcher */}
+          <div className="mt-5 pt-4 border-t border-[#1e1e2d]">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2 text-center">
+              Or Switch to a Demo Account
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              {PRESET_ACCOUNTS.map((acc) => (
+                <button
+                  key={acc.id}
+                  type="button"
+                  onClick={() => {
+                    switchUserAccount(acc.id);
+                    onClose();
+                  }}
+                  className="p-2.5 rounded-xl bg-[#181824] hover:bg-[#202030] border border-[#262638] text-left transition flex items-center gap-2 cursor-pointer"
+                >
+                  <img src={acc.avatarUrl} alt={acc.displayName} className="w-7 h-7 rounded-full object-cover shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-bold text-white truncate">{acc.displayName}</p>
+                    <p className="text-[10px] text-zinc-400 truncate">@{acc.xHandle}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 };
-

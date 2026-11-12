@@ -173,7 +173,7 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
     if (!walletAddress) {
       setVoteFeedbackMap((prev) => ({
         ...prev,
-        [marketId]: '⚠️ Connect wallet to vote on-chain',
+        [marketId]: '⚠️ Sign in to vote & trade',
       }));
       if (onRequireWallet) {
         onRequireWallet(`Voting ${isYes ? 'YES' : 'NO'} on Opinion`);
@@ -349,15 +349,15 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
                 </div>
                 <div>
                   <div className="text-sm font-black text-white">Join the Public Conviction Feed</div>
-                  <div className="text-xs text-[#8c8c9e]">Connect your wallet to challenge consensus, publish opinions, and earn creator royalties.</div>
+                  <div className="text-xs text-[#8c8c9e]">Sign in to challenge consensus, publish opinions, and earn creator royalties in ₦.</div>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => onRequireWallet?.('Publish your conviction')}
-                className="w-full sm:w-auto shrink-0 rounded-full bg-gradient-to-r from-[#FF6B00] to-orange-500 px-5 py-2.5 text-xs font-black text-white hover:opacity-95 transition shadow-lg shadow-orange-500/20 active:scale-95"
+                className="w-full sm:w-auto shrink-0 rounded-full bg-gradient-to-r from-[#FF6B00] to-orange-500 px-5 py-2.5 text-xs font-black text-white hover:opacity-95 transition shadow-lg shadow-orange-500/20 active:scale-95 cursor-pointer"
               >
-                Connect Wallet
+                Sign In / Register
               </button>
             </div>
           ) : (
@@ -768,13 +768,13 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
                       {/* Write a comment */}
                       {!walletAddress || !userProfile ? (
                         <div className="flex items-center justify-between rounded-xl border border-[#262638] bg-[#0d0d13] p-3 text-xs">
-                          <span className="text-[#8c8c9e]">Connect wallet to reply to this conviction post.</span>
+                          <span className="text-[#8c8c9e]">Sign in to reply to this conviction post.</span>
                           <button
                             type="button"
                             onClick={() => onRequireWallet?.('Reply to conviction post')}
-                            className="rounded-full bg-[#227c9d] px-3.5 py-1.5 text-xs font-bold text-white hover:bg-[#1a647f] transition shadow"
+                            className="rounded-full bg-[#227c9d] px-3.5 py-1.5 text-xs font-bold text-white hover:bg-[#1a647f] transition shadow cursor-pointer"
                           >
-                            Connect Wallet
+                            Sign In
                           </button>
                         </div>
                       ) : (

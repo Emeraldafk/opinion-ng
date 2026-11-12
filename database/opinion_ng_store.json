@@ -35,30 +35,54 @@
     "wlt_opinion_platform_treasury": {
       "id": "wlt_opinion_platform_treasury",
       "userId": "usr_opinion_platform_treasury",
-      "availableKobo": 1500,
+      "availableKobo": 6000,
       "lockedKobo": 0,
       "creatorEarningsKobo": 0,
-      "updatedAt": "2026-11-12T18:12:13.184Z"
+      "updatedAt": "2026-11-12T18:28:26.772Z"
     },
     "wlt_demo_893240": {
       "id": "wlt_demo_893240",
       "userId": "usr_demo_893240",
-      "availableKobo": 900000,
+      "availableKobo": 1100000,
       "lockedKobo": 0,
       "creatorEarningsKobo": 25000,
       "virtualAccountNumber": "9920194821",
       "virtualAccountBank": "Wema Bank (OpinionNG)",
-      "updatedAt": "2026-11-12T18:12:13.184Z"
+      "updatedAt": "2026-11-12T18:28:26.772Z"
     },
     "wlt_creator_burna": {
       "id": "wlt_creator_burna",
       "userId": "usr_creator_burna",
       "availableKobo": 5000000,
       "lockedKobo": 0,
-      "creatorEarningsKobo": 1251500,
+      "creatorEarningsKobo": 1256000,
       "virtualAccountNumber": "9920198834",
       "virtualAccountBank": "Wema Bank (OpinionNG)",
-      "updatedAt": "2026-11-12T18:12:13.184Z"
+      "updatedAt": "2026-11-12T18:28:26.772Z"
+    },
+    "wlt_usr_mwdvefza": {
+      "id": "wlt_usr_mwdvefza",
+      "userId": "usr_mwdvefza",
+      "availableKobo": 0,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T18:17:27.247Z"
+    },
+    "wlt_usr_mwdvg32k": {
+      "id": "wlt_usr_mwdvg32k",
+      "userId": "usr_mwdvg32k",
+      "availableKobo": 0,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T18:18:43.834Z"
+    },
+    "wlt_user_tunde_01": {
+      "id": "wlt_user_tunde_01",
+      "userId": "user_tunde_01",
+      "availableKobo": 400000,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T18:42:17.973Z"
     }
   },
   "ledgerEntries": [
@@ -120,6 +144,205 @@
         "tradeVolumeKobo": 100000
       },
       "createdAt": "2026-11-12T18:12:13.184Z"
+    },
+    {
+      "id": "ldg_dep_paystack_1794508026296",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 500000,
+      "balanceAfterKobo": 1400000,
+      "entryType": "DEPOSIT",
+      "referenceId": "dep_paystack_1794508026296",
+      "metadata": {
+        "channel": "BANK_TRANSFER",
+        "amountNaira": 5000,
+        "status": "SUCCESS"
+      },
+      "createdAt": "2026-11-12T18:27:06.322Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794508097058_1gw2f_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 1300000,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794508097058_1gw2f",
+      "metadata": {
+        "marketId": 2,
+        "side": "YES",
+        "shares": 1324,
+        "avgPriceKobo": 7324,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T18:28:17.058Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794508097058_1gw2f_creator",
+      "walletId": "wlt_creator_burna",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 1253000,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794508097058_1gw2f",
+      "metadata": {
+        "marketId": 2,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_creator_burna"
+      },
+      "createdAt": "2026-11-12T18:28:17.058Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794508097058_1gw2f_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 3000,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794508097058_1gw2f",
+      "metadata": {
+        "marketId": 2,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T18:28:17.058Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794508101550_mhotv_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 1200000,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794508101550_mhotv",
+      "metadata": {
+        "marketId": 2,
+        "side": "YES",
+        "shares": 1284,
+        "avgPriceKobo": 7553,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T18:28:21.550Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794508101550_mhotv_creator",
+      "walletId": "wlt_creator_burna",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 1254500,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794508101550_mhotv",
+      "metadata": {
+        "marketId": 2,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_creator_burna"
+      },
+      "createdAt": "2026-11-12T18:28:21.550Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794508101550_mhotv_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 4500,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794508101550_mhotv",
+      "metadata": {
+        "marketId": 2,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T18:28:21.550Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794508106772_3qaut_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 1100000,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794508106772_3qaut",
+      "metadata": {
+        "marketId": 2,
+        "side": "YES",
+        "shares": 1253,
+        "avgPriceKobo": 7741,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T18:28:26.772Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794508106772_3qaut_creator",
+      "walletId": "wlt_creator_burna",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 1256000,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794508106772_3qaut",
+      "metadata": {
+        "marketId": 2,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_creator_burna"
+      },
+      "createdAt": "2026-11-12T18:28:26.772Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794508106772_3qaut_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 6000,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794508106772_3qaut",
+      "metadata": {
+        "marketId": 2,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T18:28:26.772Z"
+    },
+    {
+      "id": "ldg_dep_mwdw7xji_hs40",
+      "walletId": "wlt_user_tunde_01",
+      "amountKobo": 250000,
+      "balanceAfterKobo": 250000,
+      "entryType": "DEPOSIT",
+      "referenceId": "dep_mwdw7xji_hs40",
+      "metadata": {
+        "channel": "BANK_TRANSFER",
+        "amountNaira": 2500,
+        "status": "SUCCESS"
+      },
+      "createdAt": "2026-11-12T18:40:22.926Z"
+    },
+    {
+      "id": "ldg_wth_nip_mwdw7xjv_quqx",
+      "walletId": "wlt_user_tunde_01",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 150000,
+      "entryType": "WITHDRAWAL",
+      "referenceId": "wth_nip_mwdw7xjv_quqx",
+      "metadata": {
+        "destinationBank": "Guaranty Trust Bank (GTBank)",
+        "accountNumber": "0123456789",
+        "accountName": "TUNDE AFOLABI",
+        "nipFeeKobo": 2500,
+        "status": "PROCESSED"
+      },
+      "createdAt": "2026-11-12T18:40:22.939Z"
+    },
+    {
+      "id": "ldg_dep_mwdwaeb9_981y",
+      "walletId": "wlt_user_tunde_01",
+      "amountKobo": 250000,
+      "balanceAfterKobo": 400000,
+      "entryType": "DEPOSIT",
+      "referenceId": "dep_mwdwaeb9_981y",
+      "metadata": {
+        "channel": "BANK_TRANSFER",
+        "amountNaira": 2500,
+        "status": "SUCCESS"
+      },
+      "createdAt": "2026-11-12T18:42:17.973Z"
     }
   ],
   "markets": {
@@ -153,9 +376,9 @@
       "category": "Culture",
       "imageUri": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600",
       "sourceHandle": "@burnaboy",
-      "yesPoolKobo": 720000,
+      "yesPoolKobo": 1011000,
       "noPoolKobo": 280000,
-      "totalVolumeKobo": 2200000,
+      "totalVolumeKobo": 2500000,
       "creatorFeeBps": 150,
       "platformFeeBps": 150,
       "status": "ACTIVE",
@@ -167,7 +390,7 @@
       "noCondition": "None of the three headline the official closing ceremony.",
       "evidenceSource": "https://www.fifa.com/worldcup",
       "createdAt": "2026-11-12T18:04:57.877Z",
-      "updatedAt": "2026-11-12T18:04:57.877Z"
+      "updatedAt": "2026-11-12T18:28:26.772Z"
     },
     "3": {
       "id": 3,
@@ -456,6 +679,16 @@
       "totalCostKobo": 350000,
       "avgPriceKobo": 229,
       "updatedAt": "2026-11-12T18:12:13.184Z"
+    },
+    "usr_demo_893240_2_YES": {
+      "id": "pos_trd_buy_1794508097058_1gw2f",
+      "userId": "usr_demo_893240",
+      "marketId": 2,
+      "side": "YES",
+      "sharesCount": 3861,
+      "totalCostKobo": 300000,
+      "avgPriceKobo": 78,
+      "updatedAt": "2026-11-12T18:28:26.772Z"
     }
   }
 }

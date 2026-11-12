@@ -58,7 +58,7 @@ import { LiveTicker } from './components/LiveTicker';
 import { MarketCard } from './components/MarketCard';
 import { MarketDetailModal } from './components/MarketDetailModal';
 import { CreateMarketModal } from './components/CreateMarketModal';
-import { ConnectWalletModal } from './components/ConnectWalletModal';
+import { WithdrawModal } from './components/WithdrawModal';
 import { SignInModal } from './components/SignInModal';
 import { DepositModal } from './components/DepositModal';
 import { useAppAuth } from './hooks/useAppAuth';
@@ -172,12 +172,11 @@ export function App() {
   const [selectedMarketId, setSelectedMarketId] = useState<number | null>(null);
   const [detailInitialSide, setDetailInitialSide] = useState<'YES' | 'NO'>('YES');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
-  const [pendingWalletActionTitle, setPendingWalletActionTitle] = useState('Voting & Trading Opinions');
+  const [pendingActionTitle, setPendingActionTitle] = useState('Voting & Trading Opinions');
 
   const promptConnectWallet = (actionTitle = 'Voting & Trading Opinions') => {
-    setPendingWalletActionTitle(actionTitle);
-    setIsWalletModalOpen(true);
+    setPendingActionTitle(actionTitle);
+    auth.openSignInModal();
   };
 
   // Live Tape & Pulse Activities
@@ -1959,121 +1958,19 @@ export function App() {
           <div className="space-y-8">
             <CreatorEconomicsView
               markets={markets}
-              walletAddress={walletAddress}
+              walletAddress={walletAddress || (auth.isAuthenticated ? auth.user?.id : null)}
               claimableCreatorFees={claimableCreatorFees}
               contractAddress={contractAddress}
               isLiveOnChainMode={isLiveOnChainMode}
               claimHistory={claimHistory}
               onClaimCreatorFees={handleClaimCreatorFees}
               onProfileUpdated={(updated: UserProfile) => setUserProfile(updated)}
-              onRequireWallet={(title) => promptConnectWallet(title || 'Viewing Portfolio & Creator Fees')}
+              onRequireWallet={(_title) => auth.openSignInModal()}
               holdings={holdings}
               activities={activities}
               onSelectMarket={(m) => setSelectedMarketId(m.id)}
               onOpenCreateModal={() => setIsCreateModalOpen(true)}
             />
-
-            {/* User Position Holdings List (Only shown when wallet is connected) */}
-            {walletAddress && (
-              <div className="space-y-4">
-                <h3 className="text-sm font-fun font-bold uppercase tracking-wider text-white">
-                  Active Opinion Curve Positions
-                </h3>
-
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                {markets
-                  .filter(
-                    (m) =>
-                      (holdings[m.id]?.yesShares || 0) > 0 ||
-                      (holdings[m.id]?.noShares || 0) > 0
-                  )
-                  .map((m) => {
-                    const yShares = holdings[m.id]?.yesShares || 0;
-                    const nShares = holdings[m.id]?.noShares || 0;
-                    const yQuote = quoteSellOrder(m, true, yShares);
-                    const nQuote = quoteSellOrder(m, false, nShares);
-                    const { yesSentimentPct, noSentimentPct } = getMarketPricesAndSentiment(m);
-
-                    return (
-                      <div
-                        key={m.id}
-                        className="flex flex-col justify-between rounded-[24px] border border-[#232330] bg-[#161620] p-5 shadow-lg"
-                      >
-                        <div>
-                          <div className="mb-2.5 flex items-center justify-between">
-                            <span className="rounded-full bg-[#227c9d]/20 px-3 py-0.5 text-[11px] font-fun font-bold text-[#53b3d4]">
-                              {m.category}
-                            </span>
-                            <button
-                              onClick={() => setSelectedMarketId(m.id)}
-                              className="inline-flex items-center gap-1 text-xs font-fun font-bold text-[#227c9d] hover:underline"
-                            >
-                              <span>Open Terminal</span>
-                              <ArrowUpRight className="h-3.5 w-3.5" />
-                            </button>
-                          </div>
-                          <h3 className="mb-3 text-base font-fun font-bold text-white">{m.question}</h3>
-
-                          {/* Conviction Bar with Real Decimals */}
-                          <div className="mb-4">
-                            <div className="relative h-2 w-full overflow-hidden rounded-full bg-[#252533]">
-                              <div
-                                style={{ width: `${Math.max(0, Math.min(100, yesSentimentPct))}%` }}
-                                className="h-full rounded-full bg-[#227c9d] transition-all duration-300"
-                              />
-                            </div>
-                            <div className="mt-1 flex items-center justify-between font-mono text-[11px] font-semibold">
-                              <span className="text-[#53b3d4]">{yesSentimentPct.toFixed(1)}% YES</span>
-                              <span className="text-[#FF6B00]">{noSentimentPct.toFixed(1)}% NO</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="space-y-3">
-                          {yShares > 0 && (
-                            <div className="flex items-center justify-between rounded-2xl border border-[#227c9d]/30 bg-[#227c9d]/10 p-3.5">
-                              <div>
-                                <span className="text-xs font-fun font-bold text-[#53b3d4]">
-                                  YES POSITION
-                                </span>
-                                <div className="font-mono text-xs text-white">
-                                  {yShares.toFixed(0)} shares ≈ {yQuote.netEthDelta.toFixed(4)} ETH
-                                </div>
-                              </div>
-                              <button
-                                onClick={() => handleExecuteTrade(m.id, true, false, yShares)}
-                                className="rounded-full bg-[#227c9d] px-4 py-2 font-fun text-xs font-bold text-white hover:bg-[#1a647f] transition"
-                              >
-                                Instant Sell
-                              </button>
-                            </div>
-                          )}
-
-                          {nShares > 0 && (
-                            <div className="flex items-center justify-between rounded-2xl border border-[#FF6B00]/30 bg-[#FF6B00]/10 p-3.5">
-                              <div>
-                                <span className="text-xs font-fun font-bold text-[#FF8A33]">
-                                  NO POSITION
-                                </span>
-                                <div className="font-mono text-xs text-white">
-                                  {nShares.toFixed(0)} shares ≈ {nQuote.netEthDelta.toFixed(4)} ETH
-                                </div>
-                              </div>
-                              <button
-                                onClick={() => handleExecuteTrade(m.id, false, false, nShares)}
-                                className="rounded-full bg-[#FF6B00] px-4 py-2 font-fun text-xs font-bold text-black hover:bg-[#EA580C] transition"
-                              >
-                                Instant Sell
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
-            )}
           </div>
         )}
 
@@ -2285,7 +2182,7 @@ export function App() {
       <SignInModal
         isOpen={auth.isSignInModalOpen}
         onClose={auth.closeSignInModal}
-        pendingActionTitle={pendingWalletActionTitle}
+        pendingActionTitle={pendingActionTitle}
       />
 
       {/* NGN Fiat Deposit Modal (Paystack & Instant Transfer) */}
@@ -2294,13 +2191,10 @@ export function App() {
         onClose={auth.closeDepositModal}
       />
 
-      {/* Web3 Connect Wallet Fallback Modal */}
-      <ConnectWalletModal
-        isOpen={isWalletModalOpen}
-        onClose={() => setIsWalletModalOpen(false)}
-        onConnectWallet={handleConnectWallet}
-        onConnectSimulatedWallet={handleConnectSimulatedWallet}
-        pendingActionTitle={pendingWalletActionTitle}
+      {/* NGN Bank Withdrawal Modal (NIP Instant Bank Transfer) */}
+      <WithdrawModal
+        isOpen={auth.isWithdrawModalOpen}
+        onClose={auth.closeWithdrawModal}
       />
 
       

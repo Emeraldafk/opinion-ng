@@ -190,6 +190,36 @@ export function opinionNgApiPlugin(): Plugin {
             return sendJson(res, 200, result);
           }
 
+          // 10b. Fiat Deposit (Virtual Bank Transfer / Paystack)
+          if (pathname === '/api/wallet/deposit' && req.method === 'POST') {
+            const body = await parseJsonBody(req);
+            const targetUser = body.userId || userId;
+            const amountKobo = Number(body.amountKobo);
+
+            const result = await globalNgnEngine.executeDeposit(
+              targetUser,
+              amountKobo,
+              body.channel || 'BANK_TRANSFER',
+              body.referenceId
+            );
+            return sendJson(res, 200, result);
+          }
+
+          // 10c. Fiat Withdrawal to Nigerian Bank (NIP)
+          if (pathname === '/api/wallet/withdraw' && req.method === 'POST') {
+            const body = await parseJsonBody(req);
+            const targetUser = body.userId || userId;
+            const amountKobo = Number(body.amountKobo);
+
+            const result = await globalNgnEngine.executeWithdrawal(targetUser, amountKobo, {
+              bankCode: body.bankCode || '058',
+              bankName: body.bankName || 'Guaranty Trust Bank',
+              accountNumber: body.accountNumber || '0123456789',
+              accountName: body.accountName || 'Beneficiary Account',
+            });
+            return sendJson(res, 200, result);
+          }
+
           // 11. Resolve Market with 2-Hour Dispute Window
           const resolveMatch = pathname.match(/^\/api\/markets\/(\d+)\/resolve$/);
           if (resolveMatch && req.method === 'POST') {

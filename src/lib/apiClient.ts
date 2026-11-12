@@ -190,6 +190,44 @@ class ApiClient {
     return res.json();
   }
 
+  public async deposit(params: {
+    userId?: string;
+    amountKobo: number;
+    channel?: string;
+    referenceId?: string;
+  }) {
+    const res = await fetch('/api/wallet/deposit', {
+      method: 'POST',
+      headers: this.getHeaders(params.userId),
+      body: JSON.stringify(params),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Deposit failed');
+    }
+    return res.json();
+  }
+
+  public async withdraw(params: {
+    userId?: string;
+    amountKobo: number;
+    bankCode?: string;
+    bankName: string;
+    accountNumber: string;
+    accountName: string;
+  }) {
+    const res = await fetch('/api/wallet/withdraw', {
+      method: 'POST',
+      headers: this.getHeaders(params.userId),
+      body: JSON.stringify(params),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Withdrawal failed');
+    }
+    return res.json();
+  }
+
   public async resolveMarket(params: {
     marketId: number;
     outcome: 'YES' | 'NO' | 'VOID';

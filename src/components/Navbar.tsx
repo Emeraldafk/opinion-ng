@@ -335,14 +335,20 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           )}
 
-          {/* Mobile Profile Card - only visible when wallet is connected */}
-          {walletAddress && userProfile && (
+          {/* Mobile Profile Card - only visible when user is logged in */}
+          {isUserLoggedIn && (
             <div
               onClick={() => handleSelectTab('portfolio')}
               className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#14141c] border border-[#232330] mb-2.5 cursor-pointer hover:border-[#38384d] transition"
             >
               <div className="h-8 w-8 rounded-full overflow-hidden shrink-0">
-                {userProfile.avatarUrl ? (
+                {auth.user?.avatarUrl ? (
+                  <img
+                    src={auth.user.avatarUrl}
+                    alt={auth.user.displayName}
+                    className="h-full w-full object-cover"
+                  />
+                ) : userProfile?.avatarUrl ? (
                   <img
                     src={userProfile.avatarUrl}
                     alt={userProfile.displayName}
@@ -350,17 +356,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                   />
                 ) : (
                   <div
-                    className={`h-full w-full bg-gradient-to-tr ${userProfile.avatarGradient} flex items-center justify-center text-xs font-bold text-white`}
+                    className="h-full w-full bg-gradient-to-tr from-[#227c9d] to-[#1a647f] flex items-center justify-center text-xs font-bold text-white"
                   >
-                    {userProfile.displayName.charAt(0).toUpperCase()}
+                    {(auth.user?.displayName || userProfile?.displayName || 'T').charAt(0).toUpperCase()}
                   </div>
                 )}
               </div>
               <div className="min-w-0 flex-1">
-                <div className="text-xs font-bold text-white truncate">{userProfile.displayName}</div>
-                <div className="text-[10px] text-[#8c8c9e] font-mono">@{userProfile.username}</div>
+                <div className="text-xs font-bold text-white truncate">{auth.user?.displayName || userProfile?.displayName}</div>
+                <div className="text-[10px] text-[#8c8c9e] font-mono">@{auth.user?.xHandle || userProfile?.username}</div>
               </div>
-              <span className="text-[11px] font-bold text-[#FF6B00]">Profile ›</span>
+              <span className="text-[11px] font-bold text-[#53b3d4]">Portfolio ›</span>
             </div>
           )}
           {/* Featured Settlement & Protocol Info (Resolutions & Architecture) */}
