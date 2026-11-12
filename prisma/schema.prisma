@@ -1,0 +1,145 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum LedgerEntryType {
+  DEPOSIT
+  TRADE_BUY
+  TRADE_SELL
+  MARKET_PAYOUT
+  CREATOR_FEE
+  MARKET_CREATION_FEE
+  WITHDRAWAL
+  WITHDRAWAL_REFUND
+}
+
+enum MarketStatus {
+  ACTIVE
+  CLOSED
+  PROPOSED
+  DISPUTED
+  RESOLVED
+  VOID
+}
+
+enum MarketOutcome {
+  UNRESOLVED
+  YES
+  NO
+  VOID
+}
+
+enum MarketSide {
+  YES
+  NO
+}
+
+model User {
+  id              String      @id @default(uuid())
+  email           String?     @unique
+  phone           String?     @unique
+  xHandle         String?     @unique @map("x_handle")
+  xUserId         String?     @unique @map("x_user_id")
+  displayName     String?     @map("display_name")
+  avatarUrl       String?     @map("avatar_url")
+  kycTier         Int         @default(0) @map("kyc_tier")
+  bvnNinVerified  Boolean     @default(false) @map("bvn_nin_verified")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  wallet          Wallet?
+  createdMarkets  Market[]    @relation("MarketCreator")
+  positions       Position[]
+
+  @@map("users")
+}
+
+model Wallet {
+  id                    String        @id @default(uuid())
+  userId                String        @unique @map("user_id")
+  user                  User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  availableKobo         BigInt        @default(0) @map("available_kobo")
+  lockedKobo            BigInt        @default(0) @map("locked_kobo")
+  creatorEarningsKobo   BigInt        @default(0) @map("creator_earnings_kobo")
+  virtualAccountNumber  String?       @map("virtual_account_number")
+  virtualAccountBank    String?       @map("virtual_account_bank")
+  createdAt             DateTime      @default(now()) @map("created_at")
+  updatedAt             DateTime      @updatedAt @map("updated_at")
+
+  ledgerEntries         LedgerEntry[]
+
+  @@map("wallets")
+}
+
+model LedgerEntry {
+  id                String          @id @default(uuid())
+  walletId          String          @map("wallet_id")
+  wallet            Wallet          @relation(fields: [walletId], references: [id], onDelete: Restrict)
+  amountKobo        BigInt          @map("amount_kobo")
+  balanceAfterKobo  BigInt          @map("balance_after_kobo")
+  entryType         LedgerEntryType @map("entry_type")
+  referenceId       String          @map("reference_id")
+  metadata          Json            @default("{}")
+  createdAt         DateTime        @default(now()) @map("created_at")
+
+  @@index([walletId])
+  @@index([referenceId])
+  @@index([entryType])
+  @@index([createdAt])
+  @@map("ledger_entries")
+}
+
+model Market {
+  id                  Int           @id @default(autoincrement())
+  creatorId           String        @map("creator_id")
+  creator             User          @relation("MarketCreator", fields: [creatorId], references: [id], onDelete: Restrict)
+  question            String
+  category            String        @default("Trending")
+  imageUri            String?       @map("image_uri")
+  sourceHandle        String?       @map("source_handle")
+  yesPoolKobo         BigInt        @default(0) @map("yes_pool_kobo")
+  noPoolKobo          BigInt        @default(0) @map("no_pool_kobo")
+  totalVolumeKobo     BigInt        @default(0) @map("total_volume_kobo")
+  creatorFeeBps       Int           @default(150) @map("creator_fee_bps") // 1.5%
+  platformFeeBps      Int           @default(150) @map("platform_fee_bps") // 1.5%
+  status              MarketStatus  @default(ACTIVE)
+  finalOutcome        MarketOutcome @default(UNRESOLVED) @map("final_outcome")
+  closingTime         DateTime?     @map("closing_time")
+  resolutionDeadline  DateTime?     @map("resolution_deadline")
+  yesCondition        String?       @map("yes_condition")
+  noCondition         String?       @map("no_condition")
+  evidenceSource      String?       @map("evidence_source")
+  createdAt           DateTime      @default(now()) @map("created_at")
+  updatedAt           DateTime      @updatedAt @map("updated_at")
+
+  positions           Position[]
+
+  @@index([creatorId])
+  @@index([status])
+  @@index([category])
+  @@map("markets")
+}
+
+model Position {
+  id               String     @id @default(uuid())
+  userId           String     @map("user_id")
+  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  marketId         Int        @map("market_id")
+  market           Market     @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  side             MarketSide
+  sharesCount      BigInt     @default(0) @map("shares_count")
+  totalCostKobo    BigInt     @default(0) @map("total_cost_kobo")
+  avgPriceKobo     BigInt     @default(0) @map("avg_price_kobo")
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @updatedAt @map("updated_at")
+
+  @@unique([userId, marketId, side])
+  @@index([userId])
+  @@index([marketId])
+  @@map("positions")
+}

@@ -1,0 +1,34 @@
+{
+  "name": "tired-fun",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Tired.Fun — Perpetual Opinion & Sentiment Markets (POV.co architecture) on Robinhood Chain Testnet (Chain ID 46630)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test:contract": "node scripts/test-contract.mjs",
+    "compile:contract": "node scripts/compile-contract.mjs",
+    "indexer:daemon": "node scripts/indexer-daemon.mjs",
+    "deploy:robinhood": "node scripts/deploy-robinhood.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^0.475.0",
+    "mqtt": "^5.16.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "viem": "^2.23.5"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.3",
+    "solc": "^0.8.38",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0"
+  }
+}
