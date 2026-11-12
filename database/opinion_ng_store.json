@@ -83,6 +83,30 @@
       "lockedKobo": 0,
       "creatorEarningsKobo": 0,
       "updatedAt": "2026-11-12T18:42:17.973Z"
+    },
+    "wlt_usr_mwdwh8bk": {
+      "id": "wlt_usr_mwdwh8bk",
+      "userId": "usr_mwdwh8bk",
+      "availableKobo": 290000,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T18:49:32.651Z"
+    },
+    "wlt_usr_mwdwktyg": {
+      "id": "wlt_usr_mwdwktyg",
+      "userId": "usr_mwdwktyg",
+      "availableKobo": 0,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T18:50:24.877Z"
+    },
+    "wlt_usr_mwdwkx2u": {
+      "id": "wlt_usr_mwdwkx2u",
+      "userId": "usr_mwdwkx2u",
+      "availableKobo": 0,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T18:50:28.930Z"
     }
   },
   "ledgerEntries": [
@@ -343,6 +367,36 @@
         "status": "SUCCESS"
       },
       "createdAt": "2026-11-12T18:42:17.973Z"
+    },
+    {
+      "id": "ldg_dep_paystack_1794509341347",
+      "walletId": "wlt_usr_mwdwh8bk",
+      "amountKobo": 500000,
+      "balanceAfterKobo": 500000,
+      "entryType": "DEPOSIT",
+      "referenceId": "dep_paystack_1794509341347",
+      "metadata": {
+        "channel": "BANK_TRANSFER",
+        "amountNaira": 5000,
+        "status": "SUCCESS"
+      },
+      "createdAt": "2026-11-12T18:49:01.365Z"
+    },
+    {
+      "id": "ldg_wth_nip_mwdwjppn_02fx",
+      "walletId": "wlt_usr_mwdwh8bk",
+      "amountKobo": -210000,
+      "balanceAfterKobo": 290000,
+      "entryType": "WITHDRAWAL",
+      "referenceId": "wth_nip_mwdwjppn_02fx",
+      "metadata": {
+        "destinationBank": "OPay Digital Services",
+        "accountNumber": "9073930166",
+        "accountName": "AMOSEMMANUEL2000",
+        "nipFeeKobo": 2500,
+        "status": "PROCESSED"
+      },
+      "createdAt": "2026-11-12T18:49:32.651Z"
     }
   ],
   "markets": {
@@ -367,7 +421,22 @@
       "noCondition": "Retail PMS prices remain at or above ₦850/L at closing deadline.",
       "evidenceSource": "https://majoroilmarketers.com",
       "createdAt": "2026-11-12T18:04:57.877Z",
-      "updatedAt": "2026-11-12T18:12:13.184Z"
+      "updatedAt": "2026-11-12T18:59:55.602Z",
+      "comments": [
+        {
+          "id": "cmt_test_1794509995513",
+          "author": "Tunde Afolabi",
+          "authorHandle": "@opinion_trader",
+          "authorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+          "side": "YES",
+          "sharesHeld": 1500,
+          "text": "Refinery output ramping up to 650k bpd will definitely stabilize retail prices below ₦850 across Lagos.",
+          "createdAt": 1794509995513,
+          "timestamp": "Just now",
+          "likes": 3,
+          "hasLiked": false
+        }
+      ]
     },
     "2": {
       "id": 2,

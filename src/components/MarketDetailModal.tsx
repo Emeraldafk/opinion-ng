@@ -295,6 +295,10 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
   const handlePostComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!market || !commentText.trim()) return;
+    if (!auth.isAuthenticated) {
+      auth.openSignInModal();
+      return;
+    }
     onAddComment(market.id, selectedSide, commentText.trim());
     setCommentText('');
   };
@@ -1164,27 +1168,58 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
 
               {/* Comments Section */}
               <div className="rounded-[22px] border border-[#232330] bg-[#161620] p-5">
-                <h3 className="text-sm font-bold text-white mb-3">
-                  Comments ({market.comments.length})
-                </h3>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-bold text-white">
+                    Comments ({market.comments.length})
+                  </h3>
+                  {auth.isAuthenticated && auth.user && (
+                    <span className="text-[11px] text-[#53b3d4] font-medium font-sans">
+                      Replying as <strong className="text-white">{auth.user.displayName}</strong>
+                    </span>
+                  )}
+                </div>
 
-                {/* Add a comment input with send arrow */}
-                <form onSubmit={handlePostComment} className="relative mb-5">
-                  <input
-                    type="text"
-                    value={commentText}
-                    onChange={(e) => setCommentText(e.target.value)}
-                    placeholder="Add a comment..."
-                    className="w-full rounded-2xl border border-[#232330] bg-[#0c0c11] py-3 pl-4 pr-12 text-xs text-white placeholder-[#8c8c9e] focus:border-[#227c9d] focus:outline-none"
-                  />
-                  <button
-                    type="submit"
-                    disabled={!commentText.trim()}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-xl bg-[#227c9d] text-white hover:bg-[#1a647f] transition disabled:opacity-40 cursor-pointer"
-                  >
-                    <Send className="h-3.5 w-3.5" />
-                  </button>
-                </form>
+                {/* Add a comment input */}
+                {!auth.isAuthenticated ? (
+                  <div className="flex items-center justify-between rounded-2xl border border-[#232330] bg-[#0c0c11] p-3.5 mb-5 text-xs">
+                    <span className="text-[#8c8c9e]">Sign in to join the debate and share your conviction.</span>
+                    <button
+                      type="button"
+                      onClick={() => auth.openSignInModal()}
+                      className="rounded-full bg-[#227c9d] px-4 py-1.5 text-xs font-bold text-white hover:bg-[#1a647f] transition shadow cursor-pointer"
+                    >
+                      Sign In
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handlePostComment} className="flex items-center gap-2.5 mb-5">
+                    <div className="h-8 w-8 rounded-full overflow-hidden shrink-0 border border-[#2e2e40] bg-[#1a1a26]">
+                      {auth.user?.avatarUrl ? (
+                        <img src={auth.user.avatarUrl} alt="" className="h-full w-full object-cover" />
+                      ) : (
+                        <div className="h-full w-full flex items-center justify-center text-xs font-bold text-white bg-gradient-to-tr from-[#227c9d] to-cyan-500">
+                          {auth.user?.displayName.slice(0, 1).toUpperCase()}
+                        </div>
+                      )}
+                    </div>
+                    <div className="relative flex-1">
+                      <input
+                        type="text"
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        placeholder={`Reply as ${auth.user?.displayName || 'trader'}...`}
+                        className="w-full rounded-2xl border border-[#232330] bg-[#0c0c11] py-2.5 pl-4 pr-11 text-xs text-white placeholder-[#8c8c9e] focus:border-[#227c9d] focus:outline-none"
+                      />
+                      <button
+                        type="submit"
+                        disabled={!commentText.trim()}
+                        className="absolute right-1.5 top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-xl bg-[#227c9d] text-white hover:bg-[#1a647f] transition disabled:opacity-40 cursor-pointer"
+                      >
+                        <Send className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </form>
+                )}
 
                 {/* Comments List */}
                 <div className="space-y-4">

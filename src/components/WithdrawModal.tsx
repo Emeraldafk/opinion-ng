@@ -335,3 +335,4 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({ isOpen, onClose })
     </div>
   );
 };
+

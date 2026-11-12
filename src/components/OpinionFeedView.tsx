@@ -28,6 +28,7 @@ import { dbService } from '../lib/databaseService';
 import { realtimeSync } from '../lib/realtimeSyncService';
 import { calculateXScore } from '../lib/feedAlgorithm';
 import { shortenAddress } from '../config/robinhoodChain';
+import { useAppAuth } from '../hooks/useAppAuth';
 
 interface OpinionFeedViewProps {
   markets: OpinionMarket[];
@@ -70,6 +71,41 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
   onSpawnOpinion,
   onRequireWallet,
 }) => {
+  const auth = useAppAuth();
+  const isLoggedIn = auth.isAuthenticated || !!walletAddress;
+  const activeUserIdentifier = auth.user?.id || walletAddress || null;
+
+  const activeProfile = useMemo(() => {
+    if (auth.user) {
+      return {
+        displayName: auth.user.displayName,
+        username: auth.user.xHandle
+          ? auth.user.xHandle.replace(/^@/, '')
+          : (auth.user.email ? auth.user.email.split('@')[0] : 'trader'),
+        avatarUrl: auth.user.avatarUrl,
+        avatarGradient: getAvatarGradient(auth.user.displayName),
+      };
+    }
+    if (userProfile) {
+      return {
+        displayName: userProfile.displayName,
+        username: userProfile.username,
+        avatarUrl: userProfile.avatarUrl,
+        avatarGradient: userProfile.avatarGradient || getAvatarGradient(userProfile.displayName),
+      };
+    }
+    if (walletAddress) {
+      const short = shortenAddress(walletAddress);
+      return {
+        displayName: short,
+        username: short,
+        avatarUrl: undefined,
+        avatarGradient: getAvatarGradient(short),
+      };
+    }
+    return null;
+  }, [auth.user, userProfile, walletAddress]);
+
   const [feedTab, setFeedTab] = useState<'for-you' | 'following'>('for-you');
   const [newOpinionText, setNewOpinionText] = useState('');
   const [newOpinionCategory, setNewOpinionCategory] = useState('Crypto');
@@ -77,7 +113,7 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
 
   // Load persistent likes from Database
   const [likesMap, setLikesMap] = useState<Record<number, { count: number; liked: boolean }>>(() =>
-    dbService.loadLikes(walletAddress)
+    dbService.loadLikes(activeUserIdentifier)
   );
 
   const [repostsMap, setRepostsMap] = useState<Record<number, { count: number; reposted: boolean }>>(() =>
@@ -99,31 +135,33 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
 
   const [sessionSeed, setSessionSeed] = useState(() => Date.now());
 
-  // Sync likes and reposts from real database when user connects or switches wallet,
-  // and listen for real-time cross-device likes (phone <-> PC)
+  // Sync likes and reposts from real database when user connects or switches account,
+  // and listen for real-time cross-device likes
   useEffect(() => {
-    setLikesMap(dbService.loadLikes(walletAddress));
+    setLikesMap(dbService.loadLikes(activeUserIdentifier));
     setRepostsMap(dbService.loadReposts());
 
     const unsubLike = realtimeSync.onLike(() => {
-      setLikesMap(dbService.loadLikes(walletAddress));
+      setLikesMap(dbService.loadLikes(activeUserIdentifier));
     });
 
     return () => {
       unsubLike();
     };
-  }, [walletAddress]);
+  }, [activeUserIdentifier]);
 
   const toggleLike = (marketId: number) => {
-    // Unauthenticated users are redirected to login / connect wallet
-    if (!walletAddress) {
+    // Unauthenticated users are redirected to login / register
+    if (!isLoggedIn) {
       if (onRequireWallet) {
         onRequireWallet('Liking an Opinion Post');
+      } else {
+        auth.openSignInModal();
       }
       return;
     }
     // Persist perpetual like to database for this user
-    const updated = dbService.toggleMarketLike(marketId, walletAddress);
+    const updated = dbService.toggleMarketLike(marketId, activeUserIdentifier || 'authenticated_user');
     setLikesMap(updated);
 
     // Broadcast like globally with retain so other devices (e.g. PC or other users) see it instantly
@@ -132,9 +170,11 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
   };
 
   const handleCommentLike = (marketId: number, commentId: string) => {
-    if (!walletAddress) {
+    if (!isLoggedIn) {
       if (onRequireWallet) {
         onRequireWallet('Liking a Comment');
+      } else {
+        auth.openSignInModal();
       }
       return;
     }
@@ -144,6 +184,14 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
   };
 
   const toggleRepost = (marketId: number) => {
+    if (!isLoggedIn) {
+      if (onRequireWallet) {
+        onRequireWallet('Reposting an Opinion');
+      } else {
+        auth.openSignInModal();
+      }
+      return;
+    }
     const updated = dbService.toggleRepost(marketId);
     setRepostsMap(updated);
   };
@@ -156,9 +204,11 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
   };
 
   const handleSendComment = (marketId: number) => {
-    if (!walletAddress) {
+    if (!isLoggedIn) {
       if (onRequireWallet) {
         onRequireWallet('Commenting on Opinion');
+      } else {
+        auth.openSignInModal();
       }
       return;
     }
@@ -170,13 +220,15 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
   };
 
   const handleVote = async (marketId: number, isYes: boolean) => {
-    if (!walletAddress) {
+    if (!isLoggedIn) {
       setVoteFeedbackMap((prev) => ({
         ...prev,
         [marketId]: '⚠️ Sign in to vote & trade',
       }));
       if (onRequireWallet) {
         onRequireWallet(`Voting ${isYes ? 'YES' : 'NO'} on Opinion`);
+      } else {
+        auth.openSignInModal();
       }
       setTimeout(() => {
         setVoteFeedbackMap((prev) => ({ ...prev, [marketId]: null }));
@@ -217,9 +269,11 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
 
   const handlePostOpinion = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!walletAddress) {
+    if (!isLoggedIn) {
       if (onRequireWallet) {
         onRequireWallet('Spawning an Opinion');
+      } else {
+        auth.openSignInModal();
       }
       return;
     }
@@ -341,7 +395,7 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
           </div>
 
           {/* COMPOSE OPINION BOX (X Style) */}
-          {!walletAddress || !userProfile ? (
+          {!isLoggedIn || !activeProfile ? (
             <div className="rounded-[22px] sm:rounded-[24px] border border-[#232332] bg-[#14141c] p-4 sm:p-5 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FF6B00]/10 text-[#FF6B00] border border-[#FF6B00]/20">
@@ -354,7 +408,7 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
               </div>
               <button
                 type="button"
-                onClick={() => onRequireWallet?.('Publish your conviction')}
+                onClick={() => onRequireWallet ? onRequireWallet('Publish your conviction') : auth.openSignInModal()}
                 className="w-full sm:w-auto shrink-0 rounded-full bg-gradient-to-r from-[#FF6B00] to-orange-500 px-5 py-2.5 text-xs font-black text-white hover:opacity-95 transition shadow-lg shadow-orange-500/20 active:scale-95 cursor-pointer"
               >
                 Sign In / Register
@@ -363,27 +417,27 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
           ) : (
             <div className="rounded-[22px] sm:rounded-[24px] border border-[#232332] bg-[#14141c] p-3.5 sm:p-5 shadow-lg">
               <div className="flex gap-3.5">
-                {/* User Avatar (With uploaded PFP if available) */}
+                {/* User Avatar */}
                 <div className="h-10 w-10 shrink-0 rounded-full overflow-hidden shadow-md ring-2 ring-[#227c9d]/30">
-                  {userProfile.avatarUrl ? (
+                  {activeProfile.avatarUrl ? (
                     <img
-                      src={userProfile.avatarUrl}
-                      alt={userProfile.displayName}
+                      src={activeProfile.avatarUrl}
+                      alt={activeProfile.displayName}
                       className="h-full w-full object-cover"
                     />
                   ) : (
                     <div
-                      className={`h-full w-full bg-gradient-to-tr ${userProfile.avatarGradient} flex items-center justify-center font-fun text-sm font-black text-white`}
+                      className={`h-full w-full bg-gradient-to-tr ${activeProfile.avatarGradient} flex items-center justify-center font-fun text-sm font-black text-white`}
                     >
-                      {userProfile.displayName.charAt(0).toUpperCase()}
+                      {activeProfile.displayName.charAt(0).toUpperCase()}
                     </div>
                   )}
                 </div>
 
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="font-bold text-xs text-white">{userProfile.displayName}</span>
-                    <span className="text-[11px] font-mono text-[#8c8c9e]">@{userProfile.username}</span>
+                    <span className="font-bold text-xs text-white">{activeProfile.displayName}</span>
+                    <span className="text-[11px] font-mono text-[#8c8c9e]">@{activeProfile.username}</span>
                   </div>
 
                   <textarea
@@ -766,12 +820,12 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
                   {isExpanded && (
                     <div className="mt-4 border-t border-[#232332] pt-4 space-y-3">
                       {/* Write a comment */}
-                      {!walletAddress || !userProfile ? (
+                      {!isLoggedIn || !activeProfile ? (
                         <div className="flex items-center justify-between rounded-xl border border-[#262638] bg-[#0d0d13] p-3 text-xs">
                           <span className="text-[#8c8c9e]">Sign in to reply to this conviction post.</span>
                           <button
                             type="button"
-                            onClick={() => onRequireWallet?.('Reply to conviction post')}
+                            onClick={() => onRequireWallet ? onRequireWallet('Reply to conviction post') : auth.openSignInModal()}
                             className="rounded-full bg-[#227c9d] px-3.5 py-1.5 text-xs font-bold text-white hover:bg-[#1a647f] transition shadow cursor-pointer"
                           >
                             Sign In
@@ -780,17 +834,17 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
                       ) : (
                         <div className="flex items-center gap-2.5">
                           <div className="h-8 w-8 shrink-0 rounded-full overflow-hidden">
-                            {userProfile.avatarUrl ? (
+                            {activeProfile.avatarUrl ? (
                               <img
-                                src={userProfile.avatarUrl}
-                                alt={userProfile.displayName}
+                                src={activeProfile.avatarUrl}
+                                alt={activeProfile.displayName}
                                 className="h-full w-full object-cover"
                               />
                             ) : (
                               <div
-                                className={`h-full w-full bg-gradient-to-tr ${userProfile.avatarGradient} flex items-center justify-center text-xs font-black text-white`}
+                                className={`h-full w-full bg-gradient-to-tr ${activeProfile.avatarGradient} flex items-center justify-center text-xs font-black text-white`}
                               >
-                                {userProfile.displayName.charAt(0).toUpperCase()}
+                                {activeProfile.displayName.charAt(0).toUpperCase()}
                               </div>
                             )}
                           </div>
@@ -806,7 +860,7 @@ export const OpinionFeedView: React.FC<OpinionFeedViewProps> = ({
                             onKeyDown={(e) => {
                               if (e.key === 'Enter') handleSendComment(market.id);
                             }}
-                            placeholder={`Post your reply as ${userProfile.displayName}...`}
+                            placeholder={`Post your reply as ${activeProfile.displayName}...`}
                             className="flex-1 rounded-full border border-[#262638] bg-[#0d0d13] px-4 py-2 text-xs text-white placeholder-[#7a7a8c] focus:border-[#227c9d] focus:outline-none"
                           />
                           <button

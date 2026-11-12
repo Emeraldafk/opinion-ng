@@ -103,6 +103,7 @@ export interface MarketRecord {
   evidenceSource?: string;
   proposedEvidence?: string;
   disputeEvidence?: string;
+  comments?: any[];
   createdAt: string;
   updatedAt: string;
 }
@@ -1659,6 +1660,25 @@ export class NgnTradingEngine {
     } finally {
       releaseLock();
     }
+  }
+
+  public addMarketComment(marketId: number, comment: any): any[] {
+    const market = this.state.markets[marketId];
+    if (!market) {
+      throw new Error(`Market #${marketId} not found`);
+    }
+    if (!market.comments) {
+      market.comments = [];
+    }
+    market.comments = [comment, ...market.comments];
+    market.updatedAt = new Date().toISOString();
+    this.persistSync(this.state);
+    return market.comments;
+  }
+
+  public getMarketComments(marketId: number): any[] {
+    const market = this.state.markets[marketId];
+    return market?.comments || [];
   }
 }
 

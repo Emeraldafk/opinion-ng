@@ -1266,21 +1266,38 @@ export function App() {
   };
 
   const handleAddComment = (marketId: number, side: 'YES' | 'NO', text: string) => {
-    if (!walletAddress) {
+    if (!auth.isAuthenticated && !walletAddress) {
       promptConnectWallet('Posting a Comment');
       return;
     }
-    const author = userProfile?.displayName || (walletAddress ? shortenAddress(walletAddress) : 'Trader');
+    const author =
+      auth.user?.displayName ||
+      userProfile?.displayName ||
+      (walletAddress ? shortenAddress(walletAddress) : 'Trader');
+
+    const authorHandle = auth.user?.xHandle
+      ? (auth.user.xHandle.startsWith('@') ? auth.user.xHandle : `@${auth.user.xHandle}`)
+      : userProfile?.username
+      ? `@${userProfile.username.replace(/^@/, '')}`
+      : walletAddress
+      ? `@${shortenAddress(walletAddress)}`
+      : '@trader';
+
+    const authorAvatar =
+      auth.user?.avatarUrl ||
+      userProfile?.avatarUrl ||
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150';
+
     const userH = holdings[marketId];
     const sharesHeld =
-      side === 'YES' ? userH?.yesShares || 1000 : userH?.noShares || 1000;
+      side === 'YES' ? userH?.yesShares || 0 : userH?.noShares || 0;
 
     const now = Date.now();
     const newComment: MarketComment = {
       id: 'cmt-' + now + '-' + Math.random().toString(36).slice(2, 7),
       author,
-      authorHandle: userProfile?.username ? `@${userProfile.username}` : (walletAddress ? `@${shortenAddress(walletAddress)}` : '@trader'),
-      authorAvatar: userProfile?.avatarUrl,
+      authorHandle,
+      authorAvatar,
       side,
       sharesHeld,
       text,
@@ -1290,25 +1307,36 @@ export function App() {
       hasLiked: false,
     };
 
+    // 1. Save locally in local database and broadcast across network
     dbService.addComment(marketId, newComment);
     realtimeSync.broadcastComment(marketId, newComment);
 
+    // 2. Persist to backend API so comments remain saved on server
+    fetch(`/api/markets/${marketId}/comments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ comment: newComment, userId: auth.user?.id }),
+    }).catch((err) => console.warn('Backend comment persist err:', err));
+
+    // 3. Update React state immediately
     setMarkets((prev) => {
       const updated = prev.map((m) =>
         m.id === marketId
           ? {
               ...m,
-              comments: [newComment, ...m.comments],
+              comments: [newComment, ...(m.comments || [])],
             }
           : m
       );
       dbService.saveMarkets(updated);
       return updated;
     });
+
+    pushToast('Comment Posted', `Your reply was published on Market #${marketId}`);
   };
 
   const handleToggleCommentLike = (marketId: number, commentId: string) => {
-    if (!walletAddress) {
+    if (!auth.isAuthenticated && !walletAddress) {
       promptConnectWallet('Liking a Comment');
       return;
     }
@@ -1318,7 +1346,7 @@ export function App() {
         if (m.id !== marketId) return m;
         return {
           ...m,
-          comments: m.comments.map((c) => {
+          comments: (m.comments || []).map((c) => {
             if (c.id !== commentId) return c;
             const liked = !c.hasLiked;
             return {
@@ -1919,8 +1947,21 @@ export function App() {
         {activeTab === 'pulse' && (
           <OpinionFeedView
             markets={markets}
-            walletAddress={walletAddress}
-            userProfile={userProfile}
+            walletAddress={walletAddress || (auth.isAuthenticated && auth.user ? auth.user.id : null)}
+            userProfile={
+              userProfile ||
+              (auth.user
+                ? {
+                    address: auth.user.id,
+                    username: auth.user.xHandle ? auth.user.xHandle.replace(/^@/, '') : 'trader',
+                    displayName: auth.user.displayName,
+                    bio: 'Verified OpinionNG Trader',
+                    avatarUrl: auth.user.avatarUrl,
+                    avatarGradient: 'from-[#227c9d] to-cyan-600',
+                    createdAt: Date.now(),
+                  }
+                : null)
+            }
             onRequireWallet={(title) => promptConnectWallet(title || 'Voting & Trading Opinions')}
             onSelectMarket={(m, side) => {
               if (side) setDetailInitialSide(side);
@@ -1930,12 +1971,13 @@ export function App() {
               handleExecuteTrade(marketId, isYes, true, ethAmt)
             }
             onAddComment={handleAddComment}
+            onToggleCommentLike={handleToggleCommentLike}
             onSpawnOpinion={(question, category, isYes) => {
               handleCreateMarket({
                 question,
-                category: (category as any) || 'Crypto',
+                category: (category as any) || 'Culture',
                 imageUri: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600&auto=format&fit=crop&q=80',
-                sourceHandle: userProfile ? `@${userProfile.username}` : (walletAddress ? `@${shortenAddress(walletAddress)}` : '@trader'),
+                sourceHandle: auth.user?.xHandle ? (auth.user.xHandle.startsWith('@') ? auth.user.xHandle : `@${auth.user.xHandle}`) : (userProfile ? `@${userProfile.username}` : '@OpinionNG'),
                 initialSideIsYes: isYes,
                 initialBuyEth: 0.001,
               });

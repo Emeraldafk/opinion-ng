@@ -169,6 +169,25 @@ export function opinionNgApiPlugin(): Plugin {
             return sendJson(res, 201, result);
           }
 
+          // 8b. Market Comments (Persist user debate across sessions)
+          const commentsMatch = pathname.match(/^\/api\/markets\/(\d+)\/comments$/);
+          if (commentsMatch && req.method === 'POST') {
+            const marketId = parseInt(commentsMatch[1], 10);
+            const body = await parseJsonBody(req);
+            const comment = body.comment;
+            if (!comment) {
+              return sendJson(res, 400, { error: 'Comment payload is required' });
+            }
+            const comments = globalNgnEngine.addMarketComment(marketId, comment);
+            return sendJson(res, 201, { success: true, comments });
+          }
+
+          if (commentsMatch && req.method === 'GET') {
+            const marketId = parseInt(commentsMatch[1], 10);
+            const comments = globalNgnEngine.getMarketComments(marketId);
+            return sendJson(res, 200, { comments });
+          }
+
           // 9. X (Twitter) Bot Mention Webhook
           if (pathname === '/api/webhooks/x-mentions' && req.method === 'POST') {
             const body = await parseJsonBody(req);
