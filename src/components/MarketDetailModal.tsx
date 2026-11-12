@@ -1105,11 +1105,11 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
                     {isPrediction && market.prediction && (
                       <div className="space-y-2 pt-2">
                         <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/20 p-2.5">
-                          <strong className="text-emerald-300 block mb-0.5 text-xs">YES Resolution Criteria:</strong>
+                          <strong className="text-emerald-300 block mb-0.5 text-xs">YES Winning Criteria:</strong>
                           <p className="text-slate-300 text-xs">{market.prediction.yesCondition}</p>
                         </div>
                         <div className="rounded-lg bg-orange-500/10 border border-orange-500/20 p-2.5">
-                          <strong className="text-orange-300 block mb-0.5 text-xs">NO Resolution Criteria:</strong>
+                          <strong className="text-orange-300 block mb-0.5 text-xs">NO Winning Criteria:</strong>
                           <p className="text-slate-300 text-xs">{market.prediction.noCondition}</p>
                         </div>
                       </div>

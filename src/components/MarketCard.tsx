@@ -253,7 +253,7 @@ export const MarketCard: React.FC<MarketCardProps> = ({
                 >
                   {market.status === 'RESOLVED' || market.status === 'VOID'
                     ? '🎯 View Settlement Payouts & Claims'
-                    : '🔒 Trading Closed • View Resolution'}
+                    : '🔒 Trading Closed • Awaiting Final Payout'}
                 </button>
               </div>
             ) : (

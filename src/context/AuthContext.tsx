@@ -110,10 +110,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.USER);
       if (saved) return JSON.parse(saved);
-      // Default to demo authenticated user for seamless first boot
-      return DEFAULT_DEMO_USER;
+      return null;
     } catch {
-      return DEFAULT_DEMO_USER;
+      return null;
     }
   });
 

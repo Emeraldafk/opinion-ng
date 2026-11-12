@@ -455,7 +455,7 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
           {/* Phase 2: Market Type Selector */}
           <div>
             <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
-              Select Market Architecture
+              Select Market Type
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
               <button
@@ -493,7 +493,7 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
                   <span>Resolvable Prediction</span>
                 </div>
                 <p className="mt-1 text-[11px] leading-relaxed text-[#8c8c9e]">
-                  Fixed closing date, outcome resolution & Pari-Mutuel payouts.
+                  Fixed closing date & winning share payouts.
                 </p>
                 <span className="mt-2 rounded-full bg-[#FF6B00]/20 px-2 py-0.5 font-mono text-[9px] sm:text-[10px] font-bold text-[#FF8A33]">
                   Type 1 • Settlement Pool
@@ -505,9 +505,7 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
           {/* Market Question */}
           <div>
             <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
-              {marketType === 'RESOLVABLE_PREDICTION'
-                ? 'Prediction Resolution Question'
-                : 'Debate Question'}
+              Market Question
             </label>
             <textarea
               rows={2}

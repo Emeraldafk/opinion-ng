@@ -6,13 +6,10 @@ import {
   Flame,
   Award,
   Coins,
-  Scale,
-  Layers,
   Menu,
   X,
   ExternalLink,
   ChevronRight,
-  ChevronDown,
   LogOut,
 } from 'lucide-react';
 import {
@@ -28,9 +25,7 @@ export type TiredFunNavTab =
   | 'feed'
   | 'pulse'
   | 'reputation'
-  | 'portfolio'
-  | 'resolution'
-  | 'how-it-works';
+  | 'portfolio';
 
 export type NullhoodNavTab = TiredFunNavTab;
 
@@ -61,9 +56,7 @@ const NAV_ITEMS: {
   { id: 'feed', label: 'Markets', shortLabel: 'Markets', icon: Sparkles, description: 'Perpetual opinions & predictions' },
   { id: 'pulse', label: 'Feed', shortLabel: 'Feed', icon: Flame, description: 'Live conviction posts & debaters' },
   { id: 'reputation', label: 'Reputation', shortLabel: 'Ranks', icon: Award, description: 'Trader ranking & track records' },
-  { id: 'portfolio', label: 'Portfolio & Fees', shortLabel: 'Portfolio', icon: Coins, description: 'Holdings & 1% creator earnings' },
-  { id: 'resolution', label: 'Resolutions', shortLabel: 'Resolve', icon: Scale, description: 'Adjudication & Pari-Mutuel payouts' },
-  { id: 'how-it-works', label: 'Architecture', shortLabel: 'Model', icon: Layers, description: 'Bonding curve mathematical model' },
+  { id: 'portfolio', label: 'Portfolio', shortLabel: 'Portfolio', icon: Coins, description: 'Holdings, virtual bank & creator fees' },
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -111,82 +104,26 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </div>
 
-        {/* Center: Desktop Navigation Tabs (Primary 4 on lg+, all 6 on 2xl+, More dropdown on lg-xl) */}
-        <nav className="hidden lg:flex items-center justify-center gap-1 xl:gap-2 flex-1 min-w-0 px-2">
-          {NAV_ITEMS.map((item, idx) => {
+        {/* Center: Desktop Navigation Tabs */}
+        <nav className="hidden lg:flex items-center justify-center gap-1.5 xl:gap-2.5 flex-1 min-w-0 px-2">
+          {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
-            // Secondary items (Resolutions & Architecture) only direct-show on 2xl+ (1536px+)
-            const isSecondary = idx >= 4;
             return (
               <button
                 key={item.id}
                 onClick={() => handleSelectTab(item.id)}
-                className={`items-center gap-1.5 rounded-full px-2.5 py-1.5 xl:px-3.5 xl:py-2 text-xs xl:text-[13px] font-bold transition-all whitespace-nowrap shrink-0 ${
-                  isSecondary ? 'hidden 2xl:flex' : 'flex'
-                } ${
+                className={`flex items-center gap-2 rounded-full px-3.5 py-2 text-xs xl:text-sm font-bold transition-all whitespace-nowrap shrink-0 ${
                   isActive
                     ? 'bg-[#227c9d] text-white shadow-sm shadow-[#227c9d]/25'
                     : 'text-[#8c8c9e] hover:text-white hover:bg-[#1a1a24]'
                 }`}
               >
-                <Icon className="h-3.5 w-3.5 shrink-0" />
-                <span className="hidden xl:inline">{item.label}</span>
-                <span className="inline xl:hidden">{item.shortLabel || item.label}</span>
+                <Icon className="h-4 w-4 shrink-0" />
+                <span>{item.label}</span>
               </button>
             );
           })}
-
-          {/* Compact More Dropdown for Resolutions & Architecture on lg to 2xl */}
-          <div className="relative hidden lg:block 2xl:hidden shrink-0">
-            <button
-              type="button"
-              onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
-              className={`flex items-center gap-1 rounded-full px-2.5 py-1.5 xl:px-3 xl:py-2 text-xs xl:text-[13px] font-bold transition-all ${
-                activeTab === 'resolution' || activeTab === 'how-it-works'
-                  ? 'bg-[#227c9d] text-white shadow-sm'
-                  : 'text-[#8c8c9e] hover:text-white hover:bg-[#1a1a24]'
-              }`}
-            >
-              <span>More</span>
-              <ChevronDown className={`h-3 w-3 transition-transform ${isMoreMenuOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            {isMoreMenuOpen && (
-              <>
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setIsMoreMenuOpen(false)}
-                />
-                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 rounded-2xl border border-[#232330] bg-[#14141c] p-1.5 shadow-2xl z-50 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-100">
-                  <button
-                    type="button"
-                    onClick={() => handleSelectTab('resolution')}
-                    className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold transition ${
-                      activeTab === 'resolution'
-                        ? 'bg-[#227c9d] text-white'
-                        : 'text-[#8c8c9e] hover:text-white hover:bg-[#1f1f2c]'
-                    }`}
-                  >
-                    <Scale className="h-3.5 w-3.5 text-[#53b3d4]" />
-                    <span>Resolutions</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleSelectTab('how-it-works')}
-                    className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold transition ${
-                      activeTab === 'how-it-works'
-                        ? 'bg-[#227c9d] text-white'
-                        : 'text-[#8c8c9e] hover:text-white hover:bg-[#1f1f2c]'
-                    }`}
-                  >
-                    <Layers className="h-3.5 w-3.5 text-[#53b3d4]" />
-                    <span>Architecture</span>
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
         </nav>
 
         {/* Right: Actions (Create, Sign In / Balance Pill, Profile, Mobile Menu Toggle) */}
@@ -213,30 +150,35 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Sign In / Get Started</span>
             </button>
           ) : (
-            <div className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-[#232330] bg-[#171722] py-1 px-2.5 sm:px-3 shrink-0">
-              <span className="font-mono text-xs sm:text-sm font-bold text-emerald-400">
-                {formatNGN(auth.wallet.availableKobo)}
-              </span>
-              <button
-                type="button"
-                onClick={auth.openDepositModal}
-                className="flex items-center gap-0.5 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 px-2 py-0.5 text-[11px] font-bold transition shadow-sm"
-                title="Deposit NGN"
-              >
-                + Deposit
-              </button>
+            <>
+              <div className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-[#232330] bg-[#171722] py-1 px-2.5 sm:px-3 shrink-0">
+                <span className="font-mono text-xs sm:text-sm font-bold text-emerald-400">
+                  {formatNGN(auth.wallet.availableKobo)}
+                </span>
+                <button
+                  type="button"
+                  onClick={auth.openDepositModal}
+                  className="flex items-center gap-0.5 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 px-2 py-0.5 text-[11px] font-bold transition shadow-sm cursor-pointer"
+                  title="Deposit NGN"
+                >
+                  + Deposit
+                </button>
+              </div>
+
+              {/* Prominent Sign Out Button */}
               <button
                 type="button"
                 onClick={() => {
                   auth.logout();
                   if (onDisconnectWallet) onDisconnectWallet();
                 }}
-                title="Sign Out"
-                className="ml-0.5 rounded px-1 text-[11px] text-[#7a7a8c] hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
+                className="hidden md:flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-red-400 px-3 py-1.5 text-xs font-bold transition cursor-pointer"
+                title="Sign Out of OpinionNG"
               >
-                ✕
+                <LogOut className="h-3.5 w-3.5" />
+                <span>Sign Out</span>
               </button>
-            </div>
+            </>
           )}
 
           {/* User Profile Avatar */}
@@ -369,82 +311,23 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="text-[11px] font-bold text-[#53b3d4]">Portfolio ›</span>
             </div>
           )}
-          {/* Featured Settlement & Protocol Info (Resolutions & Architecture) */}
-          <div className="space-y-2 mb-3">
-            <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#7a7a8c] px-1">
-              Protocol & Settlement
+          {/* Mobile Sign Out Button */}
+          {isUserLoggedIn && (
+            <div className="pt-2 mb-3">
+              <button
+                type="button"
+                onClick={() => {
+                  auth.logout();
+                  if (onDisconnectWallet) onDisconnectWallet();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 py-3 text-xs font-bold text-red-400 hover:bg-red-500/20 transition cursor-pointer"
+              >
+                <LogOut className="h-4 w-4" />
+                <span>Sign Out of OpinionNG</span>
+              </button>
             </div>
-
-            <button
-              type="button"
-              onClick={() => handleSelectTab('resolution')}
-              className={`flex w-full items-center justify-between rounded-2xl p-3 transition text-left border ${
-                activeTab === 'resolution'
-                  ? 'bg-[#FF6B00] text-white border-[#FF6B00] shadow-md shadow-[#FF6B00]/25'
-                  : 'border-[#232330] bg-[#14141c] text-[#8c8c9e] hover:text-white hover:border-[#343446]'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className={`flex h-9 w-9 items-center justify-center rounded-xl ${
-                    activeTab === 'resolution'
-                      ? 'bg-black/25 text-white'
-                      : 'bg-[#181824] text-amber-400'
-                  }`}
-                >
-                  <Scale className="h-4 w-4" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-white leading-tight">Resolutions</div>
-                  <div
-                    className={`text-[10px] leading-tight mt-0.5 ${
-                      activeTab === 'resolution' ? 'text-white/80' : 'text-[#7a7a8c]'
-                    }`}
-                  >
-                    Adjudication & Pari-Mutuel payouts
-                  </div>
-                </div>
-              </div>
-              <ChevronRight
-                className={`h-4 w-4 ${activeTab === 'resolution' ? 'text-white' : 'text-[#555566]'}`}
-              />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleSelectTab('how-it-works')}
-              className={`flex w-full items-center justify-between rounded-2xl p-3 transition text-left border ${
-                activeTab === 'how-it-works'
-                  ? 'bg-[#FF6B00] text-white border-[#FF6B00] shadow-md shadow-[#FF6B00]/25'
-                  : 'border-[#232330] bg-[#14141c] text-[#8c8c9e] hover:text-white hover:border-[#343446]'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className={`flex h-9 w-9 items-center justify-center rounded-xl ${
-                    activeTab === 'how-it-works'
-                      ? 'bg-black/25 text-white'
-                      : 'bg-[#181824] text-[#53b3d4]'
-                  }`}
-                >
-                  <Layers className="h-4 w-4" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-white leading-tight">Architecture</div>
-                  <div
-                    className={`text-[10px] leading-tight mt-0.5 ${
-                      activeTab === 'how-it-works' ? 'text-white/80' : 'text-[#7a7a8c]'
-                    }`}
-                  >
-                    Bonding curve mathematical model
-                  </div>
-                </div>
-              </div>
-              <ChevronRight
-                className={`h-4 w-4 ${activeTab === 'how-it-works' ? 'text-white' : 'text-[#555566]'}`}
-              />
-            </button>
-          </div>
+          )}
 
           {/* Mobile Footer Status */}
           <div className="mt-3 pt-3 border-t border-[#1f1f2c] flex items-center justify-between text-xs font-mono">

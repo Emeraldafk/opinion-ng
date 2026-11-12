@@ -68,7 +68,7 @@ import { OpinionFeedView } from './components/OpinionFeedView';
 import { getUserProfile, UserProfile } from './lib/userProfileService';
 import { OpinionReputationView } from './components/OpinionReputationView';
 import { CreatorEconomicsView, FeeClaimRecord } from './components/CreatorEconomicsView';
-import { AdminResolutionDashboard } from './components/AdminResolutionDashboard';
+import { AuthLandingPage } from './components/AuthLandingPage';
 import { infraManager } from './lib/indexerService';
 import { dbService } from './lib/databaseService';
 import { realtimeSync } from './lib/realtimeSyncService';
@@ -1494,6 +1494,11 @@ export function App() {
     { id: 'Other', label: 'Other', symbol: '💬' },
   ];
 
+  // Gated Auth First Page: If user is not logged in, redirect them directly to the Login/SignUp landing page
+  if (!auth.isAuthenticated || !auth.user) {
+    return <AuthLandingPage />;
+  }
+
   return (
     <div className="min-h-screen bg-[#0b0c10] text-[#f1f1f4] w-full max-w-[100vw] overflow-x-hidden">
       {/* Top Navbar */}
@@ -2015,113 +2020,6 @@ export function App() {
             />
           </div>
         )}
-
-        {/* TAB 5: PREDICTION RESOLUTION & GOVERNANCE DASHBOARD */}
-        {activeTab === 'resolution' && (
-          <AdminResolutionDashboard
-            markets={markets}
-            walletAddress={walletAddress}
-            contractAddress={contractAddress}
-            onProposeOutcome={handleProposeOutcome}
-            onDisputeOutcome={handleDisputeOutcome}
-            onResolveMarket={handleResolveMarket}
-            onSettleMarket={handleClaimSettlement}
-            onEmergencyCancel={handleEmergencyCancel}
-            onSelectMarket={(m) => setSelectedMarketId(m.id)}
-            onRefreshMarkets={async () => {
-              const refreshed = await dbService.syncOnChainMarkets(contractAddress);
-              if (refreshed && refreshed.length > 0) setMarkets(refreshed);
-            }}
-          />
-        )}
-
-        {/* TAB 6: HOW POV WORKS (ARCHITECTURE) */}
-        {activeTab === 'how-it-works' && (
-          <section className="mx-auto max-w-4xl space-y-6">
-            <div className="rounded-[28px] border border-[#1c313a] bg-gradient-to-r from-[#0e1c24] via-[#121218] to-[#101a22] p-6 sm:p-8 shadow-xl">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#227c9d]/30 bg-[#227c9d]/15 px-3.5 py-1 text-xs font-fun font-bold text-[#53b3d4]">
-                <Flame className="h-3.5 w-3.5 text-[#227c9d]" />
-                <span>TIRED.FUN PROTOCOL ARCHITECTURE (POV MODEL)</span>
-              </div>
-              <h2 className="mb-3 text-2xl font-fun font-bold text-white sm:text-3xl">
-                How Perpetual Opinion Markets Work on Robinhood Chain
-              </h2>
-              <p className="text-sm leading-relaxed text-slate-300 font-sans">
-                Traditional prediction markets lock your capital for months waiting for an external
-                oracle to resolve a single binary date. <strong className="text-white">Tired.Fun</strong> replaces binary
-                expiration with <strong className="text-white">continuous, independent bonding curves</strong> that measure
-                live collective conviction 24/7.
-              </p>
-
-              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div className="rounded-[22px] border border-[#232330] bg-[#0f1015] p-5 shadow-inner">
-                  <Layers className="mb-2.5 h-6 w-6 text-[#227c9d]" />
-                  <h3 className="mb-1 text-sm font-fun font-bold text-white">
-                    1. Independent YES & NO Curves
-                  </h3>
-                  <p className="text-xs leading-relaxed text-slate-400 font-sans">
-                    YES and NO are separate tokens, each on its own constant-product bonding curve (
-                    <code className="text-[#53b3d4]">K = 0.5 ETH × 500,000</code>). Buying YES pushes YES up without artificially
-                    crushing NO—both sides can appreciate when a debate goes viral.
-                  </p>
-                </div>
-
-                <div className="rounded-[22px] border border-[#232330] bg-[#0f1015] p-5 shadow-inner">
-                  <TrendingUp className="mb-2.5 h-6 w-6 text-[#53b3d4]" />
-                  <h3 className="mb-1 text-sm font-fun font-bold text-white">
-                    2. Instant On-Chain Liquidity
-                  </h3>
-                  <p className="text-xs leading-relaxed text-slate-400 font-sans">
-                    No orderbooks, no market makers, and no oracle delays. The smart contract holds
-                    100% of the real ETH reserve and acts as an instant counterparty whenever you buy or
-                    sell.
-                  </p>
-                </div>
-
-                <div className="rounded-[22px] border border-[#232330] bg-[#0f1015] p-5 shadow-inner">
-                  <Coins className="mb-2.5 h-6 w-6 text-[#FF6B00]" />
-                  <h3 className="mb-1 text-sm font-fun font-bold text-white">
-                    3. 1% Creator Revenue Share
-                  </h3>
-                  <p className="text-xs leading-relaxed text-slate-400 font-sans">
-                    Anyone can spawn a market from a cultural debate or X post. The creator
-                    automatically earns 1.00% of every buy and sell in ETH across both curves.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#227c9d]/30 bg-[#227c9d]/10 p-4 text-xs font-fun font-bold">
-                <div className="flex items-center gap-2.5 text-white">
-                  <ShieldCheck className="h-5 w-5 text-[#227c9d]" />
-                  <span>
-                    Built natively for <strong>Robinhood Chain Testnet (Chain ID 46630)</strong> •{' '}
-                    <code className="font-mono text-[#53b3d4]">contracts/Tired.FunMarkets.sol</code>
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <a
-                    href={ROBINHOOD_FAUCET_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-[#FF6B00] hover:underline"
-                  >
-                    <span>Testnet Faucet</span>
-                    <ExternalLink className="h-3 w-3" />
-                  </a>
-                  <a
-                    href={ROBINHOOD_EXPLORER_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-[#227c9d] hover:underline"
-                  >
-                    <span>Block Explorer</span>
-                    <ExternalLink className="h-3 w-3" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
       </main>
 
       {/* POV-Style Sticky Bottom Bar / Footer */}
@@ -2131,9 +2029,9 @@ export function App() {
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2 font-fun text-base font-bold text-white">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#227c9d] text-white shadow-[0_0_12px_rgba(34,124,157,0.6)]">
-                <Flame className="h-4 w-4" />
+                <Sparkles className="h-4 w-4" />
               </span>
-              <span>tired.fun</span>
+              <span>Opinion<span className="text-[#53b3d4]">NG</span></span>
             </div>
             <a
               href="https://explorer.testnet.chain.robinhood.com"
