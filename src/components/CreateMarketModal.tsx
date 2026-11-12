@@ -17,6 +17,8 @@ import {
   Check,
 } from 'lucide-react';
 import { MarketCategory, MarketType } from '../lib/bondingCurve';
+import { useAppAuth } from '../hooks/useAppAuth';
+import { formatNGN } from '../lib/currency';
 
 interface CreateMarketModalProps {
   isOpen: boolean;
@@ -275,6 +277,7 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
   walletAddress,
   onRequireWallet,
 }) => {
+  const auth = useAppAuth();
   // Market Type: Perpetual Opinion vs Resolvable Prediction
   const [marketType, setMarketType] = useState<MarketType>('PERPETUAL_OPINION');
 
@@ -283,7 +286,8 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
   const [sourceHandle, setSourceHandle] = useState('@TheTiredFun');
   const [imageUri, setImageUri] = useState(PRESET_THUMBNAILS[0].url);
   const [initialSideIsYes, setInitialSideIsYes] = useState(true);
-  const [initialBuyEth, setInitialBuyEth] = useState('0.001');
+  const [initialBuyEth, setInitialBuyEth] = useState('1000');
+  const [antiSpamOption, setAntiSpamOption] = useState<'fee' | 'seed'>('fee');
 
   // Thumbnail Gallery Dropdown state
   const [isThumbnailMenuOpen, setIsThumbnailMenuOpen] = useState(false);
@@ -313,7 +317,7 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
     e.preventDefault();
     setFormError(null);
 
-    if (!walletAddress) {
+    if (!walletAddress && !auth.isAuthenticated) {
       if (onRequireWallet) {
         onRequireWallet(
           marketType === 'RESOLVABLE_PREDICTION'
@@ -860,6 +864,47 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
             </div>
           </div>
 
+          {/* Anti-Spam Market Creation Requirement */}
+          <div className="rounded-2xl border border-[#2e2e42] bg-[#0c0c14] p-3.5 space-y-2.5">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-bold text-white flex items-center gap-1.5">
+                <ShieldCheck className="h-4 w-4 text-[#227c9d]" />
+                <span>Anti-Spam Requirement</span>
+              </span>
+              <span className="text-[11px] text-[#8c8c9e]">
+                Available: <strong className="text-white">{formatNGN(auth.wallet.availableKobo)}</strong>
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <button
+                type="button"
+                onClick={() => setAntiSpamOption('fee')}
+                className={`rounded-xl border p-2.5 text-left transition ${
+                  antiSpamOption === 'fee'
+                    ? 'border-[#227c9d] bg-[#227c9d]/15 text-white'
+                    : 'border-[#232330] bg-[#12121a] text-[#8c8c9e]'
+                }`}
+              >
+                <div className="font-bold text-white">₦1,000 Creation Fee</div>
+                <div className="text-[10px] text-[#8c8c9e] mt-0.5">Deducted once to combat spam</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setAntiSpamOption('seed')}
+                className={`rounded-xl border p-2.5 text-left transition ${
+                  antiSpamOption === 'seed'
+                    ? 'border-[#227c9d] bg-[#227c9d]/15 text-white'
+                    : 'border-[#232330] bg-[#12121a] text-[#8c8c9e]'
+                }`}
+              >
+                <div className="font-bold text-white">₦5,000 Liquidity Seed</div>
+                <div className="text-[10px] text-[#8c8c9e] mt-0.5">Adds initial liquidity to pools</div>
+              </button>
+            </div>
+          </div>
+
           {/* Creator Reward Note */}
           <div className="flex items-center gap-2.5 rounded-2xl border border-purple-500/30 bg-purple-500/10 p-3 text-xs text-purple-200">
             <Coins className="h-4 w-4 shrink-0 text-purple-400" />
@@ -888,7 +933,7 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
           >
             <Sparkles className="h-4 w-4" />
             <span>
-              {!walletAddress
+              {!walletAddress && !auth.isAuthenticated
                 ? 'Sign In to Launch Market'
                 : isCreating
                 ? 'Creating Opinion Market...'

@@ -49,7 +49,8 @@ export interface AuthContextType {
   deductKoboForTrade: (kobo: number) => boolean;
   creditKoboForTrade: (kobo: number) => void;
   creditCreatorEarningsKobo: (kobo: number) => void;
-  claimCreatorEarnings: () => number;
+  claimCreatorEarnings: () => Promise<number>;
+  syncWithBackend: () => Promise<void>;
 }
 
 const STORAGE_KEYS = {
@@ -243,9 +244,51 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }));
   };
 
-  const claimCreatorEarnings = (): number => {
+  const syncWithBackend = async () => {
+    try {
+      const res = await fetch(`/api/user/me?userId=${encodeURIComponent(user?.id || DEFAULT_DEMO_USER.id)}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.wallet) {
+          setWallet({
+            availableKobo: Number(data.wallet.availableKobo),
+            lockedKobo: Number(data.wallet.lockedKobo || 0),
+            creatorEarningsKobo: Number(data.wallet.creatorEarningsKobo || 0),
+          });
+        }
+      }
+    } catch {
+      // Offline fallback silently keeps local state
+    }
+  };
+
+  useEffect(() => {
+    syncWithBackend();
+  }, [user?.id]);
+
+  const claimCreatorEarnings = async (): Promise<number> => {
     const claimable = wallet.creatorEarningsKobo;
     if (claimable <= 0) return 0;
+
+    try {
+      const res = await fetch('/api/creator/claim', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user?.id || DEFAULT_DEMO_USER.id }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setWallet((prev) => ({
+          ...prev,
+          availableKobo: data.newAvailableKobo,
+          creatorEarningsKobo: data.newCreatorEarningsKobo,
+        }));
+        return data.claimedKobo;
+      }
+    } catch {
+      // Local fallback
+    }
+
     setWallet((prev) => ({
       ...prev,
       availableKobo: prev.availableKobo + claimable,
@@ -277,6 +320,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         creditKoboForTrade,
         creditCreatorEarningsKobo,
         claimCreatorEarnings,
+        syncWithBackend,
       }}
     >
       {children}

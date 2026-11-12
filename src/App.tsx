@@ -73,6 +73,7 @@ import { infraManager } from './lib/indexerService';
 import { dbService } from './lib/databaseService';
 import { realtimeSync } from './lib/realtimeSyncService';
 import { calculateXScore, getTopTrendingMarket } from './lib/feedAlgorithm';
+import { apiClient } from './lib/apiClient';
 
 type SortOption = 'volume' | 'conviction' | 'controversial' | 'newest';
 
@@ -457,82 +458,134 @@ export function App() {
       }
     }
 
-    // 2. Off-Chain NGN Double-Entry Ledger execution (when not forcing Web3 transaction)
+    // 2. Atomic Off-Chain NGN Double-Entry Ledger execution
     if (!walletAddress || !window.ethereum) {
-      const costKobo = isBuy
-        ? Math.max(100, Math.round(amount * 4_200_000 * 100))
-        : Math.round(quote.grossEthDelta * 4_200_000 * 100);
+      try {
+        if (isBuy) {
+          const grossAmountKobo = amount < 1
+            ? Math.round(amount * 4_200_000 * 100)
+            : Math.round(amount * 100);
 
-      if (isBuy && auth.wallet.availableKobo < costKobo) {
-        pushToast('Insufficient NGN Balance', `You need ${formatNGN(costKobo)} to place this order.`);
-        auth.openDepositModal();
-        return;
-      }
+          if (auth.wallet.availableKobo < grossAmountKobo) {
+            pushToast('Insufficient NGN Balance', `You need ${formatNGN(grossAmountKobo)} to place this order.`);
+            auth.openDepositModal();
+            return;
+          }
 
-      if (isBuy) {
-        auth.deductKoboForTrade(costKobo);
-        const creatorEarnings = Math.round(costKobo * 0.015);
-        auth.creditCreatorEarningsKobo(creatorEarnings);
-      } else {
-        const proceedsKobo = Math.round(quote.netEthDelta * 4_200_000 * 100);
-        auth.creditKoboForTrade(proceedsKobo);
-      }
+          const res = await apiClient.buyShares({
+            userId: auth.user?.id,
+            marketId,
+            side: isYes ? 'YES' : 'NO',
+            grossAmountKobo,
+            slippagePct,
+          });
 
-      const currentHoldings = holdings[marketId] || { yesShares: 0, noShares: 0 };
-      const nextHoldings = {
-        ...holdings,
-        [marketId]: {
-          yesShares: isBuy
-            ? (isYes ? currentHoldings.yesShares + quote.sharesDelta : currentHoldings.yesShares)
-            : (isYes ? Math.max(0, currentHoldings.yesShares - amount) : currentHoldings.yesShares),
-          noShares: isBuy
-            ? (!isYes ? currentHoldings.noShares + quote.sharesDelta : currentHoldings.noShares)
-            : (!isYes ? Math.max(0, currentHoldings.noShares - amount) : currentHoldings.noShares),
-        },
-      };
-      setHoldings(nextHoldings);
-      dbService.saveHoldings(nextHoldings);
+          await auth.syncWithBackend();
 
-      setMarkets((prev) =>
-        prev.map((m) => {
-          if (m.id !== marketId) return m;
-          const curveKey = isYes ? 'yesCurve' : 'noCurve';
-          const curve = m[curveKey];
-          return {
-            ...m,
-            totalTrades: m.totalTrades + 1,
-            [curveKey]: {
-              ...curve,
-              realEth: isBuy ? curve.realEth + amount : Math.max(0, curve.realEth - quote.netEthDelta),
-              totalShares: isBuy ? curve.totalShares + quote.sharesDelta : Math.max(0, curve.totalShares - amount),
-              volumeEth: curve.volumeEth + amount,
+          const currentHoldings = holdings[marketId] || { yesShares: 0, noShares: 0 };
+          const sharesDelta = res.sharesReceived || quote.sharesDelta;
+          const nextHoldings = {
+            ...holdings,
+            [marketId]: {
+              yesShares: isYes ? currentHoldings.yesShares + sharesDelta : currentHoldings.yesShares,
+              noShares: !isYes ? currentHoldings.noShares + sharesDelta : currentHoldings.noShares,
             },
           };
-        })
-      );
+          setHoldings(nextHoldings);
+          dbService.saveHoldings(nextHoldings);
 
-      const newAct: TradeActivity = {
-        id: `act-${Date.now()}`,
-        marketId,
-        marketQuestion: targetMarket.question,
-        category: targetMarket.category,
-        trader: auth.user?.displayName || 'OpinionNG Trader',
-        isYes,
-        isBuy,
-        ethAmount: amount,
-        sharesAmount: Math.round(quote.sharesDelta || amount),
-        yesSentimentAfter: quote.newSentimentPct,
-        eventType: 'STANDARD_TRADE',
-        timestamp: Date.now(),
-        isOnChain: false,
-      };
-      setActivities((prev) => [newAct, ...prev]);
+          setMarkets((prev) =>
+            prev.map((m) => {
+              if (m.id !== marketId) return m;
+              const curveKey = isYes ? 'yesCurve' : 'noCurve';
+              const curve = m[curveKey];
+              return {
+                ...m,
+                totalTrades: m.totalTrades + 1,
+                creatorFeesEarned: (m.creatorFeesEarned || 0) + (res.creatorFeeKobo / (4_200_000 * 100)),
+                [curveKey]: {
+                  ...curve,
+                  realEth: curve.realEth + (res.netAmountKobo || 0) / (4_200_000 * 100),
+                  totalShares: curve.totalShares + sharesDelta,
+                  volumeEth: curve.volumeEth + grossAmountKobo / (4_200_000 * 100),
+                },
+              };
+            })
+          );
 
-      pushToast(
-        isBuy ? 'Shares Purchased' : 'Shares Sold',
-        `Settled ${isBuy ? '+' : '-'}${Math.round(quote.sharesDelta || amount)} ${isYes ? 'YES' : 'NO'} shares via NGN ledger`
-      );
-      return;
+          const newAct: TradeActivity = {
+            id: res.tradeRef || `act-${Date.now()}`,
+            marketId,
+            marketQuestion: targetMarket.question,
+            category: targetMarket.category,
+            trader: auth.user?.displayName || 'OpinionNG Trader',
+            isYes,
+            isBuy: true,
+            ethAmount: amount,
+            sharesAmount: sharesDelta,
+            yesSentimentAfter: res.marketState?.yesPct || quote.newSentimentPct,
+            eventType: 'STANDARD_TRADE',
+            timestamp: Date.now(),
+            isOnChain: false,
+          };
+          setActivities((prev) => [newAct, ...prev]);
+
+          pushToast(
+            'Shares Purchased',
+            `Purchased ${sharesDelta.toLocaleString()} ${isYes ? 'YES' : 'NO'} shares for ${formatNGN(grossAmountKobo)} (Creator earned ${formatNGN(res.creatorFeeKobo)})`
+          );
+          return;
+        } else {
+          // SELL
+          const sharesToSell = Math.round(amount);
+          const res = await apiClient.sellShares({
+            userId: auth.user?.id,
+            marketId,
+            side: isYes ? 'YES' : 'NO',
+            sharesCount: sharesToSell,
+            slippagePct,
+          });
+
+          await auth.syncWithBackend();
+
+          const currentHoldings = holdings[marketId] || { yesShares: 0, noShares: 0 };
+          const nextHoldings = {
+            ...holdings,
+            [marketId]: {
+              yesShares: isYes ? Math.max(0, currentHoldings.yesShares - sharesToSell) : currentHoldings.yesShares,
+              noShares: !isYes ? Math.max(0, currentHoldings.noShares - sharesToSell) : currentHoldings.noShares,
+            },
+          };
+          setHoldings(nextHoldings);
+          dbService.saveHoldings(nextHoldings);
+
+          const newAct: TradeActivity = {
+            id: res.tradeRef || `act-${Date.now()}`,
+            marketId,
+            marketQuestion: targetMarket.question,
+            category: targetMarket.category,
+            trader: auth.user?.displayName || 'OpinionNG Trader',
+            isYes,
+            isBuy: false,
+            ethAmount: amount,
+            sharesAmount: sharesToSell,
+            yesSentimentAfter: res.marketState?.yesPct || quote.newSentimentPct,
+            eventType: 'STANDARD_TRADE',
+            timestamp: Date.now(),
+            isOnChain: false,
+          };
+          setActivities((prev) => [newAct, ...prev]);
+
+          pushToast(
+            'Shares Sold',
+            `Sold ${sharesToSell.toLocaleString()} ${isYes ? 'YES' : 'NO'} shares for ${formatNGN(res.netProceedsKobo || 0)}`
+          );
+          return;
+        }
+      } catch (err: any) {
+        pushToast('Trade Failed', err.message || 'Execution error');
+        throw err;
+      }
     }
 
     // 2. Broadcast real on-chain transaction through user's wallet
@@ -719,7 +772,7 @@ export function App() {
     );
   };
 
-  // Create New Market (Strictly Real On-Chain)
+  // Create New Market (Off-Chain NGN Engine + Optional On-Chain EVM)
   const handleCreateMarket = async (data: {
     question: string;
     category: Exclude<MarketCategory, 'All'>;
@@ -734,17 +787,83 @@ export function App() {
     noCondition?: string;
     evidenceSource?: string;
   }) => {
-    // 1. Enforce wallet connection
-    if (!walletAddress) {
-      pushToast('Wallet Not Connected', 'Please connect your Robinhood Chain wallet to spawn a market.');
-      promptConnectWallet('Spawning a Market');
-      return;
+    // 1. Off-Chain NGN Atomic Market Creation Flow (Anti-spam check & Creator Economics)
+    if (!walletAddress || !window.ethereum) {
+      if (!auth.isAuthenticated) {
+        pushToast('Sign In Required', 'Please sign in to OpinionNG to create a market.');
+        auth.openSignInModal();
+        return;
+      }
+
+      try {
+        const res = await apiClient.createMarket({
+          creatorId: auth.user?.id,
+          question: data.question,
+          category: data.category,
+          imageUri: data.imageUri,
+          sourceHandle: data.sourceHandle || (auth.user?.xHandle ? `@${auth.user.xHandle}` : '@OpinionNG'),
+          antiSpamOption: 'fee',
+          yesCondition: data.yesCondition,
+          noCondition: data.noCondition,
+          evidenceSource: data.evidenceSource,
+          closingTime: data.closingTime ? new Date(data.closingTime * 1000).toISOString() : undefined,
+          resolutionDeadline: data.resolutionDeadline ? new Date(data.resolutionDeadline * 1000).toISOString() : undefined,
+        });
+
+        await auth.syncWithBackend();
+
+        const createdMkt: OpinionMarket = {
+          id: res.market.id,
+          creator: auth.user?.displayName || 'OpinionNG Creator',
+          question: res.market.question,
+          category: data.category,
+          imageUri: res.market.imageUri,
+          sourceHandle: res.market.sourceHandle,
+          createdAt: Date.now(),
+          totalTrades: 0,
+          creatorFeesEarned: 0,
+          yesCurve: {
+            virtualEth: 0.5,
+            virtualShares: 500000,
+            realEth: 0.001,
+            totalShares: 1000,
+            volumeEth: 0.001,
+          },
+          noCurve: {
+            virtualEth: 0.5,
+            virtualShares: 500000,
+            realEth: 0.001,
+            totalShares: 1000,
+            volumeEth: 0.001,
+          },
+          history: [],
+          comments: [],
+          marketType: data.marketType || 'PERPETUAL_OPINION',
+          status: 'ACTIVE',
+          prediction: data.marketType === 'RESOLVABLE_PREDICTION' ? {
+            closingTime: data.closingTime || Math.floor(Date.now() / 1000) + 7 * 86400,
+            resolutionDeadline: data.resolutionDeadline || Math.floor(Date.now() / 1000) + 8 * 86400,
+            yesCondition: data.yesCondition || '',
+            noCondition: data.noCondition || '',
+            evidenceSource: data.evidenceSource || '',
+          } : undefined,
+        };
+
+        setMarkets((prev) => [createdMkt, ...prev]);
+        setSelectedMarketId(createdMkt.id);
+
+        pushToast(
+          'Market Created & Live!',
+          `₦1,000 anti-spam fee deducted. You will earn 1.5% creator fees on every trade.`
+        );
+        return;
+      } catch (err: any) {
+        pushToast('Market Creation Failed', err.message || 'Error creating market');
+        throw err;
+      }
     }
 
-    if (!window.ethereum) {
-      pushToast('EVM Wallet Required', 'Please install MetaMask or Rabby to create markets on Robinhood Chain.');
-      return;
-    }
+    // 2. Broadcast to real on-chain contract when Web3 wallet connected
 
     let txHash: string;
     const isPrediction = data.marketType === 'RESOLVABLE_PREDICTION';
@@ -913,11 +1032,56 @@ export function App() {
     outcome: 'YES' | 'NO' | 'VOID',
     evidenceUrl: string
   ) => {
+    // 1. Off-chain NGN dispute window & resolution
     if (!walletAddress || !window.ethereum) {
-      pushToast('Wallet Required', 'Please connect your wallet to resolve market.');
-      promptConnectWallet('Resolving Market');
-      return;
+      try {
+        const res = await apiClient.resolveMarket({
+          marketId,
+          outcome,
+          evidenceUrl,
+          adminUserId: auth.user?.id,
+          immediate: false,
+        });
+
+        setMarkets((prev) =>
+          prev.map((m) =>
+            m.id === marketId
+              ? {
+                  ...m,
+                  status: 'PROPOSED',
+                  prediction: m.prediction
+                    ? {
+                        ...m.prediction,
+                        proposedOutcome: outcome,
+                        proposedEvidence: evidenceUrl,
+                        disputeDeadline: Math.floor(Date.now() / 1000) + 7200,
+                      }
+                    : {
+                        closingTime: Math.floor(Date.now() / 1000),
+                        resolutionDeadline: Math.floor(Date.now() / 1000) + 7200,
+                        disputeDeadline: Math.floor(Date.now() / 1000) + 7200,
+                        proposedOutcome: outcome,
+                        proposedEvidence: evidenceUrl,
+                        yesCondition: '',
+                        noCondition: '',
+                        evidenceSource: evidenceUrl,
+                      },
+                }
+              : m
+          )
+        );
+
+        pushToast(
+          'Outcome Proposed (2-Hour Dispute Window Active)',
+          `Proposed ${outcome}. Dispute window ends at ${new Date(res.disputeEndsAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`
+        );
+        return;
+      } catch (err: any) {
+        pushToast('Resolution Error', err.message || 'Failed to resolve market');
+        return;
+      }
     }
+
     const outcomeNum = outcome === 'YES' ? 1 : outcome === 'NO' ? 2 : 3;
     try {
       await switchOrAddRobinhoodChain();
@@ -985,11 +1149,46 @@ export function App() {
   };
 
   const handleClaimSettlement = async (marketId: number) => {
+    // 1. Off-chain NGN settlement payout (₦100 per winning share)
     if (!walletAddress || !window.ethereum) {
-      pushToast('Wallet Required', 'Please connect your wallet to claim settlement rewards.');
-      promptConnectWallet('Claiming Settlement');
-      return;
+      try {
+        const res = await apiClient.settleMarket({ marketId, forceImmediate: true });
+        await auth.syncWithBackend();
+
+        // Update local holdings
+        setHoldings((prev) => ({
+          ...prev,
+          [marketId]: { yesShares: 0, noShares: 0 },
+        }));
+
+        setMarkets((prev) =>
+          prev.map((m) =>
+            m.id === marketId
+              ? {
+                  ...m,
+                  status: 'RESOLVED',
+                  prediction: m.prediction
+                    ? {
+                        ...m.prediction,
+                        finalOutcome: (res.finalOutcome as any) || 'YES',
+                      }
+                    : undefined,
+                }
+              : m
+          )
+        );
+
+        pushToast(
+          'Settlement Claimed!',
+          `Paid ₦100 per winning share directly into your available NGN balance.`
+        );
+        return;
+      } catch (err: any) {
+        pushToast('Settlement Notice', err.message || 'Error settling market');
+        return;
+      }
     }
+
     try {
       await switchOrAddRobinhoodChain();
       const walletClient = createWalletClient({
@@ -1892,6 +2091,7 @@ export function App() {
             onProposeOutcome={handleProposeOutcome}
             onDisputeOutcome={handleDisputeOutcome}
             onResolveMarket={handleResolveMarket}
+            onSettleMarket={handleClaimSettlement}
             onEmergencyCancel={handleEmergencyCancel}
             onSelectMarket={(m) => setSelectedMarketId(m.id)}
             onRefreshMarkets={async () => {

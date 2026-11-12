@@ -14,6 +14,7 @@ CREATE TYPE ledger_entry_type AS ENUM (
   'TRADE_SELL',
   'MARKET_PAYOUT',
   'CREATOR_FEE',
+  'PLATFORM_FEE',
   'MARKET_CREATION_FEE',
   'WITHDRAWAL',
   'WITHDRAWAL_REFUND'
@@ -113,7 +114,9 @@ CREATE TABLE IF NOT EXISTS markets (
   creator_fee_bps INTEGER NOT NULL DEFAULT 150, -- 1.5% (150 basis points)
   platform_fee_bps INTEGER NOT NULL DEFAULT 150, -- 1.5% (150 basis points)
   status market_status NOT NULL DEFAULT 'ACTIVE',
+  proposed_outcome market_outcome NOT NULL DEFAULT 'UNRESOLVED',
   final_outcome market_outcome NOT NULL DEFAULT 'UNRESOLVED',
+  dispute_ends_at TIMESTAMPTZ,
   closing_time TIMESTAMPTZ,
   resolution_deadline TIMESTAMPTZ,
   yes_condition TEXT,

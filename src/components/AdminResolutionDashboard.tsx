@@ -44,6 +44,7 @@ interface AdminResolutionDashboardProps {
     outcome: 'YES' | 'NO' | 'VOID',
     evidenceUrl: string
   ) => Promise<void>;
+  onSettleMarket?: (marketId: number) => Promise<void>;
   onEmergencyCancel: (marketId: number, reason: string) => Promise<void>;
   onSelectMarket: (market: OpinionMarket) => void;
   onRefreshMarkets?: () => Promise<void>;
@@ -56,6 +57,7 @@ export const AdminResolutionDashboard: React.FC<AdminResolutionDashboardProps> =
   onProposeOutcome,
   onDisputeOutcome,
   onResolveMarket,
+  onSettleMarket,
   onEmergencyCancel,
   onSelectMarket,
   onRefreshMarkets,
@@ -469,15 +471,10 @@ export const AdminResolutionDashboard: React.FC<AdminResolutionDashboardProps> =
                                 Dispute
                               </button>
                               <button
-                                onClick={() => handleOpenAction(m, 'RESOLVE')}
-                                disabled={isCreator}
-                                className={`rounded-xl px-3 py-1.5 font-fun text-xs font-bold transition ${
-                                  isCreator
-                                    ? 'border border-[#232330] bg-[#0c0c11] text-[#7a7a8c] cursor-not-allowed'
-                                    : 'bg-emerald-600 text-white hover:bg-emerald-500'
-                                }`}
+                                onClick={() => onSettleMarket ? onSettleMarket(m.id) : handleOpenAction(m, 'RESOLVE')}
+                                className="rounded-xl bg-purple-600 px-3 py-1.5 font-fun text-xs font-bold text-white hover:bg-purple-500 transition"
                               >
-                                Finalize
+                                Settle Payouts (₦100)
                               </button>
                             </>
                           )}

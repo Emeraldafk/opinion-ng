@@ -27,6 +27,7 @@ import { ROBINHOOD_EXPLORER_URL, shortenAddress } from '../config/robinhoodChain
 import { infraManager, SolvencyReconciliationReport } from '../lib/indexerService';
 import { useAppAuth } from '../hooks/useAppAuth';
 import { formatNGN } from '../lib/currency';
+import { apiClient } from '../lib/apiClient';
 import {
   getUserProfile,
   saveUserProfile,
@@ -104,6 +105,30 @@ export const CreatorEconomicsView: React.FC<CreatorEconomicsViewProps> = ({
   const [saveToast, setSaveToast] = useState(false);
   const [profileError, setProfileError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // X Bot Webhook Mention Simulation State
+  const [xBotQuestion, setXBotQuestion] = useState('Will Dangote Refinery export jet fuel across West Africa by Q4?');
+  const [xBotResult, setXBotResult] = useState<{ market_url: string; reply_text: string } | null>(null);
+  const [isXBotSubmitting, setIsXBotSubmitting] = useState(false);
+
+  const handleTestXBot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!xBotQuestion.trim()) return;
+    setIsXBotSubmitting(true);
+    try {
+      const res = await apiClient.triggerXMentionBot({
+        author_id: auth.user?.id || 'x_user_demo',
+        author_username: auth.user?.xHandle || 'opinion_trader',
+        text: `@OpinionNG ${xBotQuestion.trim()}`,
+      });
+      setXBotResult(res);
+      await auth.syncWithBackend();
+    } catch (err: any) {
+      alert(err.message || 'X bot submission failed');
+    } finally {
+      setIsXBotSubmitting(false);
+    }
+  };
 
   // Sync profile when wallet changes
   useEffect(() => {
@@ -832,6 +857,71 @@ export const CreatorEconomicsView: React.FC<CreatorEconomicsViewProps> = ({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* X (TWITTER) BOT INGESTION TESTER CARD */}
+      <div className="rounded-[26px] border border-[#232332] bg-[#12121a] p-6 shadow-xl">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#20202e] pb-4 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-500/15 border border-sky-500/30 text-sky-400">
+              <AtSign className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-white">X Mention Bot Integration (@TheTiredFun / @OpinionNG)</h3>
+              <p className="text-xs text-[#8c8c9e]">
+                Tag the bot on X to spawn verified markets automatically and earn 1.5% creator fees on every trade in ₦.
+              </p>
+            </div>
+          </div>
+          <span className="rounded-full bg-sky-500/10 border border-sky-500/30 px-3 py-1 text-[11px] font-mono text-sky-400">
+            Webhook: /api/webhooks/x-mentions
+          </span>
+        </div>
+
+        <form onSubmit={handleTestXBot} className="space-y-3">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <div className="relative flex-1">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-mono text-xs text-sky-400 font-bold">
+                @OpinionNG
+              </span>
+              <input
+                type="text"
+                value={xBotQuestion}
+                onChange={(e) => setXBotQuestion(e.target.value)}
+                placeholder="Type your debate prediction..."
+                className="w-full rounded-xl border border-[#2b2b3a] bg-[#0c0c12] pl-28 pr-4 py-2.5 text-xs text-white placeholder-[#555566] focus:border-sky-500 focus:outline-none"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isXBotSubmitting || !xBotQuestion.trim()}
+              className="rounded-xl bg-sky-600 hover:bg-sky-500 disabled:opacity-50 px-5 py-2.5 text-xs font-bold text-white transition active:scale-95 shrink-0"
+            >
+              {isXBotSubmitting ? 'Bot Processing...' : 'Simulate X Mention'}
+            </button>
+          </div>
+
+          {xBotResult && (
+            <div className="rounded-xl border border-emerald-500/40 bg-emerald-950/40 p-3.5 text-xs space-y-1.5">
+              <div className="flex items-center gap-1.5 font-bold text-emerald-300">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                <span>Market Created Successfully via X Mention Webhook!</span>
+              </div>
+              <div className="text-slate-300 font-mono text-[11px] bg-black/40 p-2 rounded-lg">
+                🤖 Bot Response: "{xBotResult.reply_text}"
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <a
+                  href={xBotResult.market_url}
+                  className="inline-flex items-center gap-1 text-sky-400 hover:underline font-bold"
+                >
+                  <span>Open Live Market</span>
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            </div>
+          )}
+        </form>
       </div>
 
       {/* 3. 4 METRIC CARDS */}

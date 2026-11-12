@@ -1,0 +1,565 @@
+{
+  "users": {
+    "usr_opinion_platform_treasury": {
+      "id": "usr_opinion_platform_treasury",
+      "displayName": "OpinionNG Platform Treasury",
+      "avatarUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150",
+      "kycTier": 2,
+      "bvnNinVerified": true,
+      "createdAt": "2026-11-12T14:49:57.823Z"
+    },
+    "usr_demo_893240": {
+      "id": "usr_demo_893240",
+      "email": "trader@opinion.ng",
+      "phone": "+2348012345678",
+      "xHandle": "opinion_trader",
+      "xUserId": "x_opinion_demo_101",
+      "displayName": "Tunde Afolabi",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+      "kycTier": 1,
+      "bvnNinVerified": true,
+      "createdAt": "2026-11-12T14:49:57.824Z"
+    },
+    "usr_creator_burna": {
+      "id": "usr_creator_burna",
+      "displayName": "NaijaPopCurator",
+      "xHandle": "BurnaBoyFanClub",
+      "xUserId": "x_burna_curator",
+      "avatarUrl": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150",
+      "kycTier": 1,
+      "bvnNinVerified": true,
+      "createdAt": "2026-11-12T14:49:57.824Z"
+    }
+  },
+  "wallets": {
+    "wlt_opinion_platform_treasury": {
+      "id": "wlt_opinion_platform_treasury",
+      "userId": "usr_opinion_platform_treasury",
+      "availableKobo": 304390,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T15:05:30.480Z"
+    },
+    "wlt_demo_893240": {
+      "id": "wlt_demo_893240",
+      "userId": "usr_demo_893240",
+      "availableKobo": 35430019,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "virtualAccountNumber": "9920194821",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "updatedAt": "2026-11-12T15:05:30.501Z"
+    },
+    "wlt_creator_burna": {
+      "id": "wlt_creator_burna",
+      "userId": "usr_creator_burna",
+      "availableKobo": 5000000,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 1250831,
+      "virtualAccountNumber": "9920198834",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "updatedAt": "2026-11-12T14:52:21.287Z"
+    }
+  },
+  "ledgerEntries": [
+    {
+      "id": "ldg_init_demo_fund",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1000000,
+      "balanceAfterKobo": 1000000,
+      "entryType": "DEPOSIT",
+      "referenceId": "init_fiat_funding_v1",
+      "metadata": {
+        "note": "Initial Demo User ₦10,000 Wallet Balance"
+      },
+      "createdAt": "2026-11-12T14:49:57.825Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794495122174_ci62b_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -50000,
+      "balanceAfterKobo": 950000,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794495122174_ci62b",
+      "metadata": {
+        "marketId": 1,
+        "side": "YES",
+        "shares": 928,
+        "avgPriceKobo": 5221,
+        "grossAmountKobo": 50000,
+        "netAmountKobo": 48500,
+        "feeKobo": 1500
+      },
+      "createdAt": "2026-11-12T14:52:02.174Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794495122174_ci62b_creator",
+      "walletId": "wlt_creator_burna",
+      "amountKobo": 750,
+      "balanceAfterKobo": 1250750,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794495122174_ci62b",
+      "metadata": {
+        "marketId": 1,
+        "feeBps": 150,
+        "tradeVolumeKobo": 50000,
+        "creatorId": "usr_creator_burna"
+      },
+      "createdAt": "2026-11-12T14:52:02.174Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794495122174_ci62b_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 750,
+      "balanceAfterKobo": 750,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794495122174_ci62b",
+      "metadata": {
+        "marketId": 1,
+        "feeBps": 150,
+        "tradeVolumeKobo": 50000
+      },
+      "createdAt": "2026-11-12T14:52:02.174Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794495141277_r7vpi_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 5278,
+      "balanceAfterKobo": 955278,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794495141277_r7vpi",
+      "metadata": {
+        "marketId": 1,
+        "side": "YES",
+        "sharesSold": 100,
+        "grossProceedsKobo": 5440,
+        "netProceedsKobo": 5278,
+        "feeKobo": 162
+      },
+      "createdAt": "2026-11-12T14:52:21.287Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794495141277_r7vpi_creator",
+      "walletId": "wlt_creator_burna",
+      "amountKobo": 81,
+      "balanceAfterKobo": 1250831,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794495141277_r7vpi",
+      "metadata": {
+        "marketId": 1,
+        "tradeVolumeKobo": 5440,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T14:52:21.287Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794495141277_r7vpi_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 81,
+      "balanceAfterKobo": 831,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794495141277_r7vpi",
+      "metadata": {
+        "marketId": 1,
+        "tradeVolumeKobo": 5440,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T14:52:21.287Z"
+    },
+    {
+      "id": "ldg_mkt_create_4_1794495141448_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 855278,
+      "entryType": "MARKET_CREATION_FEE",
+      "referenceId": "mkt_create_4_1794495141448",
+      "metadata": {
+        "marketId": 4,
+        "antiSpamOption": "fee",
+        "question": "Will Nigeria launch a CBDC stablecoin on L2 before 2027?"
+      },
+      "createdAt": "2026-11-12T14:52:21.448Z"
+    },
+    {
+      "id": "ldg_mkt_create_4_1794495141448_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 100000,
+      "balanceAfterKobo": 100831,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "mkt_create_4_1794495141448",
+      "metadata": {
+        "marketId": 4,
+        "feeType": "MARKET_CREATION_FEE"
+      },
+      "createdAt": "2026-11-12T14:52:21.448Z"
+    },
+    {
+      "id": "ldg_mkt_create_5_1794495141480_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 755278,
+      "entryType": "MARKET_CREATION_FEE",
+      "referenceId": "mkt_create_5_1794495141480",
+      "metadata": {
+        "marketId": 5,
+        "antiSpamOption": "fee",
+        "question": "Will Dangote Refinery export jet fuel across Africa by Q4?"
+      },
+      "createdAt": "2026-11-12T14:52:21.480Z"
+    },
+    {
+      "id": "ldg_mkt_create_5_1794495141480_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 100000,
+      "balanceAfterKobo": 200831,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "mkt_create_5_1794495141480",
+      "metadata": {
+        "marketId": 5,
+        "feeType": "MARKET_CREATION_FEE"
+      },
+      "createdAt": "2026-11-12T14:52:21.480Z"
+    },
+    {
+      "id": "ldg_clm_usr_demo_893240_1794495187106",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 25000,
+      "balanceAfterKobo": 780278,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "clm_usr_demo_893240_1794495187106",
+      "metadata": {
+        "type": "CLAIM_TO_AVAILABLE",
+        "claimedKobo": 25000
+      },
+      "createdAt": "2026-11-12T14:53:07.106Z"
+    },
+    {
+      "id": "ldg_stl_1_1794495187160_usr_demo_893240",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 8780000,
+      "balanceAfterKobo": 9560278,
+      "entryType": "MARKET_PAYOUT",
+      "referenceId": "stl_1_1794495187160",
+      "metadata": {
+        "marketId": 1,
+        "winningOutcome": "YES",
+        "winningShares": 878,
+        "payoutPerShareKobo": 10000
+      },
+      "createdAt": "2026-11-12T14:53:07.160Z"
+    },
+    {
+      "id": "ldg_mkt_create_6_1794495930450_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 9460278,
+      "entryType": "MARKET_CREATION_FEE",
+      "referenceId": "mkt_create_6_1794495930450",
+      "metadata": {
+        "marketId": 6,
+        "antiSpamOption": "fee",
+        "question": "Will Nigeria launch national identity digital credentials on blockchain in 2026?"
+      },
+      "createdAt": "2026-11-12T15:05:30.450Z"
+    },
+    {
+      "id": "ldg_mkt_create_6_1794495930450_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 100000,
+      "balanceAfterKobo": 300831,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "mkt_create_6_1794495930450",
+      "metadata": {
+        "marketId": 6,
+        "feeType": "MARKET_CREATION_FEE"
+      },
+      "createdAt": "2026-11-12T15:05:30.450Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794495930464_4j992_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -200000,
+      "balanceAfterKobo": 9260278,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794495930464_4j992",
+      "metadata": {
+        "marketId": 6,
+        "side": "YES",
+        "shares": 3113,
+        "avgPriceKobo": 6231,
+        "grossAmountKobo": 200000,
+        "netAmountKobo": 194000,
+        "feeKobo": 6000
+      },
+      "createdAt": "2026-11-12T15:05:30.464Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794495930464_4j992_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 3000,
+      "balanceAfterKobo": 3000,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794495930464_4j992",
+      "metadata": {
+        "marketId": 6,
+        "feeBps": 150,
+        "tradeVolumeKobo": 200000,
+        "creatorId": "usr_demo_893240"
+      },
+      "createdAt": "2026-11-12T15:05:30.464Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794495930464_4j992_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 3000,
+      "balanceAfterKobo": 303831,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794495930464_4j992",
+      "metadata": {
+        "marketId": 6,
+        "feeBps": 150,
+        "tradeVolumeKobo": 200000
+      },
+      "createdAt": "2026-11-12T15:05:30.464Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794495930480_32u6z_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 36182,
+      "balanceAfterKobo": 9296460,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794495930480_32u6z",
+      "metadata": {
+        "marketId": 6,
+        "side": "YES",
+        "sharesSold": 500,
+        "grossProceedsKobo": 37300,
+        "netProceedsKobo": 36182,
+        "feeKobo": 1118
+      },
+      "createdAt": "2026-11-12T15:05:30.480Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794495930480_32u6z_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 559,
+      "balanceAfterKobo": 3559,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794495930480_32u6z",
+      "metadata": {
+        "marketId": 6,
+        "tradeVolumeKobo": 37300,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T15:05:30.480Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794495930480_32u6z_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 559,
+      "balanceAfterKobo": 304390,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794495930480_32u6z",
+      "metadata": {
+        "marketId": 6,
+        "tradeVolumeKobo": 37300,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T15:05:30.480Z"
+    },
+    {
+      "id": "ldg_clm_usr_demo_893240_1794495930486",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 3559,
+      "balanceAfterKobo": 9300019,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "clm_usr_demo_893240_1794495930486",
+      "metadata": {
+        "type": "CLAIM_TO_AVAILABLE",
+        "claimedKobo": 3559
+      },
+      "createdAt": "2026-11-12T15:05:30.486Z"
+    },
+    {
+      "id": "ldg_stl_6_1794495930501_usr_demo_893240",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 26130000,
+      "balanceAfterKobo": 35430019,
+      "entryType": "MARKET_PAYOUT",
+      "referenceId": "stl_6_1794495930501",
+      "metadata": {
+        "marketId": 6,
+        "winningOutcome": "YES",
+        "winningShares": 2613,
+        "payoutPerShareKobo": 10000
+      },
+      "createdAt": "2026-11-12T15:05:30.501Z"
+    }
+  ],
+  "markets": {
+    "1": {
+      "id": 1,
+      "creatorId": "usr_creator_burna",
+      "question": "Will Burna Boy win a 2027 Grammy Award?",
+      "category": "Culture",
+      "imageUri": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600",
+      "sourceHandle": "@BurnaBoyFanClub",
+      "yesPoolKobo": 293060,
+      "noPoolKobo": 250000,
+      "totalVolumeKobo": 555440,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "RESOLVED",
+      "proposedOutcome": "YES",
+      "finalOutcome": "YES",
+      "closingTime": "2026-11-26T14:49:57.825Z",
+      "resolutionDeadline": "2026-11-27T14:49:57.825Z",
+      "yesCondition": "Burna Boy is officially announced as winner at 69th Grammy Awards",
+      "noCondition": "Any other artist wins or no award granted",
+      "evidenceSource": "https://www.grammy.com",
+      "createdAt": "2026-11-12T14:49:57.825Z",
+      "updatedAt": "2026-11-12T14:53:07.160Z",
+      "disputeEndsAt": "2026-11-12T16:53:07.150Z",
+      "proposedEvidence": "https://www.grammy.com/winners"
+    },
+    "2": {
+      "id": 2,
+      "creatorId": "usr_demo_893240",
+      "question": "Will CBN lower the Monetary Policy Rate (MPR) before Q3 2026?",
+      "category": "Markets",
+      "imageUri": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600",
+      "sourceHandle": "@OpinionNG",
+      "yesPoolKobo": 600000,
+      "noPoolKobo": 400000,
+      "totalVolumeKobo": 1000000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2026-12-12T14:49:57.825Z",
+      "resolutionDeadline": "2026-12-13T14:49:57.825Z",
+      "yesCondition": "CBN MPC communique specifies an MPR reduction below 26.75%",
+      "noCondition": "MPR remains unchanged or is increased",
+      "evidenceSource": "https://www.cbn.gov.ng",
+      "createdAt": "2026-11-12T14:49:57.825Z",
+      "updatedAt": "2026-11-12T14:49:57.825Z"
+    },
+    "3": {
+      "id": 3,
+      "creatorId": "usr_demo_893240",
+      "question": "Will Super Eagles qualify for the 2026 FIFA World Cup semi-finals?",
+      "category": "Sports",
+      "imageUri": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600",
+      "sourceHandle": "@SuperEaglesNG",
+      "yesPoolKobo": 300000,
+      "noPoolKobo": 700000,
+      "totalVolumeKobo": 1000000,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2026-12-27T14:49:57.825Z",
+      "resolutionDeadline": "2026-12-28T14:49:57.825Z",
+      "yesCondition": "Nigeria officially reaches the semi-final round of the tournament",
+      "noCondition": "Nigeria is eliminated prior to the semi-finals",
+      "evidenceSource": "https://www.fifa.com",
+      "createdAt": "2026-11-12T14:49:57.825Z",
+      "updatedAt": "2026-11-12T14:49:57.825Z"
+    },
+    "4": {
+      "id": 4,
+      "creatorId": "usr_demo_893240",
+      "question": "Will Nigeria launch a CBDC stablecoin on L2 before 2027?",
+      "category": "Crypto",
+      "imageUri": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600",
+      "sourceHandle": "@OpinionNG",
+      "yesPoolKobo": 100000,
+      "noPoolKobo": 100000,
+      "totalVolumeKobo": 0,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2026-11-19T14:52:21.449Z",
+      "resolutionDeadline": "2026-11-20T14:52:21.449Z",
+      "yesCondition": "Event occurs as stated",
+      "noCondition": "Event does not occur",
+      "evidenceSource": "https://news.google.com",
+      "createdAt": "2026-11-12T14:52:21.448Z",
+      "updatedAt": "2026-11-12T14:52:21.448Z"
+    },
+    "5": {
+      "id": 5,
+      "creatorId": "usr_demo_893240",
+      "question": "Will Dangote Refinery export jet fuel across Africa by Q4?",
+      "category": "Culture",
+      "imageUri": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600",
+      "sourceHandle": "@opinion_trader",
+      "yesPoolKobo": 100000,
+      "noPoolKobo": 100000,
+      "totalVolumeKobo": 0,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2026-11-19T14:52:21.481Z",
+      "resolutionDeadline": "2026-11-20T14:52:21.481Z",
+      "yesCondition": "Event occurs as stated",
+      "noCondition": "Event does not occur",
+      "evidenceSource": "https://news.google.com",
+      "createdAt": "2026-11-12T14:52:21.480Z",
+      "updatedAt": "2026-11-12T14:52:21.480Z"
+    },
+    "6": {
+      "id": 6,
+      "creatorId": "usr_demo_893240",
+      "question": "Will Nigeria launch national identity digital credentials on blockchain in 2026?",
+      "category": "AI & Tech",
+      "imageUri": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600",
+      "sourceHandle": "@OpinionNG",
+      "yesPoolKobo": 256700,
+      "noPoolKobo": 100000,
+      "totalVolumeKobo": 237300,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "RESOLVED",
+      "proposedOutcome": "YES",
+      "finalOutcome": "YES",
+      "closingTime": "2026-11-19T15:05:30.451Z",
+      "resolutionDeadline": "2026-11-20T15:05:30.451Z",
+      "yesCondition": "Event occurs as stated",
+      "noCondition": "Event does not occur",
+      "evidenceSource": "https://news.google.com",
+      "createdAt": "2026-11-12T15:05:30.450Z",
+      "updatedAt": "2026-11-12T15:05:30.501Z",
+      "disputeEndsAt": "2026-11-12T17:05:30.495Z",
+      "proposedEvidence": "https://techpoint.africa/identity"
+    }
+  },
+  "positions": {
+    "usr_demo_893240_1_YES": {
+      "id": "pos_demo_1_yes",
+      "userId": "usr_demo_893240",
+      "marketId": 1,
+      "side": "YES",
+      "sharesCount": 0,
+      "totalCostKobo": 294560,
+      "avgPriceKobo": 307,
+      "updatedAt": "2026-11-12T14:53:07.160Z"
+    },
+    "usr_demo_893240_6_YES": {
+      "id": "pos_trd_buy_1794495930464_4j992",
+      "userId": "usr_demo_893240",
+      "marketId": 6,
+      "side": "YES",
+      "sharesCount": 0,
+      "totalCostKobo": 162700,
+      "avgPriceKobo": 6231,
+      "updatedAt": "2026-11-12T15:05:30.501Z"
+    }
+  }
+}

@@ -13,6 +13,7 @@ enum LedgerEntryType {
   TRADE_SELL
   MARKET_PAYOUT
   CREATOR_FEE
+  PLATFORM_FEE
   MARKET_CREATION_FEE
   WITHDRAWAL
   WITHDRAWAL_REFUND
@@ -108,7 +109,9 @@ model Market {
   creatorFeeBps       Int           @default(150) @map("creator_fee_bps") // 1.5%
   platformFeeBps      Int           @default(150) @map("platform_fee_bps") // 1.5%
   status              MarketStatus  @default(ACTIVE)
+  proposedOutcome     MarketOutcome @default(UNRESOLVED) @map("proposed_outcome")
   finalOutcome        MarketOutcome @default(UNRESOLVED) @map("final_outcome")
+  disputeEndsAt       DateTime?     @map("dispute_ends_at")
   closingTime         DateTime?     @map("closing_time")
   resolutionDeadline  DateTime?     @map("resolution_deadline")
   yesCondition        String?       @map("yes_condition")

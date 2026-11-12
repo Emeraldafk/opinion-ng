@@ -1457,14 +1457,37 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
 
                 {/* Trade Quote Details (Expected Output, Price Impact, Estimated Creator Revenue) */}
                 <div className="mt-4 space-y-2 border-t border-[#232330] pt-3 font-mono text-[11px] text-[#8c8c9e]">
-                  <div className="flex justify-between items-center">
-                    <span>Expected Output:</span>
-                    <span className="text-white font-bold text-xs">
-                      {tradeMode === 'BUY'
-                        ? `+${Math.round(quote.sharesDelta).toLocaleString()} ${selectedSide} shares (₦${(Math.round(quote.sharesDelta) * 100).toLocaleString()} win payout)`
-                        : `${formatNGN(Math.round(quote.netEthDelta * 4_200_000 * 100))}`}
-                    </span>
-                  </div>
+                  {tradeMode === 'BUY' ? (
+                    <>
+                      <div className="flex justify-between items-center">
+                        <span>Est. Shares:</span>
+                        <span className="text-white font-bold text-xs">
+                          +{Math.round(quote.sharesDelta).toLocaleString()} {selectedSide}
+                        </span>
+                      </div>
+
+                      <div className="flex justify-between items-center">
+                        <span>Avg Price in ₦:</span>
+                        <span className="text-white font-bold text-xs">
+                          ₦{(selectedSide === 'YES' ? yesSharePriceNaira : noSharePriceNaira).toFixed(2)}/share
+                        </span>
+                      </div>
+
+                      <div className="flex justify-between items-center">
+                        <span>Potential Payout at ₦100/share:</span>
+                        <span className="text-emerald-400 font-bold text-xs">
+                          ₦{(Math.round(quote.sharesDelta) * 100).toLocaleString()}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex justify-between items-center">
+                      <span>Est. Net Proceeds:</span>
+                      <span className="text-white font-bold text-xs">
+                        {formatNGN(Math.round(quote.netEthDelta * 4_200_000 * 100))}
+                      </span>
+                    </div>
+                  )}
 
                   <div className="flex justify-between items-center">
                     <span>Price Impact:</span>
@@ -1474,14 +1497,21 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
                   </div>
 
                   <div className="flex justify-between items-center">
-                    <span>Estimated Creator Revenue (1.5%):</span>
+                    <span>Creator Fee (1.5%):</span>
                     <span className="text-purple-400 font-bold">
                       +{formatNGN(Math.max(10, Math.round(quote.creatorFeeEth * 4_200_000 * 100)))}
                     </span>
                   </div>
 
+                  <div className="flex justify-between items-center">
+                    <span>Platform Fee (1.5%):</span>
+                    <span className="text-slate-400 font-bold">
+                      +{formatNGN(Math.max(10, Math.round(quote.creatorFeeEth * 4_200_000 * 100)))}
+                    </span>
+                  </div>
+
                   <div className="flex justify-between items-center text-[10px] text-[#7a7a8c] border-t border-[#1e1e2a] pt-1.5">
-                    <span>Total Creator Fees Earned:</span>
+                    <span>Market Creator Lifetime Earnings:</span>
                     <span className="text-slate-300">
                       {formatNGN(Math.round(((market.creatorFeesEarned || 0) + quote.creatorFeeEth) * 4_200_000 * 100))}
                     </span>
