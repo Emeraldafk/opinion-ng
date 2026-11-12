@@ -147,3 +147,4 @@ CREATE TABLE IF NOT EXISTS positions (
 
 CREATE INDEX IF NOT EXISTS idx_positions_user_id ON positions(user_id);
 CREATE INDEX IF NOT EXISTS idx_positions_market_id ON positions(market_id);
+

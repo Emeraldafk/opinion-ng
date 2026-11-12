@@ -291,3 +291,4 @@ export const useAppAuth = (): AuthContextType => {
   }
   return context;
 };
+

@@ -143,3 +143,4 @@ model Position {
   @@index([marketId])
   @@map("positions")
 }
+

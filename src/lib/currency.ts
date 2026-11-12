@@ -111,3 +111,4 @@ export function calculateProbability(
 
   return { yesPct, noPct, yesPriceKobo, noPriceKobo };
 }
+
