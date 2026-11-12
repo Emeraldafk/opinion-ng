@@ -49,7 +49,7 @@ function getAvatarGradient(name: string): string {
     'from-teal-400 to-emerald-600',
     'from-sky-400 to-blue-600',
     'from-rose-400 to-pink-600',
-    'from-violet-400 to-purple-600',
+    'from-[#227c9d] to-cyan-600',
     'from-emerald-400 to-teal-700',
   ];
   let hash = 0;

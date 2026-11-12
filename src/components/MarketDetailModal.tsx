@@ -609,7 +609,7 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
               <X className="h-4 w-4" />
             </button>
 
-            <h3 className="text-lg font-bold text-purple-400 mb-2 font-fun">
+            <h3 className="text-lg font-bold text-[#53b3d4] mb-2 font-fun">
               Insufficient NGN balance
             </h3>
             <p className="text-xs text-zinc-400 leading-relaxed mb-6 font-sans">
@@ -639,7 +639,7 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
                   auth.openDepositModal();
                   if (onTopUpWallet) onTopUpWallet();
                 }}
-                className="w-full rounded-2xl bg-purple-600 py-3 text-sm font-bold text-white hover:bg-purple-500 transition active:scale-98 shadow-md"
+                className="w-full rounded-2xl bg-[#227c9d] py-3 text-sm font-bold text-white hover:bg-[#1a647f] transition active:scale-98 shadow-md"
               >
                 Top Up my Wallet
               </button>
@@ -719,7 +719,7 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
                   type="button"
                   onClick={() => setInputCurrency('NGN')}
                   className={`px-2.5 py-0.5 rounded-full font-bold transition ${
-                    inputCurrency === 'NGN' ? 'bg-purple-600 text-white' : 'text-zinc-400'
+                    inputCurrency === 'NGN' ? 'bg-[#227c9d] text-white' : 'text-zinc-400'
                   }`}
                 >
                   NGN
@@ -728,7 +728,7 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
                   type="button"
                   onClick={() => setInputCurrency('ETH')}
                   className={`px-2.5 py-0.5 rounded-full font-bold transition ${
-                    inputCurrency === 'ETH' ? 'bg-purple-600 text-white' : 'text-zinc-400'
+                    inputCurrency === 'ETH' ? 'bg-[#227c9d] text-white' : 'text-zinc-400'
                   }`}
                 >
                   ETH
@@ -1390,7 +1390,7 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
                       }}
                       className="w-full bg-transparent font-mono text-2xl font-black text-white focus:outline-none"
                     />
-                    <span className="ml-2 rounded-lg bg-[#1a1a26] px-2.5 py-1 font-mono text-xs font-bold text-purple-300 border border-[#2e2e40] shrink-0">
+                    <span className="ml-2 rounded-lg bg-[#1a1a26] px-2.5 py-1 font-mono text-xs font-bold text-[#53b3d4] border border-[#2e2e40] shrink-0">
                       {tradeMode === 'BUY' ? 'NGN (₦)' : 'SHARES'}
                     </span>
                   </div>
@@ -1498,7 +1498,7 @@ export const MarketDetailModal: React.FC<MarketDetailModalProps> = ({
 
                   <div className="flex justify-between items-center">
                     <span>Creator Fee (1.5%):</span>
-                    <span className="text-purple-400 font-bold">
+                    <span className="text-[#53b3d4] font-bold">
                       +{formatNGN(Math.max(10, Math.round(quote.creatorFeeEth * 4_200_000 * 100)))}
                     </span>
                   </div>

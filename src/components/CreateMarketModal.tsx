@@ -856,9 +856,9 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
                 value={initialBuyEth}
                 onChange={(e) => setInitialBuyEth(e.target.value)}
                 placeholder="1000"
-                className="w-full rounded-xl border border-[#232330] bg-[#0c0c11] px-4 py-2 font-mono text-sm font-bold text-white focus:border-purple-500 focus:outline-none"
+                className="w-full rounded-xl border border-[#232330] bg-[#0c0c11] px-4 py-2 font-mono text-sm font-bold text-white focus:border-[#227c9d] focus:outline-none"
               />
-              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 font-mono text-xs text-purple-400 font-bold">
+              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 font-mono text-xs text-[#53b3d4] font-bold">
                 NGN (₦)
               </span>
             </div>
@@ -906,8 +906,8 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
           </div>
 
           {/* Creator Reward Note */}
-          <div className="flex items-center gap-2.5 rounded-2xl border border-purple-500/30 bg-purple-500/10 p-3 text-xs text-purple-200">
-            <Coins className="h-4 w-4 shrink-0 text-purple-400" />
+          <div className="flex items-center gap-2.5 rounded-2xl border border-[#227c9d]/30 bg-[#227c9d]/10 p-3 text-xs text-[#53b3d4]">
+            <Coins className="h-4 w-4 shrink-0 text-[#53b3d4]" />
             <span>
               You earn <strong>1.50% NGN</strong> creator fees on every buy/sell trade. Automatically credited to your OpinionNG wallet.
             </span>
@@ -928,7 +928,7 @@ export const CreateMarketModal: React.FC<CreateMarketModalProps> = ({
             className={`flex w-full items-center justify-center gap-2 rounded-full py-3.5 font-fun text-base font-black uppercase tracking-wider text-white shadow-md transition active:scale-95 disabled:opacity-50 ${
               marketType === 'RESOLVABLE_PREDICTION'
                 ? 'bg-[#FF6B00] hover:bg-[#EA580C] text-black'
-                : 'bg-purple-600 hover:bg-purple-500'
+                : 'bg-[#227c9d] hover:bg-[#1a647f]'
             }`}
           >
             <Sparkles className="h-4 w-4" />

@@ -91,7 +91,7 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) =
               onClick={() => { setTab('transfer'); setSuccessMessage(null); }}
               className={`flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold transition-all ${
                 tab === 'transfer'
-                  ? 'bg-purple-600 text-white shadow-md'
+                  ? 'bg-[#227c9d] text-white shadow-md'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
@@ -103,7 +103,7 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) =
               onClick={() => { setTab('card'); setSuccessMessage(null); }}
               className={`flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold transition-all ${
                 tab === 'card'
-                  ? 'bg-purple-600 text-white shadow-md'
+                  ? 'bg-[#227c9d] text-white shadow-md'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
@@ -141,7 +141,7 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) =
                   </div>
                   <button
                     onClick={handleCopyAccount}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600/20 hover:bg-purple-600/40 text-purple-300 border border-purple-500/30 text-xs font-medium transition"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#227c9d]/20 hover:bg-[#227c9d]/40 text-[#53b3d4] border border-[#227c9d]/30 text-xs font-medium transition"
                   >
                     {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                     {copied ? 'Copied' : 'Copy'}
@@ -187,7 +187,7 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) =
                     onChange={(e) => setCustomNaira(e.target.value)}
                     placeholder="5,000"
                     min="100"
-                    className="w-full pl-8 pr-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-base font-semibold focus:outline-none focus:border-purple-500"
+                    className="w-full pl-8 pr-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-base font-semibold focus:outline-none focus:border-[#227c9d]"
                   />
                 </div>
               </div>
@@ -200,7 +200,7 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) =
                     onClick={() => setCustomNaira(val)}
                     className={`py-1.5 rounded-lg text-xs font-medium border transition ${
                       customNaira === val
-                        ? 'bg-purple-600/30 border-purple-500 text-purple-300'
+                        ? 'bg-[#227c9d]/30 border-[#227c9d] text-[#53b3d4]'
                         : 'bg-[#181824] border-[#252536] text-zinc-400 hover:text-zinc-200'
                     }`}
                   >

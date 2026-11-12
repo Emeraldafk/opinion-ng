@@ -26,7 +26,7 @@ function getAvatarGradient(name: string): string {
     'from-teal-400 to-emerald-600',
     'from-sky-400 to-blue-600',
     'from-rose-400 to-pink-600',
-    'from-violet-400 to-purple-600',
+    'from-[#227c9d] to-cyan-600',
     'from-emerald-400 to-teal-700',
     'from-fuchsia-400 to-pink-500',
   ];
@@ -117,7 +117,7 @@ export const MarketCard: React.FC<MarketCardProps> = ({
 
     if (st === 'PROPOSED') {
       return (
-        <span className="flex items-center gap-1 rounded-full border border-purple-500/30 bg-purple-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-purple-300">
+        <span className="flex items-center gap-1 rounded-full border border-[#227c9d]/30 bg-[#227c9d]/10 px-2 py-0.5 font-mono text-[10px] font-bold text-[#53b3d4]">
           <Clock className="h-3 w-3" />
           <span>Proposed: {market.prediction?.proposedOutcome}</span>
         </span>

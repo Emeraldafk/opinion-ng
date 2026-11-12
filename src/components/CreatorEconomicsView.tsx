@@ -839,8 +839,8 @@ export const CreatorEconomicsView: React.FC<CreatorEconomicsViewProps> = ({
           </div>
 
           <div className="flex flex-col items-end gap-2 w-full sm:w-auto">
-            <div className="w-full sm:w-64 rounded-[24px] border border-purple-500/40 bg-[#171526] p-5 text-right shadow-[0_0_30px_rgba(168,85,247,0.18)]">
-              <span className="block font-fun text-xs font-bold uppercase tracking-wider text-purple-300">
+            <div className="w-full sm:w-64 rounded-[24px] border border-[#227c9d]/40 bg-[#0e1c24] p-5 text-right shadow-[0_0_30px_rgba(34,124,157,0.18)]">
+              <span className="block font-fun text-xs font-bold uppercase tracking-wider text-[#53b3d4]">
                 Claimable Creator Fees
               </span>
               <div className="mt-1 font-fun text-3xl font-bold text-white">
@@ -849,7 +849,7 @@ export const CreatorEconomicsView: React.FC<CreatorEconomicsViewProps> = ({
               <button
                 onClick={handleClaim}
                 disabled={effectiveClaimableKobo <= 0 || isClaiming}
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-purple-600 px-4 py-2.5 font-fun text-xs font-bold text-white shadow-md transition hover:bg-purple-500 active:scale-[0.99] disabled:opacity-40"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-[#227c9d] px-4 py-2.5 font-fun text-xs font-bold text-white shadow-md transition hover:bg-[#1a647f] active:scale-[0.99] disabled:opacity-40"
               >
                 <Coins className="h-4 w-4" />
                 <span>{isClaiming ? 'Claiming Fees...' : 'Claim to NGN Balance'}</span>

@@ -102,11 +102,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => handleSelectTab('feed')}
             className="flex items-center gap-1.5 sm:gap-2 text-left focus:outline-none group shrink-0"
           >
-            <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-purple-600 text-white shadow-md shadow-purple-600/25 transition-transform group-hover:scale-105 shrink-0">
+            <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-[#227c9d] text-white shadow-md shadow-[#227c9d]/25 transition-transform group-hover:scale-105 shrink-0">
               <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 fill-white" />
             </div>
             <span className="font-fun text-xl sm:text-2xl font-black tracking-tight text-white whitespace-nowrap">
-              Opinion<span className="text-purple-400">NG</span>
+              Opinion<span className="text-[#53b3d4]">NG</span>
             </span>
           </button>
         </div>
@@ -126,7 +126,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   isSecondary ? 'hidden 2xl:flex' : 'flex'
                 } ${
                   isActive
-                    ? 'bg-purple-600 text-white shadow-sm shadow-purple-600/25'
+                    ? 'bg-[#227c9d] text-white shadow-sm shadow-[#227c9d]/25'
                     : 'text-[#8c8c9e] hover:text-white hover:bg-[#1a1a24]'
                 }`}
               >
@@ -144,7 +144,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
               className={`flex items-center gap-1 rounded-full px-2.5 py-1.5 xl:px-3 xl:py-2 text-xs xl:text-[13px] font-bold transition-all ${
                 activeTab === 'resolution' || activeTab === 'how-it-works'
-                  ? 'bg-purple-600 text-white shadow-sm'
+                  ? 'bg-[#227c9d] text-white shadow-sm'
                   : 'text-[#8c8c9e] hover:text-white hover:bg-[#1a1a24]'
               }`}
             >
@@ -164,11 +164,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onClick={() => handleSelectTab('resolution')}
                     className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold transition ${
                       activeTab === 'resolution'
-                        ? 'bg-purple-600 text-white'
+                        ? 'bg-[#227c9d] text-white'
                         : 'text-[#8c8c9e] hover:text-white hover:bg-[#1f1f2c]'
                     }`}
                   >
-                    <Scale className="h-3.5 w-3.5 text-purple-400" />
+                    <Scale className="h-3.5 w-3.5 text-[#53b3d4]" />
                     <span>Resolutions</span>
                   </button>
                   <button
@@ -176,11 +176,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onClick={() => handleSelectTab('how-it-works')}
                     className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold transition ${
                       activeTab === 'how-it-works'
-                        ? 'bg-purple-600 text-white'
+                        ? 'bg-[#227c9d] text-white'
                         : 'text-[#8c8c9e] hover:text-white hover:bg-[#1f1f2c]'
                     }`}
                   >
-                    <Layers className="h-3.5 w-3.5 text-purple-400" />
+                    <Layers className="h-3.5 w-3.5 text-[#53b3d4]" />
                     <span>Architecture</span>
                   </button>
                 </div>
@@ -207,7 +207,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 auth.openSignInModal();
                 if (onConnectWallet) onConnectWallet();
               }}
-              className="flex items-center gap-1 sm:gap-1.5 rounded-full bg-purple-600 px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-extrabold text-white shadow-md shadow-purple-600/25 transition hover:bg-purple-500 active:scale-95 shrink-0"
+              className="flex items-center gap-1 sm:gap-1.5 rounded-full bg-[#227c9d] px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-extrabold text-white shadow-md shadow-[#227c9d]/25 transition hover:bg-[#1a647f] active:scale-95 shrink-0"
             >
               <Sparkles className="h-3.5 w-3.5" />
               <span>Sign In / Get Started</span>
@@ -243,7 +243,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {isUserLoggedIn && (
             <button
               onClick={() => handleSelectTab('portfolio')}
-              className="flex items-center gap-1.5 rounded-full border border-[#232330] bg-[#14141c] p-0.5 sm:p-1 pr-1.5 sm:pr-3 hover:border-purple-500/60 hover:bg-[#1a1a24] active:scale-95 transition shrink-0 cursor-pointer shadow-sm"
+              className="flex items-center gap-1.5 rounded-full border border-[#232330] bg-[#14141c] p-0.5 sm:p-1 pr-1.5 sm:pr-3 hover:border-[#227c9d]/60 hover:bg-[#1a1a24] active:scale-95 transition shrink-0 cursor-pointer shadow-sm"
               title="View Profile & Settings"
             >
               <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-full overflow-hidden shrink-0 ring-1 ring-white/10">
@@ -260,7 +260,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="h-full w-full bg-gradient-to-tr from-purple-500 to-indigo-600 flex items-center justify-center text-[10px] sm:text-xs font-bold text-white">
+                  <div className="h-full w-full bg-gradient-to-tr from-[#227c9d] to-[#1a647f] flex items-center justify-center text-[10px] sm:text-xs font-bold text-white">
                     {(auth.user?.displayName || 'U').charAt(0).toUpperCase()}
                   </div>
                 )}
@@ -293,7 +293,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 setIsMobileMenuOpen(false);
                 auth.openSignInModal();
               }}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-purple-600 py-3 px-4 text-sm font-extrabold text-white shadow-lg shadow-purple-600/30 hover:bg-purple-500 active:scale-95 transition mb-3 cursor-pointer"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#227c9d] py-3 px-4 text-sm font-extrabold text-white shadow-lg shadow-[#227c9d]/30 hover:bg-[#1a647f] active:scale-95 transition mb-3 cursor-pointer"
             >
               <Sparkles className="h-4 w-4" />
               <span>Sign In / Get Started</span>
@@ -446,7 +446,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-[11px] text-slate-300">NGN Ledger Active</span>
             </div>
-            <span className="text-[11px] text-purple-400 font-semibold">
+            <span className="text-[11px] text-[#53b3d4] font-semibold">
               Instant Settlement
             </span>
           </div>

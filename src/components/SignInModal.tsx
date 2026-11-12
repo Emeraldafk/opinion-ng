@@ -90,11 +90,11 @@ export const SignInModal: React.FC<SignInModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header */}
-        <div className="relative border-b border-[#21212e] bg-gradient-to-r from-[#171526] via-[#12121a] to-[#151728] px-6 py-5">
+        <div className="relative border-b border-[#21212e] bg-gradient-to-r from-[#0e1c24] via-[#12121a] to-[#121922] px-6 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-purple-600/30 border border-purple-500/40 text-purple-300 shadow-md">
-                <Sparkles className="w-5 h-5 text-purple-400" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#227c9d]/20 border border-[#227c9d]/40 text-[#53b3d4] shadow-md">
+                <Sparkles className="w-5 h-5 text-[#53b3d4]" />
               </div>
               <div>
                 <h3 className="text-lg font-bold text-white tracking-tight">Sign In to OpinionNG</h3>
@@ -111,8 +111,8 @@ export const SignInModal: React.FC<SignInModalProps> = ({
         </div>
 
         {/* Action Prompt */}
-        <div className="mx-6 mt-4 p-3 rounded-xl bg-purple-950/20 border border-purple-800/30 flex items-center gap-2.5 text-xs text-purple-300">
-          <ShieldCheck className="w-4 h-4 text-purple-400 shrink-0" />
+        <div className="mx-6 mt-4 p-3 rounded-xl bg-[#227c9d]/10 border border-[#227c9d]/30 flex items-center gap-2.5 text-xs text-[#53b3d4]">
+          <ShieldCheck className="w-4 h-4 text-[#53b3d4] shrink-0" />
           <span>Sign in required for <strong>{pendingActionTitle}</strong> with your NGN balance.</span>
         </div>
 
@@ -124,7 +124,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
               onClick={() => { setTab('email'); setOtpSent(false); setError(null); }}
               className={`flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all ${
                 tab === 'email'
-                  ? 'bg-purple-600 text-white shadow-md'
+                  ? 'bg-[#227c9d] text-white shadow-md'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
@@ -136,7 +136,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
               onClick={() => { setTab('phone'); setOtpSent(false); setError(null); }}
               className={`flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all ${
                 tab === 'phone'
-                  ? 'bg-purple-600 text-white shadow-md'
+                  ? 'bg-[#227c9d] text-white shadow-md'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
@@ -148,7 +148,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
               onClick={() => { setTab('x'); setOtpSent(false); setError(null); }}
               className={`flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all ${
                 tab === 'x'
-                  ? 'bg-purple-600 text-white shadow-md'
+                  ? 'bg-[#227c9d] text-white shadow-md'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
@@ -177,12 +177,12 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="e.g. tunde@gmail.com"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-purple-500 placeholder-zinc-500"
+                    className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
                 >
                   Send One-Time Code
                   <ArrowRight className="w-4 h-4" />
@@ -196,7 +196,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                     <button
                       type="button"
                       onClick={() => setOtpSent(false)}
-                      className="text-xs text-purple-400 hover:underline"
+                      className="text-xs text-[#53b3d4] hover:underline"
                     >
                       Change email
                     </button>
@@ -208,14 +208,14 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                     placeholder="123456"
                     maxLength={6}
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-center tracking-widest text-lg font-mono focus:outline-none focus:border-purple-500 placeholder-zinc-600"
+                    className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-center tracking-widest text-lg font-mono focus:outline-none focus:border-[#227c9d] placeholder-zinc-600"
                   />
                   <p className="text-[11px] text-zinc-500 mt-1">Code sent to {email} (use 123456 for demo)</p>
                 </div>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] disabled:opacity-50 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
                 >
                   {isLoading ? 'Verifying...' : 'Verify & Sign In'}
                 </button>
@@ -238,13 +238,13 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="801 234 5678"
                       required
-                      className="flex-1 px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-purple-500 placeholder-zinc-500"
+                      className="flex-1 px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
                     />
                   </div>
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
                 >
                   Send SMS Code (Termii)
                   <ArrowRight className="w-4 h-4" />
@@ -258,7 +258,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                     <button
                       type="button"
                       onClick={() => setOtpSent(false)}
-                      className="text-xs text-purple-400 hover:underline"
+                      className="text-xs text-[#53b3d4] hover:underline"
                     >
                       Change number
                     </button>
@@ -270,14 +270,14 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                     placeholder="123456"
                     maxLength={6}
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-center tracking-widest text-lg font-mono focus:outline-none focus:border-purple-500 placeholder-zinc-600"
+                    className="w-full px-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-center tracking-widest text-lg font-mono focus:outline-none focus:border-[#227c9d] placeholder-zinc-600"
                   />
                   <p className="text-[11px] text-zinc-500 mt-1">SMS sent to +234 {phone} (use 123456 for demo)</p>
                 </div>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-xl bg-[#227c9d] hover:bg-[#1a647f] disabled:opacity-50 text-white font-semibold text-sm transition shadow-lg flex items-center justify-center gap-2"
                 >
                   {isLoading ? 'Verifying...' : 'Verify & Sign In'}
                 </button>
@@ -297,7 +297,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                     onChange={(e) => setXHandle(e.target.value)}
                     placeholder="yourhandle"
                     required
-                    className="w-full pl-8 pr-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-purple-500 placeholder-zinc-500"
+                    className="w-full pl-8 pr-4 py-3 rounded-xl bg-[#181824] border border-[#272738] text-white text-sm focus:outline-none focus:border-[#227c9d] placeholder-zinc-500"
                   />
                 </div>
                 <p className="text-[11px] text-zinc-500 mt-1.5">

@@ -35,20 +35,20 @@
     "wlt_opinion_platform_treasury": {
       "id": "wlt_opinion_platform_treasury",
       "userId": "usr_opinion_platform_treasury",
-      "availableKobo": 304390,
+      "availableKobo": 327438,
       "lockedKobo": 0,
       "creatorEarningsKobo": 0,
-      "updatedAt": "2026-11-12T15:05:30.480Z"
+      "updatedAt": "2026-11-12T17:28:22.338Z"
     },
     "wlt_demo_893240": {
       "id": "wlt_demo_893240",
       "userId": "usr_demo_893240",
-      "availableKobo": 35430019,
+      "availableKobo": 35344623,
       "lockedKobo": 0,
-      "creatorEarningsKobo": 0,
+      "creatorEarningsKobo": 23048,
       "virtualAccountNumber": "9920194821",
       "virtualAccountBank": "Wema Bank (OpinionNG)",
-      "updatedAt": "2026-11-12T15:05:30.501Z"
+      "updatedAt": "2026-11-12T17:28:22.338Z"
     },
     "wlt_creator_burna": {
       "id": "wlt_creator_burna",
@@ -394,6 +394,787 @@
         "payoutPerShareKobo": 10000
       },
       "createdAt": "2026-11-12T15:05:30.501Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504451448_5zjqi_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 35330019,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794504451448_5zjqi",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "shares": 1667,
+        "avgPriceKobo": 5817,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T17:27:31.448Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504451448_5zjqi_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 1500,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794504451448_5zjqi",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_demo_893240"
+      },
+      "createdAt": "2026-11-12T17:27:31.448Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504451448_5zjqi_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 305890,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794504451448_5zjqi",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T17:27:31.448Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504455336_fn4co_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 35230019,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794504455336_fn4co",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "shares": 1376,
+        "avgPriceKobo": 7046,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T17:27:35.336Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504455336_fn4co_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 3000,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794504455336_fn4co",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_demo_893240"
+      },
+      "createdAt": "2026-11-12T17:27:35.336Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504455336_fn4co_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 307390,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794504455336_fn4co",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T17:27:35.336Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504457840_b24x6_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 35130019,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794504457840_b24x6",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "shares": 1257,
+        "avgPriceKobo": 7712,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T17:27:37.840Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504457840_b24x6_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 4500,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794504457840_b24x6",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_demo_893240"
+      },
+      "createdAt": "2026-11-12T17:27:37.840Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504457840_b24x6_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 308890,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794504457840_b24x6",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T17:27:37.840Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504459459_tt47z_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 35030019,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794504459459_tt47z",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "shares": 1193,
+        "avgPriceKobo": 8130,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T17:27:39.459Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504459459_tt47z_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 6000,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794504459459_tt47z",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_demo_893240"
+      },
+      "createdAt": "2026-11-12T17:27:39.459Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504459459_tt47z_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 310390,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794504459459_tt47z",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T17:27:39.459Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504461786_dkbf6_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 34930019,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794504461786_dkbf6",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "shares": 1152,
+        "avgPriceKobo": 8420,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T17:27:41.786Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504461786_dkbf6_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 7500,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794504461786_dkbf6",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_demo_893240"
+      },
+      "createdAt": "2026-11-12T17:27:41.786Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504461786_dkbf6_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 311890,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794504461786_dkbf6",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T17:27:41.786Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504468185_kofuz_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 34830019,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794504468185_kofuz",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "shares": 1123,
+        "avgPriceKobo": 8631,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T17:27:48.185Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504468185_kofuz_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 9000,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794504468185_kofuz",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_demo_893240"
+      },
+      "createdAt": "2026-11-12T17:27:48.185Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504468185_kofuz_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 313390,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794504468185_kofuz",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T17:27:48.185Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504469295_rnkca_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 34730019,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794504469295_rnkca",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "shares": 1103,
+        "avgPriceKobo": 8791,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T17:27:49.295Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504469295_rnkca_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 10500,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794504469295_rnkca",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_demo_893240"
+      },
+      "createdAt": "2026-11-12T17:27:49.295Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504469295_rnkca_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 314890,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794504469295_rnkca",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T17:27:49.295Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504470345_7c0fl_buyer",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 34630019,
+      "entryType": "TRADE_BUY",
+      "referenceId": "trd_buy_1794504470345_7c0fl",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "shares": 1087,
+        "avgPriceKobo": 8918,
+        "grossAmountKobo": 100000,
+        "netAmountKobo": 97000,
+        "feeKobo": 3000
+      },
+      "createdAt": "2026-11-12T17:27:50.345Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504470345_7c0fl_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 12000,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_buy_1794504470345_7c0fl",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000,
+        "creatorId": "usr_demo_893240"
+      },
+      "createdAt": "2026-11-12T17:27:50.345Z"
+    },
+    {
+      "id": "ldg_trd_buy_1794504470345_7c0fl_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1500,
+      "balanceAfterKobo": 316390,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_buy_1794504470345_7c0fl",
+      "metadata": {
+        "marketId": 5,
+        "feeBps": 150,
+        "tradeVolumeKobo": 100000
+      },
+      "createdAt": "2026-11-12T17:27:50.345Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504482412_215rj_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 87106,
+      "balanceAfterKobo": 34717125,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794504482412_215rj",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "sharesSold": 1000,
+        "grossProceedsKobo": 89800,
+        "netProceedsKobo": 87106,
+        "feeKobo": 2694
+      },
+      "createdAt": "2026-11-12T17:28:02.412Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504482412_215rj_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1347,
+      "balanceAfterKobo": 13347,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794504482412_215rj",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 89800,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:02.412Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504482412_215rj_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1347,
+      "balanceAfterKobo": 317737,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794504482412_215rj",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 89800,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:02.412Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504483732_ltzwu_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 86040,
+      "balanceAfterKobo": 34803165,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794504483732_ltzwu",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "sharesSold": 1000,
+        "grossProceedsKobo": 88700,
+        "netProceedsKobo": 86040,
+        "feeKobo": 2660
+      },
+      "createdAt": "2026-11-12T17:28:03.732Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504483732_ltzwu_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1330,
+      "balanceAfterKobo": 14677,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794504483732_ltzwu",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 88700,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:03.732Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504483732_ltzwu_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1330,
+      "balanceAfterKobo": 319067,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794504483732_ltzwu",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 88700,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:03.732Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504485951_h3oxk_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 84876,
+      "balanceAfterKobo": 34888041,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794504485951_h3oxk",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "sharesSold": 1000,
+        "grossProceedsKobo": 87500,
+        "netProceedsKobo": 84876,
+        "feeKobo": 2624
+      },
+      "createdAt": "2026-11-12T17:28:05.951Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504485951_h3oxk_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1312,
+      "balanceAfterKobo": 15989,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794504485951_h3oxk",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 87500,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:05.951Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504485951_h3oxk_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1312,
+      "balanceAfterKobo": 320379,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794504485951_h3oxk",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 87500,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:05.951Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504488641_aptji_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 83324,
+      "balanceAfterKobo": 34971365,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794504488641_aptji",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "sharesSold": 1000,
+        "grossProceedsKobo": 85900,
+        "netProceedsKobo": 83324,
+        "feeKobo": 2576
+      },
+      "createdAt": "2026-11-12T17:28:08.641Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504488641_aptji_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1288,
+      "balanceAfterKobo": 17277,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794504488641_aptji",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 85900,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:08.641Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504488641_aptji_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1288,
+      "balanceAfterKobo": 321667,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794504488641_aptji",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 85900,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:08.641Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504496138_vqcyl_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 81480,
+      "balanceAfterKobo": 35052845,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794504496138_vqcyl",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "sharesSold": 1000,
+        "grossProceedsKobo": 84000,
+        "netProceedsKobo": 81480,
+        "feeKobo": 2520
+      },
+      "createdAt": "2026-11-12T17:28:16.138Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504496138_vqcyl_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1260,
+      "balanceAfterKobo": 18537,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794504496138_vqcyl",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 84000,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:16.138Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504496138_vqcyl_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1260,
+      "balanceAfterKobo": 322927,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794504496138_vqcyl",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 84000,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:16.138Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504497724_9jw5v_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 79056,
+      "balanceAfterKobo": 35131901,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794504497724_9jw5v",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "sharesSold": 1000,
+        "grossProceedsKobo": 81500,
+        "netProceedsKobo": 79056,
+        "feeKobo": 2444
+      },
+      "createdAt": "2026-11-12T17:28:17.724Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504497724_9jw5v_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1222,
+      "balanceAfterKobo": 19759,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794504497724_9jw5v",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 81500,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:17.724Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504497724_9jw5v_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1222,
+      "balanceAfterKobo": 324149,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794504497724_9jw5v",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 81500,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:17.724Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504499061_btcy5_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 75854,
+      "balanceAfterKobo": 35207755,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794504499061_btcy5",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "sharesSold": 1000,
+        "grossProceedsKobo": 78200,
+        "netProceedsKobo": 75854,
+        "feeKobo": 2346
+      },
+      "createdAt": "2026-11-12T17:28:19.061Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504499061_btcy5_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1173,
+      "balanceAfterKobo": 20932,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794504499061_btcy5",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 78200,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:19.061Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504499061_btcy5_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1173,
+      "balanceAfterKobo": 325322,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794504499061_btcy5",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 78200,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:19.061Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504500116_t9vxu_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 71490,
+      "balanceAfterKobo": 35279245,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794504500116_t9vxu",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "sharesSold": 1000,
+        "grossProceedsKobo": 73700,
+        "netProceedsKobo": 71490,
+        "feeKobo": 2210
+      },
+      "createdAt": "2026-11-12T17:28:20.116Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504500116_t9vxu_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1105,
+      "balanceAfterKobo": 22037,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794504500116_t9vxu",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 73700,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:20.116Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504500116_t9vxu_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1105,
+      "balanceAfterKobo": 326427,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794504500116_t9vxu",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 73700,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:20.116Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504502338_gn6e8_seller",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 65378,
+      "balanceAfterKobo": 35344623,
+      "entryType": "TRADE_SELL",
+      "referenceId": "trd_sell_1794504502338_gn6e8",
+      "metadata": {
+        "marketId": 5,
+        "side": "YES",
+        "sharesSold": 1000,
+        "grossProceedsKobo": 67400,
+        "netProceedsKobo": 65378,
+        "feeKobo": 2022
+      },
+      "createdAt": "2026-11-12T17:28:22.338Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504502338_gn6e8_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1011,
+      "balanceAfterKobo": 23048,
+      "entryType": "CREATOR_FEE",
+      "referenceId": "trd_sell_1794504502338_gn6e8",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 67400,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:22.338Z"
+    },
+    {
+      "id": "ldg_trd_sell_1794504502338_gn6e8_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 1011,
+      "balanceAfterKobo": 327438,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "trd_sell_1794504502338_gn6e8",
+      "metadata": {
+        "marketId": 5,
+        "tradeVolumeKobo": 67400,
+        "feeBps": 150
+      },
+      "createdAt": "2026-11-12T17:28:22.338Z"
     }
   ],
   "markets": {
@@ -498,9 +1279,9 @@
       "category": "Culture",
       "imageUri": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600",
       "sourceHandle": "@opinion_trader",
-      "yesPoolKobo": 100000,
+      "yesPoolKobo": 139300,
       "noPoolKobo": 100000,
-      "totalVolumeKobo": 0,
+      "totalVolumeKobo": 1536700,
       "creatorFeeBps": 150,
       "platformFeeBps": 150,
       "status": "ACTIVE",
@@ -512,7 +1293,7 @@
       "noCondition": "Event does not occur",
       "evidenceSource": "https://news.google.com",
       "createdAt": "2026-11-12T14:52:21.480Z",
-      "updatedAt": "2026-11-12T14:52:21.480Z"
+      "updatedAt": "2026-11-12T17:28:22.338Z"
     },
     "6": {
       "id": 6,
@@ -560,6 +1341,16 @@
       "totalCostKobo": 162700,
       "avgPriceKobo": 6231,
       "updatedAt": "2026-11-12T15:05:30.501Z"
+    },
+    "usr_demo_893240_5_YES": {
+      "id": "pos_trd_buy_1794504451448_5zjqi",
+      "userId": "usr_demo_893240",
+      "marketId": 5,
+      "side": "YES",
+      "sharesCount": 958,
+      "totalCostKobo": 63300,
+      "avgPriceKobo": 80,
+      "updatedAt": "2026-11-12T17:28:22.338Z"
     }
   }
 }

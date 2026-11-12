@@ -242,9 +242,9 @@ export const AdminResolutionDashboard: React.FC<AdminResolutionDashboardProps> =
           <span className="block text-[10px] sm:text-[11px] font-bold uppercase text-amber-300">Awaiting Proposal</span>
           <span className="font-mono text-xl sm:text-2xl font-black text-amber-300">{awaitingProposalCount}</span>
         </div>
-        <div className="rounded-2xl border border-purple-500/30 bg-purple-500/5 p-3.5 sm:p-4">
-          <span className="block text-[10px] sm:text-[11px] font-bold uppercase text-purple-300">Dispute Window</span>
-          <span className="font-mono text-xl sm:text-2xl font-black text-purple-300">{inDisputeWindowCount}</span>
+        <div className="rounded-2xl border border-[#227c9d]/30 bg-[#227c9d]/5 p-3.5 sm:p-4">
+          <span className="block text-[10px] sm:text-[11px] font-bold uppercase text-[#53b3d4]">Dispute Window</span>
+          <span className="font-mono text-xl sm:text-2xl font-black text-[#53b3d4]">{inDisputeWindowCount}</span>
         </div>
         <div className="rounded-2xl border border-rose-500/30 bg-rose-500/5 p-3.5 sm:p-4">
           <span className="block text-[10px] sm:text-[11px] font-bold uppercase text-rose-300">Disputed</span>
@@ -398,7 +398,7 @@ export const AdminResolutionDashboard: React.FC<AdminResolutionDashboardProps> =
                             <span>Disputed</span>
                           </span>
                         ) : st === 'PROPOSED' ? (
-                          <span className="inline-flex items-center gap-1 rounded-full border border-purple-500/40 bg-purple-500/10 px-2.5 py-1 font-mono text-[11px] font-bold text-purple-300">
+                          <span className="inline-flex items-center gap-1 rounded-full border border-[#227c9d]/40 bg-[#227c9d]/10 px-2.5 py-1 font-mono text-[11px] font-bold text-[#53b3d4]">
                             <Clock className="h-3 w-3" />
                             <span>Proposed: {m.prediction?.proposedOutcome}</span>
                           </span>
@@ -472,7 +472,7 @@ export const AdminResolutionDashboard: React.FC<AdminResolutionDashboardProps> =
                               </button>
                               <button
                                 onClick={() => onSettleMarket ? onSettleMarket(m.id) : handleOpenAction(m, 'RESOLVE')}
-                                className="rounded-xl bg-purple-600 px-3 py-1.5 font-fun text-xs font-bold text-white hover:bg-purple-500 transition"
+                                className="rounded-xl bg-[#227c9d] px-3 py-1.5 font-fun text-xs font-bold text-white hover:bg-[#1a647f] transition"
                               >
                                 Settle Payouts (₦100)
                               </button>
