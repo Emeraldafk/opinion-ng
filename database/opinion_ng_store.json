@@ -18,7 +18,12 @@
       "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
       "kycTier": 1,
       "bvnNinVerified": true,
-      "createdAt": "2026-11-12T18:04:57.877Z"
+      "createdAt": "2026-11-12T18:04:57.877Z",
+      "passwordSalt": "4c5ee847cde78e40263d995b713729d8",
+      "passwordHash": "a610b95438b0275d95fee0868937ad7063ffb2f7d77514da99b5c0c04cd8f0f8048bbc9e2f48c593a9059b47fb9779b55fbfc47722caca95fa68b830d93a6f58",
+      "virtualAccountNumber": "9920194821",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "virtualAccountName": "OPINION-NG / TUNDE AFOLABI"
     },
     "usr_creator_burna": {
       "id": "usr_creator_burna",
@@ -28,7 +33,28 @@
       "avatarUrl": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150",
       "kycTier": 1,
       "bvnNinVerified": true,
-      "createdAt": "2026-11-12T18:04:57.877Z"
+      "createdAt": "2026-11-12T18:04:57.877Z",
+      "passwordSalt": "4c5ee847cde78e40263d995b713729d8",
+      "passwordHash": "a610b95438b0275d95fee0868937ad7063ffb2f7d77514da99b5c0c04cd8f0f8048bbc9e2f48c593a9059b47fb9779b55fbfc47722caca95fa68b830d93a6f58",
+      "email": "curator@opinion.ng",
+      "virtualAccountNumber": "9920198834",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "virtualAccountName": "OPINION-NG / NAIJAPOPCURATOR"
+    },
+    "usr_mwfcqmmr_gv5j": {
+      "id": "usr_mwfcqmmr_gv5j",
+      "email": "aisha.test@opinion.ng",
+      "xHandle": "aisha_crypto",
+      "displayName": "Aisha Babangida",
+      "avatarUrl": "https://api.dicebear.com/7.x/identicon/svg?seed=aisha.test%40opinion.ng",
+      "passwordHash": "a2ca6ebbe29794b9ab5bea5db1bcf9caf34d0284c4ab082f98f5c7db1d00c9dfaa1b3902578d34ee891f75f9b76a2212d03dd9019c5ac1c582d7042683030483",
+      "passwordSalt": "8fffbf3a3ea2e1ec3b9fcf8f4d987344",
+      "kycTier": 1,
+      "bvnNinVerified": true,
+      "virtualAccountNumber": "9989859949",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "virtualAccountName": "OPINION-NG / AISHA BABANGIDA",
+      "createdAt": "2026-11-13T19:10:35.314Z"
     }
   },
   "wallets": {
@@ -147,6 +173,16 @@
       "lockedKobo": 0,
       "creatorEarningsKobo": 0,
       "updatedAt": "2026-11-12T19:17:38.246Z"
+    },
+    "wlt_usr_mwfcqmmr_gv5j": {
+      "id": "wlt_usr_mwfcqmmr_gv5j",
+      "userId": "usr_mwfcqmmr_gv5j",
+      "availableKobo": 500000,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "virtualAccountNumber": "9989859949",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "updatedAt": "2026-11-13T19:10:35.315Z"
     }
   },
   "ledgerEntries": [
@@ -451,6 +487,18 @@
         "status": "SUCCESS"
       },
       "createdAt": "2026-11-12T19:17:38.246Z"
+    },
+    {
+      "id": "ldg_welcome_usr_mwfcqmmr_gv5j",
+      "walletId": "wlt_usr_mwfcqmmr_gv5j",
+      "amountKobo": 500000,
+      "balanceAfterKobo": 500000,
+      "entryType": "DEPOSIT",
+      "referenceId": "welcome_bonus_usr_mwfcqmmr_gv5j",
+      "metadata": {
+        "note": "Welcome Bonus Trading Capital (₦5,000)"
+      },
+      "createdAt": "2026-11-13T19:10:35.315Z"
     }
   ],
   "markets": {
@@ -840,6 +888,26 @@
       "totalCostKobo": 300000,
       "avgPriceKobo": 78,
       "updatedAt": "2026-11-12T18:28:26.772Z"
+    }
+  },
+  "sessions": {
+    "sess_db0ae2f956dabb29ea97fc9abb5a440174cb700e262ef089": {
+      "token": "sess_db0ae2f956dabb29ea97fc9abb5a440174cb700e262ef089",
+      "userId": "usr_mwfcqmmr_gv5j",
+      "createdAt": "2026-11-13T19:10:35.316Z",
+      "expiresAt": "2026-12-13T19:10:35.316Z"
+    },
+    "sess_502a2e8d4db20eb03b9cd76cf5adcc80435762c859d3000a": {
+      "token": "sess_502a2e8d4db20eb03b9cd76cf5adcc80435762c859d3000a",
+      "userId": "usr_mwfcqmmr_gv5j",
+      "createdAt": "2026-11-13T19:10:35.432Z",
+      "expiresAt": "2026-12-13T19:10:35.432Z"
+    },
+    "sess_b8f82f0d6e18b23da3acad306901b638a06f30eeb754c225": {
+      "token": "sess_b8f82f0d6e18b23da3acad306901b638a06f30eeb754c225",
+      "userId": "usr_demo_893240",
+      "createdAt": "2026-11-13T19:10:35.464Z",
+      "expiresAt": "2026-12-13T19:10:35.464Z"
     }
   }
 }

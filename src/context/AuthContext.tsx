@@ -6,6 +6,7 @@ import {
   koboToNaira,
   nairaToKobo,
 } from '../lib/currency';
+import { apiClient } from '../lib/apiClient';
 
 export interface AppUser {
   id: string;
@@ -101,7 +102,33 @@ export const PRESET_ACCOUNTS: AppUser[] = [
   },
 ];
 
-const DEFAULT_DEMO_USER: AppUser = PRESET_ACCOUNTS[0];
+export const DEFAULT_DEMO_USER: AppUser = PRESET_ACCOUNTS[0];
+
+function formatAppUser(backendUser: any, backendWallet?: any): AppUser {
+  return {
+    id: backendUser.id,
+    email: backendUser.email,
+    phone: backendUser.phone,
+    xHandle: backendUser.xHandle,
+    displayName: backendUser.displayName || 'Opinion Trader',
+    avatarUrl: backendUser.avatarUrl || `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(backendUser.id)}`,
+    kycTier: backendUser.kycTier ?? 1,
+    bvnNinVerified: backendUser.bvnNinVerified ?? true,
+    virtualAccount: {
+      accountNumber: backendUser.virtualAccountNumber || backendWallet?.virtualAccountNumber || '9920194821',
+      bankName: backendUser.virtualAccountBank || backendWallet?.virtualAccountBank || 'Wema Bank (OpinionNG)',
+      accountName: backendUser.virtualAccountName || `OPINION-NG / ${(backendUser.displayName || 'TRADER').toUpperCase()}`,
+    },
+  };
+}
+
+function formatAppWallet(backendWallet?: any): AppWallet {
+  return {
+    availableKobo: Number(backendWallet?.availableKobo ?? DEFAULT_DEMO_BALANCE_KOBO),
+    lockedKobo: Number(backendWallet?.lockedKobo ?? 0),
+    creatorEarningsKobo: Number(backendWallet?.creatorEarningsKobo ?? 0),
+  };
+}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -138,6 +165,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
+  // Restore live session from backend on initial mount
+  useEffect(() => {
+    let isMounted = true;
+    async function restoreSession() {
+      try {
+        const session = await apiClient.getSession();
+        if (!isMounted) return;
+        if (session && session.user) {
+          setUser(formatAppUser(session.user, session.wallet));
+          setWallet(formatAppWallet(session.wallet));
+        } else {
+          // If no active token in backend, clear local user to enforce login gate
+          const token = apiClient.getSessionToken();
+          if (!token) {
+            setUser(null);
+          }
+        }
+      } catch {
+        // Fallback gracefully
+      }
+    }
+    restoreSession();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   useEffect(() => {
     if (user) {
       localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
@@ -163,142 +217,100 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     password?: string;
     xHandle?: string;
   }): Promise<boolean> => {
-    const isEmail = params.emailOrPhone.includes('@');
-    const cleanContact = params.emailOrPhone.trim();
-    const handle = params.xHandle
-      ? params.xHandle.replace(/^@/, '')
-      : isEmail
-      ? cleanContact.split('@')[0]
-      : `user_${cleanContact.slice(-4)}`;
-
-    const newUser: AppUser = {
-      id: `usr_${Date.now().toString(36)}`,
-      email: isEmail ? cleanContact : undefined,
-      phone: !isEmail ? cleanContact : undefined,
-      displayName: params.fullName.trim() || (isEmail ? handle : `User ${cleanContact.slice(-4)}`),
-      xHandle: handle,
-      avatarUrl: `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(cleanContact)}`,
-      kycTier: 1,
-      bvnNinVerified: true,
-      virtualAccount: {
-        accountNumber: '99' + Math.floor(10000000 + Math.random() * 90000000),
-        bankName: 'Wema Bank (OpinionNG)',
-        accountName: `OPINION-NG / ${params.fullName.trim().toUpperCase()}`,
-      },
-    };
-
-    setUser(newUser);
-    setWallet({
-      availableKobo: 5_000 * KOBO_PER_NAIRA, // ₦5,000 welcome mock balance for new signups
-      lockedKobo: 0,
-      creatorEarningsKobo: 0,
-    });
-
-    closeSignInModal();
-    return true;
-  };
-
-  const loginWithEmail = async (email: string, _otp?: string): Promise<boolean> => {
-    const foundPreset = PRESET_ACCOUNTS.find((a) => a.email?.toLowerCase() === email.toLowerCase());
-    if (foundPreset) {
-      setUser(foundPreset);
+    try {
+      const data = await apiClient.register(params);
+      setUser(formatAppUser(data.user, data.wallet));
+      setWallet(formatAppWallet(data.wallet));
       closeSignInModal();
       return true;
+    } catch (err: any) {
+      console.error('[SignUp Error]:', err);
+      throw err;
     }
-
-    const handle = email.split('@')[0];
-    const newUser: AppUser = {
-      id: `usr_${Date.now().toString(36)}`,
-      email,
-      xHandle: handle,
-      displayName: handle.charAt(0).toUpperCase() + handle.slice(1),
-      avatarUrl: `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(email)}`,
-      kycTier: 1,
-      bvnNinVerified: true,
-      virtualAccount: {
-        accountNumber: '99' + Math.floor(10000000 + Math.random() * 90000000),
-        bankName: 'Wema Bank (OpinionNG)',
-        accountName: `OPINION-NG / ${handle.toUpperCase()}`,
-      },
-    };
-    setUser(newUser);
-    closeSignInModal();
-    return true;
   };
 
-  const loginWithPhone = async (phone: string, _otp?: string): Promise<boolean> => {
-    const cleanPhone = phone.replace(/\s+/g, '');
-    const foundPreset = PRESET_ACCOUNTS.find((a) => a.phone === cleanPhone);
-    if (foundPreset) {
-      setUser(foundPreset);
+  const loginWithEmail = async (email: string, otp?: string): Promise<boolean> => {
+    try {
+      const data = await apiClient.login({
+        identifier: email,
+        password: otp || 'password123',
+        otp,
+      });
+      setUser(formatAppUser(data.user, data.wallet));
+      setWallet(formatAppWallet(data.wallet));
       closeSignInModal();
       return true;
+    } catch (err: any) {
+      console.error('[Login Error]:', err);
+      throw err;
     }
+  };
 
-    const newUser: AppUser = {
-      id: `usr_${Date.now().toString(36)}`,
-      phone: cleanPhone,
-      displayName: `User ${cleanPhone.slice(-4)}`,
-      avatarUrl: `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(cleanPhone)}`,
-      kycTier: 1,
-      bvnNinVerified: true,
-      virtualAccount: {
-        accountNumber: '99' + Math.floor(10000000 + Math.random() * 90000000),
-        bankName: 'Providus Bank (OpinionNG)',
-        accountName: `OPINION-NG / ${cleanPhone.slice(-4)}`,
-      },
-    };
-    setUser(newUser);
-    closeSignInModal();
-    return true;
+  const loginWithPhone = async (phone: string, otp?: string): Promise<boolean> => {
+    try {
+      const data = await apiClient.login({
+        identifier: phone,
+        password: otp || 'password123',
+        otp,
+      });
+      setUser(formatAppUser(data.user, data.wallet));
+      setWallet(formatAppWallet(data.wallet));
+      closeSignInModal();
+      return true;
+    } catch (err: any) {
+      console.error('[Login Error]:', err);
+      throw err;
+    }
   };
 
   const loginWithX = async (handle: string = 'crypto_sage'): Promise<boolean> => {
-    const cleanHandle = handle.replace(/^@/, '');
-    const foundPreset = PRESET_ACCOUNTS.find(
-      (a) => a.xHandle?.toLowerCase() === cleanHandle.toLowerCase()
-    );
-    if (foundPreset) {
-      setUser(foundPreset);
+    try {
+      const data = await apiClient.loginWithX({ handle });
+      setUser(formatAppUser(data.user, data.wallet));
+      setWallet(formatAppWallet(data.wallet));
       closeSignInModal();
       return true;
+    } catch (err: any) {
+      console.error('[X Auth Error]:', err);
+      throw err;
     }
-
-    const newUser: AppUser = {
-      id: `usr_x_${cleanHandle}`,
-      xHandle: cleanHandle,
-      displayName: `@${cleanHandle}`,
-      avatarUrl: `https://unavatar.io/twitter/${cleanHandle}`,
-      kycTier: 1,
-      bvnNinVerified: true,
-      virtualAccount: {
-        accountNumber: '99' + Math.floor(10000000 + Math.random() * 90000000),
-        bankName: 'Wema Bank (OpinionNG)',
-        accountName: `OPINION-NG / @${cleanHandle.toUpperCase()}`,
-      },
-    };
-    setUser(newUser);
-    closeSignInModal();
-    return true;
   };
 
-  const loginDemoUser = () => {
-    setUser(DEFAULT_DEMO_USER);
-    setWallet((prev) => ({
-      ...prev,
-      availableKobo: Math.max(prev.availableKobo, DEFAULT_DEMO_BALANCE_KOBO),
-    }));
+  const loginDemoUser = async () => {
+    try {
+      const data = await apiClient.login({
+        identifier: 'trader@opinion.ng',
+        password: 'password123',
+      });
+      setUser(formatAppUser(data.user, data.wallet));
+      setWallet(formatAppWallet(data.wallet));
+    } catch {
+      setUser(DEFAULT_DEMO_USER);
+    }
     closeSignInModal();
   };
 
-  const switchUserAccount = (userId: string) => {
+  const switchUserAccount = async (userId: string) => {
     const target = PRESET_ACCOUNTS.find((a) => a.id === userId);
     if (target) {
-      setUser(target);
+      try {
+        const data = await apiClient.login({
+          identifier: target.email || target.xHandle || target.id,
+          password: 'password123',
+          otp: '123456',
+        });
+        setUser(formatAppUser(data.user, data.wallet));
+        setWallet(formatAppWallet(data.wallet));
+      } catch {
+        setUser(target);
+      }
     }
   };
 
   const logout = () => {
+    apiClient.logout();
+    localStorage.removeItem(STORAGE_KEYS.USER);
+    localStorage.removeItem(STORAGE_KEYS.WALLET);
     setUser(null);
   };
 
@@ -396,16 +408,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const syncWithBackend = async () => {
     try {
-      const res = await fetch(`/api/user/me?userId=${encodeURIComponent(user?.id || DEFAULT_DEMO_USER.id)}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.wallet) {
-          setWallet({
-            availableKobo: Number(data.wallet.availableKobo),
-            lockedKobo: Number(data.wallet.lockedKobo || 0),
-            creatorEarningsKobo: Number(data.wallet.creatorEarningsKobo || 0),
-          });
-        }
+      const data = await apiClient.getMe(user?.id);
+      if (data && data.wallet) {
+        setWallet({
+          availableKobo: Number(data.wallet.availableKobo),
+          lockedKobo: Number(data.wallet.lockedKobo || 0),
+          creatorEarningsKobo: Number(data.wallet.creatorEarningsKobo || 0),
+        });
+      }
+      if (data && data.user) {
+        setUser((prev) => (prev ? { ...prev, ...formatAppUser(data.user, data.wallet) } : prev));
       }
     } catch {
       // Offline fallback silently keeps local state

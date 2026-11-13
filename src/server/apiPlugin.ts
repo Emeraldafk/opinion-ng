@@ -12,7 +12,7 @@ function sendJson(res: ServerResponse, statusCode: number, data: any) {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, x-user-id',
+    'Access-Control-Allow-Headers': 'Content-Type, x-user-id, authorization, x-session-token',
   });
   res.end(JSON.stringify(data));
 }
@@ -51,12 +51,19 @@ export function opinionNgApiPlugin(): Plugin {
           res.writeHead(204, {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, x-user-id',
+            'Access-Control-Allow-Headers': 'Content-Type, x-user-id, authorization, x-session-token',
           });
           return res.end();
         }
 
+        const authHeader = req.headers['authorization'];
+        const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7).trim() : null;
+        const headerToken = (req.headers['x-session-token'] as string) || urlObj.searchParams.get('token');
+        const sessionToken = bearerToken || headerToken;
+        const activeSession = sessionToken ? globalNgnEngine.validateSession(sessionToken) : null;
+
         const userId =
+          activeSession?.user.id ||
           (req.headers['x-user-id'] as string) ||
           urlObj.searchParams.get('userId') ||
           DEMO_USER_ID;
@@ -69,6 +76,77 @@ export function opinionNgApiPlugin(): Plugin {
               service: 'OpinionNG NGN Engine (Stage 2)',
               timestamp: Date.now(),
             });
+          }
+
+          // Auth: Register new user
+          if (pathname === '/api/auth/register' && req.method === 'POST') {
+            const body = await parseJsonBody(req);
+            const result = await globalNgnEngine.registerUser({
+              fullName: body.fullName || '',
+              emailOrPhone: body.emailOrPhone || '',
+              password: body.password,
+              xHandle: body.xHandle,
+            });
+            return sendJson(res, 201, {
+              success: true,
+              token: result.sessionToken,
+              user: result.user,
+              wallet: result.wallet,
+            });
+          }
+
+          // Auth: Login with email / phone / handle
+          if (pathname === '/api/auth/login' && req.method === 'POST') {
+            const body = await parseJsonBody(req);
+            const result = await globalNgnEngine.loginUser({
+              identifier: body.identifier || '',
+              password: body.password,
+              otp: body.otp,
+            });
+            return sendJson(res, 200, {
+              success: true,
+              token: result.sessionToken,
+              user: result.user,
+              wallet: result.wallet,
+            });
+          }
+
+          // Auth: Login / Auth with X handle
+          if (pathname === '/api/auth/x-login' && req.method === 'POST') {
+            const body = await parseJsonBody(req);
+            const result = await globalNgnEngine.loginWithX({
+              handle: body.handle || '',
+            });
+            return sendJson(res, 200, {
+              success: true,
+              token: result.sessionToken,
+              user: result.user,
+              wallet: result.wallet,
+            });
+          }
+
+          // Auth: Validate active session
+          if (pathname === '/api/auth/session' && req.method === 'GET') {
+            if (!activeSession) {
+              return sendJson(res, 401, { success: false, error: 'Unauthorized or session expired' });
+            }
+            const positions = globalNgnEngine.getUserPositions(activeSession.user.id);
+            const ledger = globalNgnEngine.getUserLedger(activeSession.user.id);
+            return sendJson(res, 200, {
+              success: true,
+              user: activeSession.user,
+              wallet: activeSession.wallet,
+              positions,
+              recentLedger: ledger.slice(0, 20),
+            });
+          }
+
+          // Auth: Logout
+          if (pathname === '/api/auth/logout' && req.method === 'POST') {
+            if (sessionToken) {
+              globalNgnEngine.logoutSession(sessionToken);
+            }
+            return sendJson(res, 200, { success: true });
           }
 
           // 2. Full state / snapshot

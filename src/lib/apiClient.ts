@@ -6,6 +6,7 @@
 import { KOBO_PER_NAIRA, MAX_SHARE_PAYOUT_KOBO as WINNING_SHARE_PAYOUT_KOBO } from './currency';
 
 export const DEMO_USER_ID = 'usr_demo_893240';
+export const OPINION_NG_SESSION_KEY = 'opinion_ng_session_token_v1';
 
 export interface TradeQuoteResult {
   isBuy: boolean;
@@ -53,11 +54,112 @@ export interface TradeExecutionResult {
 }
 
 class ApiClient {
+  public getSessionToken(): string | null {
+    try {
+      return localStorage.getItem(OPINION_NG_SESSION_KEY);
+    } catch {
+      return null;
+    }
+  }
+
+  public setSessionToken(token: string | null): void {
+    try {
+      if (token) {
+        localStorage.setItem(OPINION_NG_SESSION_KEY, token);
+      } else {
+        localStorage.removeItem(OPINION_NG_SESSION_KEY);
+      }
+    } catch {}
+  }
+
   private getHeaders(userId?: string): HeadersInit {
+    const token = this.getSessionToken();
     return {
       'Content-Type': 'application/json',
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
       'x-user-id': userId || DEMO_USER_ID,
     };
+  }
+
+  public async register(params: {
+    fullName: string;
+    emailOrPhone: string;
+    password?: string;
+    xHandle?: string;
+  }) {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      throw new Error(data.error || 'Registration failed');
+    }
+    if (data.token) {
+      this.setSessionToken(data.token);
+    }
+    return data;
+  }
+
+  public async login(params: {
+    identifier: string;
+    password?: string;
+    otp?: string;
+  }) {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      throw new Error(data.error || 'Login failed');
+    }
+    if (data.token) {
+      this.setSessionToken(data.token);
+    }
+    return data;
+  }
+
+  public async loginWithX(params: { handle: string }) {
+    const res = await fetch('/api/auth/x-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      throw new Error(data.error || 'X authentication failed');
+    }
+    if (data.token) {
+      this.setSessionToken(data.token);
+    }
+    return data;
+  }
+
+  public async getSession() {
+    const token = this.getSessionToken();
+    if (!token) return null;
+    const res = await fetch('/api/auth/session', {
+      headers: this.getHeaders(),
+    });
+    if (!res.ok) {
+      this.setSessionToken(null);
+      return null;
+    }
+    return res.json();
+  }
+
+  public async logout() {
+    const token = this.getSessionToken();
+    if (token) {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: this.getHeaders(),
+      }).catch(() => {});
+    }
+    this.setSessionToken(null);
   }
 
   public async getHealth() {
