@@ -61,20 +61,20 @@
     "wlt_opinion_platform_treasury": {
       "id": "wlt_opinion_platform_treasury",
       "userId": "usr_opinion_platform_treasury",
-      "availableKobo": 6000,
+      "availableKobo": 106000,
       "lockedKobo": 0,
       "creatorEarningsKobo": 0,
-      "updatedAt": "2026-11-12T18:28:26.772Z"
+      "updatedAt": "2026-11-13T22:41:50.211Z"
     },
     "wlt_demo_893240": {
       "id": "wlt_demo_893240",
       "userId": "usr_demo_893240",
-      "availableKobo": 4600000,
+      "availableKobo": 4500000,
       "lockedKobo": 0,
       "creatorEarningsKobo": 25000,
       "virtualAccountNumber": "9920194821",
       "virtualAccountBank": "Wema Bank (OpinionNG)",
-      "updatedAt": "2026-11-13T19:22:35.501Z"
+      "updatedAt": "2026-11-13T22:41:50.211Z"
     },
     "wlt_creator_burna": {
       "id": "wlt_creator_burna",
@@ -551,6 +551,33 @@
         "status": "PROCESSED"
       },
       "createdAt": "2026-11-13T19:22:35.501Z"
+    },
+    {
+      "id": "ldg_mkt_create_15_1794609710211_creator",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -100000,
+      "balanceAfterKobo": 4500000,
+      "entryType": "MARKET_CREATION_FEE",
+      "referenceId": "mkt_create_15_1794609710211",
+      "metadata": {
+        "marketId": 15,
+        "antiSpamOption": "fee",
+        "question": "Will Nigeria launch its first sovereign AI computing cluster in Abuja before end of 2027?"
+      },
+      "createdAt": "2026-11-13T22:41:50.211Z"
+    },
+    {
+      "id": "ldg_mkt_create_15_1794609710211_platform",
+      "walletId": "wlt_opinion_platform_treasury",
+      "amountKobo": 100000,
+      "balanceAfterKobo": 106000,
+      "entryType": "PLATFORM_FEE",
+      "referenceId": "mkt_create_15_1794609710211",
+      "metadata": {
+        "marketId": 15,
+        "feeType": "MARKET_CREATION_FEE"
+      },
+      "createdAt": "2026-11-13T22:41:50.211Z"
     }
   ],
   "markets": {
@@ -918,6 +945,29 @@
       "evidenceSource": "https://boxrec.com",
       "createdAt": "2026-11-12T18:04:57.878Z",
       "updatedAt": "2026-11-12T18:04:57.878Z"
+    },
+    "15": {
+      "id": 15,
+      "creatorId": "usr_demo_893240",
+      "question": "Will Nigeria launch its first sovereign AI computing cluster in Abuja before end of 2027?",
+      "category": "Tech",
+      "imageUri": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600",
+      "sourceHandle": "@FMITENigeria",
+      "yesPoolKobo": 100000,
+      "noPoolKobo": 100000,
+      "totalVolumeKobo": 0,
+      "creatorFeeBps": 150,
+      "platformFeeBps": 150,
+      "status": "ACTIVE",
+      "proposedOutcome": "UNRESOLVED",
+      "finalOutcome": "UNRESOLVED",
+      "closingTime": "2026-11-20T22:41:50.221Z",
+      "resolutionDeadline": "2026-11-21T22:41:50.222Z",
+      "yesCondition": "Federal Ministry of Communications, Innovation and Digital Economy officially inaugurates a dedicated national GPU cluster.",
+      "noCondition": "No cluster commissioned by end of 2027.",
+      "evidenceSource": "https://bmdce.gov.ng",
+      "createdAt": "2026-11-13T22:41:50.211Z",
+      "updatedAt": "2026-11-13T22:41:50.211Z"
     }
   },
   "positions": {

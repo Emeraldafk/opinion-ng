@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   createPublicClient,
   createWalletClient,
@@ -51,7 +51,9 @@ import {
   quoteBuyOrder,
   quoteSellOrder,
   isPredictionMarket,
+  adaptBackendMarketToOpinionMarket,
 } from './lib/bondingCurve';
+import { INITIAL_MOCK_ACTIVITIES } from './lib/mockActivities';
 import { NULLHOOD_MARKETS_ABI } from './contracts/NullhoodMarketsArtifact';
 import { Navbar, TiredFunNavTab } from './components/Navbar';
 import { LiveTicker } from './components/LiveTicker';
@@ -108,8 +110,35 @@ export function App() {
   const [creatorFeeRate, setCreatorFeeRate] = useState<number>(0.01);
   const [protocolFeeRate, setProtocolFeeRate] = useState<number>(0.01);
 
-  // Markets & User State
-  const [markets, setMarkets] = useState<OpinionMarket[]>(() => dbService.loadMarkets(INITIAL_OPINION_MARKETS));
+  // Markets & User State (Synchronized directly with the database)
+  const [markets, setMarkets] = useState<OpinionMarket[]>(() => {
+    const cached = dbService.loadMarkets([]);
+    if (cached && cached.length > 0) return cached;
+    return INITIAL_OPINION_MARKETS;
+  });
+  const [isLoadingMarkets, setIsLoadingMarkets] = useState(false);
+
+  // Fetch live markets directly from database API
+  const refreshMarketsFromDatabase = useCallback(async () => {
+    try {
+      setIsLoadingMarkets(true);
+      const raw = await apiClient.getMarkets();
+      if (raw && raw.length > 0) {
+        const adapted = raw.map(adaptBackendMarketToOpinionMarket);
+        setMarkets(adapted);
+        dbService.saveMarkets(adapted);
+      }
+    } catch (err) {
+      console.warn('[DB Engine] Using cached/local markets fallback:', err);
+    } finally {
+      setIsLoadingMarkets(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    refreshMarketsFromDatabase();
+  }, [refreshMarketsFromDatabase]);
+
   const [holdings, setHoldings] = useState<UserHoldings>(() => dbService.loadHoldings({}));
   const [claimableCreatorFees, setClaimableCreatorFees] = useState<number>(0);
   const [claimHistory, setClaimHistory] = useState<FeeClaimRecord[]>(() =>
@@ -185,104 +214,7 @@ export function App() {
 
   // Live Tape & Pulse Activities
   const [activities, setActivities] = useState<TradeActivity[]>(() =>
-    dbService.loadActivities([
-      {
-        id: 'act-init-1',
-        marketId: 1,
-        marketQuestion: 'Will Dangote Refinery petrol pump price drop below ₦850/L across Lagos before Q4 2026?',
-        category: 'Economy',
-        trader: 'Tunde Afolabi',
-        isYes: true,
-        isBuy: true,
-        ethAmount: 0.048,
-        sharesAmount: 640,
-        yesSentimentAfter: 64.2,
-        sentimentDeltaPct: 2.2,
-        eventType: 'STANDARD_TRADE',
-        timestamp: Date.now() - 1000 * 60 * 18,
-        isOnChain: false,
-      },
-      {
-        id: 'act-init-2',
-        marketId: 2,
-        marketQuestion: 'Will Burna Boy, Wizkid or Davido headline the 2026 FIFA World Cup Closing Ceremony?',
-        category: 'Culture',
-        trader: 'Chioma Adebayo',
-        isYes: true,
-        isBuy: true,
-        ethAmount: 0.072,
-        sharesAmount: 890,
-        yesSentimentAfter: 71.8,
-        sentimentDeltaPct: 3.5,
-        eventType: 'STANDARD_TRADE',
-        timestamp: Date.now() - 1000 * 60 * 42,
-        isOnChain: false,
-      },
-      {
-        id: 'act-init-3',
-        marketId: 3,
-        marketQuestion: 'Will the Super Eagles reach the Quarter-Finals or better at the 2026 FIFA World Cup?',
-        category: 'Sports',
-        trader: 'Emeka Nwosu',
-        isYes: true,
-        isBuy: true,
-        ethAmount: 0.055,
-        sharesAmount: 760,
-        yesSentimentAfter: 54.8,
-        sentimentDeltaPct: 1.8,
-        eventType: 'STANDARD_TRADE',
-        timestamp: Date.now() - 1000 * 60 * 75,
-        isOnChain: false,
-      },
-      {
-        id: 'act-init-4',
-        marketId: 4,
-        marketQuestion: 'Will official NAFEM USD/NGN exchange rate strengthen below ₦1,400/$ in 2026?',
-        category: 'Economy',
-        trader: 'Dapo Oladipo',
-        isYes: false,
-        isBuy: true,
-        ethAmount: 0.061,
-        sharesAmount: 680,
-        yesSentimentAfter: 51.2,
-        sentimentDeltaPct: 1.2,
-        eventType: 'STANDARD_TRADE',
-        timestamp: Date.now() - 1000 * 60 * 120,
-        isOnChain: false,
-      },
-      {
-        id: 'act-init-5',
-        marketId: 5,
-        marketQuestion: 'Will INEC mandate 100% digital voter accreditation and real-time portal upload for the 2027 General Elections?',
-        category: 'Politics',
-        trader: 'Amina Bello',
-        isYes: true,
-        isBuy: true,
-        ethAmount: 0.062,
-        sharesAmount: 620,
-        yesSentimentAfter: 61.9,
-        sentimentDeltaPct: 2.1,
-        eventType: 'STANDARD_TRADE',
-        timestamp: Date.now() - 1000 * 60 * 180,
-        isOnChain: false,
-      },
-      {
-        id: 'act-init-6',
-        marketId: 6,
-        marketQuestion: 'Will Moniepoint or OPay execute an IPO listing on the Nigerian Exchange (NGX) before 2027?',
-        category: 'Tech',
-        trader: 'Kelechi Okafor',
-        isYes: true,
-        isBuy: true,
-        ethAmount: 0.058,
-        sharesAmount: 710,
-        yesSentimentAfter: 57.8,
-        sentimentDeltaPct: 2.5,
-        eventType: 'STANDARD_TRADE',
-        timestamp: Date.now() - 1000 * 60 * 240,
-        isOnChain: false,
-      },
-    ])
+    dbService.loadActivities(INITIAL_MOCK_ACTIVITIES)
   );
 
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
@@ -775,7 +707,7 @@ export function App() {
     );
   };
 
-  // Create New Market (Off-Chain NGN Engine + Optional On-Chain EVM)
+  // Create New Market (Directly in Database Engine)
   const handleCreateMarket = async (data: {
     question: string;
     category: Exclude<MarketCategory, 'All'>;
@@ -790,164 +722,46 @@ export function App() {
     noCondition?: string;
     evidenceSource?: string;
   }) => {
-    // 1. Off-Chain NGN Atomic Market Creation Flow (Anti-spam check & Creator Economics)
-    if (!walletAddress || !window.ethereum) {
-      if (!auth.isAuthenticated) {
-        pushToast('Sign In Required', 'Please sign in to OpinionNG to create a market.');
-        auth.openSignInModal();
-        return;
-      }
-
-      try {
-        const res = await apiClient.createMarket({
-          creatorId: auth.user?.id,
-          question: data.question,
-          category: data.category,
-          imageUri: data.imageUri,
-          sourceHandle: data.sourceHandle || (auth.user?.xHandle ? `@${auth.user.xHandle}` : '@OpinionNG'),
-          antiSpamOption: 'fee',
-          yesCondition: data.yesCondition,
-          noCondition: data.noCondition,
-          evidenceSource: data.evidenceSource,
-          closingTime: data.closingTime ? new Date(data.closingTime * 1000).toISOString() : undefined,
-          resolutionDeadline: data.resolutionDeadline ? new Date(data.resolutionDeadline * 1000).toISOString() : undefined,
-        });
-
-        await auth.syncWithBackend();
-
-        const createdMkt: OpinionMarket = {
-          id: res.market.id,
-          creator: auth.user?.displayName || 'OpinionNG Creator',
-          question: res.market.question,
-          category: data.category,
-          imageUri: res.market.imageUri,
-          sourceHandle: res.market.sourceHandle,
-          createdAt: Date.now(),
-          totalTrades: 0,
-          creatorFeesEarned: 0,
-          yesCurve: {
-            virtualEth: 0.5,
-            virtualShares: 500000,
-            realEth: 0.001,
-            totalShares: 1000,
-            volumeEth: 0.001,
-          },
-          noCurve: {
-            virtualEth: 0.5,
-            virtualShares: 500000,
-            realEth: 0.001,
-            totalShares: 1000,
-            volumeEth: 0.001,
-          },
-          history: [],
-          comments: [],
-          marketType: data.marketType || 'PERPETUAL_OPINION',
-          status: 'ACTIVE',
-          prediction: data.marketType === 'RESOLVABLE_PREDICTION' ? {
-            closingTime: data.closingTime || Math.floor(Date.now() / 1000) + 7 * 86400,
-            resolutionDeadline: data.resolutionDeadline || Math.floor(Date.now() / 1000) + 8 * 86400,
-            yesCondition: data.yesCondition || '',
-            noCondition: data.noCondition || '',
-            evidenceSource: data.evidenceSource || '',
-          } : undefined,
-        };
-
-        setMarkets((prev) => [createdMkt, ...prev]);
-        setSelectedMarketId(createdMkt.id);
-
-        pushToast(
-          'Market Created & Live!',
-          `₦1,000 anti-spam fee deducted. You will earn 1.5% creator fees on every trade.`
-        );
-        return;
-      } catch (err: any) {
-        pushToast('Market Creation Failed', err.message || 'Error creating market');
-        throw err;
-      }
+    if (!auth.isAuthenticated) {
+      pushToast('Sign In Required', 'Please sign in to OpinionNG to create a market.');
+      auth.openSignInModal();
+      return;
     }
 
-    // 2. Broadcast to real on-chain contract when Web3 wallet connected
-
-    let txHash: string;
-    const isPrediction = data.marketType === 'RESOLVABLE_PREDICTION';
-
     try {
-      await switchOrAddRobinhoodChain();
-      const walletClient = createWalletClient({
-        account: walletAddress as `0x${string}`,
-        chain: robinhoodTestnet,
-        transport: custom(window.ethereum),
+      pushToast('Creating Market...', 'Deducting anti-spam fee and registering with database...');
+
+      const res = await apiClient.createMarket({
+        creatorId: auth.user?.id,
+        question: data.question,
+        category: data.category,
+        imageUri: data.imageUri,
+        sourceHandle: data.sourceHandle || (auth.user?.xHandle ? `@${auth.user.xHandle}` : '@OpinionNG'),
+        antiSpamOption: 'fee',
+        yesCondition: data.yesCondition,
+        noCondition: data.noCondition,
+        evidenceSource: data.evidenceSource,
+        closingTime: data.closingTime ? new Date(data.closingTime * 1000).toISOString() : undefined,
+        resolutionDeadline: data.resolutionDeadline ? new Date(data.resolutionDeadline * 1000).toISOString() : undefined,
       });
 
-      pushToast(
-        'Confirm in Wallet',
-        `Please confirm ${isPrediction ? 'createPredictionMarket' : 'createMarket'} in MetaMask...`
-      );
+      // Synchronize wallet balance and creator economics
+      await auth.syncWithBackend();
 
-      if (isPrediction) {
-        txHash = await walletClient.writeContract({
-          address: contractAddress as `0x${string}`,
-          abi: NULLHOOD_MARKETS_ABI,
-          functionName: 'createPredictionMarket',
-          args: [
-            data.question,
-            data.category,
-            data.imageUri,
-            data.sourceHandle || (userProfile ? `@${userProfile.username}` : (walletAddress ? shortenAddress(walletAddress) : '')),
-            BigInt(data.closingTime || Math.floor(Date.now() / 1000) + 7 * 86400),
-            BigInt(data.resolutionDeadline || Math.floor(Date.now() / 1000) + 8 * 86400),
-            data.yesCondition || '',
-            data.noCondition || '',
-            data.evidenceSource || '',
-            data.initialSideIsYes,
-          ],
-          value: data.initialBuyEth > 0 ? parseEther(data.initialBuyEth.toString()) : 0n,
-        });
-      } else {
-        txHash = await walletClient.writeContract({
-          address: contractAddress as `0x${string}`,
-          abi: NULLHOOD_MARKETS_ABI,
-          functionName: 'createMarket',
-          args: [
-            data.question,
-            data.category,
-            data.imageUri,
-            data.sourceHandle || (userProfile ? `@${userProfile.username}` : (walletAddress ? shortenAddress(walletAddress) : '')),
-            data.initialSideIsYes,
-          ],
-          value: data.initialBuyEth > 0 ? parseEther(data.initialBuyEth.toString()) : 0n,
-        });
-      }
+      // Refresh all markets directly from the live database
+      await refreshMarketsFromDatabase();
 
-      pushToast('Creating Market', 'Awaiting block confirmation on Robinhood Chain...', txHash);
-
-      await infraManager.publicClient.waitForTransactionReceipt({
-        hash: txHash as `0x${string}`,
-      });
-
-      // Update balance
-      const bal = await infraManager.publicClient.getBalance({
-        address: walletAddress as `0x${string}`,
-      });
-      setEthBalance(formatEther(bal));
-
-      // Re-sync on-chain markets directly from smart contract
-      const refreshed = await dbService.syncOnChainMarkets(contractAddress);
-      if (refreshed && refreshed.length > 0) {
-        setMarkets(refreshed);
-        const createdId = refreshed[refreshed.length - 1]?.id || refreshed.length;
-        setSelectedMarketId(createdId);
+      if (res.market?.id) {
+        setSelectedMarketId(res.market.id);
       }
 
       pushToast(
-        isPrediction ? 'Prediction Market Live on Robinhood Chain!' : 'Opinion Market Live on Robinhood Chain!',
-        `Spawned Market on-chain: "${data.question}"`,
-        txHash
+        'Market Created & Live!',
+        `Market #${res.market.id} registered in database. You will earn 1.5% creator fees on every trade in ₦.`
       );
-    } catch (err: unknown) {
-      infraManager.recordError('CONTRACT_TX', err);
-      const msg = err instanceof Error ? err.message : 'Market creation cancelled';
-      pushToast('Market Creation Cancelled', msg.slice(0, 80));
+    } catch (err: any) {
+      console.error('[Create Market Error]:', err);
+      pushToast('Market Creation Failed', err.message || 'Error creating market in database');
       throw err;
     }
   };

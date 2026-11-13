@@ -565,6 +565,88 @@ export function makeCurveStateFromReserve(
   };
 }
 
+/**
+ * Transforms an atomic database market record directly into an OpinionMarket
+ * for full frontend compatibility with live probability math and historical chart plotting.
+ */
+export function adaptBackendMarketToOpinionMarket(m: any): OpinionMarket {
+  const yesPool = Number(m.yesPoolKobo || 100_000);
+  const noPool = Number(m.noPoolKobo || 100_000);
+  const totalPool = yesPool + noPool;
+  const yesRatio = totalPool > 0 ? yesPool / totalPool : 0.5;
+  const noRatio = 1 - yesRatio;
+  const totalVolKobo = Number(m.totalVolumeKobo || 0);
+
+  // Convert Naira Kobo to virtual curve units for sentiment & chart plotting
+  const realEthYes = (yesPool / 100) / 4_200_000;
+  const realEthNo = (noPool / 100) / 4_200_000;
+  const volumeEth = (totalVolKobo / 100) / 4_200_000;
+
+  return {
+    id: Number(m.id),
+    creator: m.creatorId || m.sourceHandle || 'usr_creator',
+    creatorAvatar: m.creatorAvatar,
+    question: m.question,
+    category: (m.category as any) || 'Culture',
+    imageUri: m.imageUri || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600',
+    sourceHandle: m.sourceHandle || '@OpinionNG',
+    createdAt: m.createdAt ? new Date(m.createdAt).getTime() : Date.now(),
+    totalTrades: Math.max(1, Math.round(totalVolKobo / 50_000)),
+    creatorFeesEarned: ((totalVolKobo * (m.creatorFeeBps || 150)) / 10_000) / 100,
+    yesCurve: {
+      virtualEth: INITIAL_VIRTUAL_ETH + realEthYes,
+      virtualShares: CURVE_K / (INITIAL_VIRTUAL_ETH + realEthYes),
+      realEth: realEthYes,
+      totalShares: Math.round(yesPool / 100),
+      volumeEth: volumeEth * yesRatio,
+      buyVolumeEth: volumeEth * yesRatio,
+      sellVolumeEth: 0,
+      tradeCount: Math.max(1, Math.round(totalVolKobo / 100_000)),
+    },
+    noCurve: {
+      virtualEth: INITIAL_VIRTUAL_ETH + realEthNo,
+      virtualShares: CURVE_K / (INITIAL_VIRTUAL_ETH + realEthNo),
+      realEth: realEthNo,
+      totalShares: Math.round(noPool / 100),
+      volumeEth: volumeEth * noRatio,
+      buyVolumeEth: volumeEth * noRatio,
+      sellVolumeEth: 0,
+      tradeCount: Math.max(1, Math.round(totalVolKobo / 100_000)),
+    },
+    history: [
+      {
+        timestamp: m.createdAt ? new Date(m.createdAt).getTime() : Date.now() - 86400 * 1000,
+        label: 'Genesis',
+        yesSentiment: 50,
+        yesPriceEth: 0.000001,
+        noPriceEth: 0.000001,
+        volumeSnapshotEth: 0,
+      },
+      {
+        timestamp: Date.now(),
+        label: 'Now',
+        yesSentiment: Math.round(yesRatio * 100),
+        yesPriceEth: 0.000001 + realEthYes,
+        noPriceEth: 0.000001 + realEthNo,
+        volumeSnapshotEth: volumeEth,
+      },
+    ],
+    holders: [],
+    comments: m.comments || [],
+    marketType: 'RESOLVABLE_PREDICTION',
+    status: m.status || 'ACTIVE',
+    prediction: {
+      closingTime: m.closingTime ? Math.floor(new Date(m.closingTime).getTime() / 1000) : Math.floor(Date.now() / 1000) + 30 * 86400,
+      resolutionDeadline: m.resolutionDeadline ? Math.floor(new Date(m.resolutionDeadline).getTime() / 1000) : Math.floor(Date.now() / 1000) + 31 * 86400,
+      yesCondition: m.yesCondition || 'Event condition verified.',
+      noCondition: m.noCondition || 'Event condition not met.',
+      evidenceSource: m.evidenceSource || 'Official Public Record',
+      proposedOutcome: m.proposedOutcome || 'UNRESOLVED',
+      finalOutcome: m.finalOutcome || 'UNRESOLVED',
+    },
+  };
+}
+
 export const INITIAL_OPINION_MARKETS: OpinionMarket[] = [
   {
     id: 1,

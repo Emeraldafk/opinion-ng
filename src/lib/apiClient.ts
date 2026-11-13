@@ -167,6 +167,18 @@ class ApiClient {
     return res.json();
   }
 
+  public async getMarkets(): Promise<any[]> {
+    const res = await fetch('/api/markets', {
+      headers: this.getHeaders(),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to fetch markets from database');
+    }
+    const data = await res.json();
+    return data.markets || [];
+  }
+
   public async getMe(userId?: string) {
     const uid = userId || DEMO_USER_ID;
     const res = await fetch(`/api/user/me?userId=${encodeURIComponent(uid)}`, {
