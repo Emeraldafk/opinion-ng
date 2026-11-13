@@ -55,6 +55,51 @@
       "virtualAccountBank": "Wema Bank (OpinionNG)",
       "virtualAccountName": "OPINION-NG / AISHA BABANGIDA",
       "createdAt": "2026-11-13T19:10:35.314Z"
+    },
+    "usr_mwfkqjpd_for1": {
+      "id": "usr_mwfkqjpd_for1",
+      "email": "user_1794610468120@opinion.ng",
+      "xHandle": "test_user",
+      "displayName": "Test User",
+      "avatarUrl": "https://api.dicebear.com/7.x/identicon/svg?seed=user_1794610468120%40opinion.ng",
+      "passwordHash": "5fe9e473eec725ac53a937c8983afa52530a0c689229a458883c8499747e8c979458e7870e897cfd237851884ae8a9f8c0cc532d8dbe4761c5209cc34b8d17d6",
+      "passwordSalt": "d7132853794415f900fc85275cb69984",
+      "kycTier": 1,
+      "bvnNinVerified": true,
+      "virtualAccountNumber": "9968084085",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "virtualAccountName": "OPINION-NG / TEST USER",
+      "createdAt": "2026-11-13T22:54:28.466Z"
+    },
+    "usr_mwfku6xq_962u": {
+      "id": "usr_mwfku6xq_962u",
+      "email": "fashola_1794610638276@opinion.ng",
+      "xHandle": "fashola_1794610638276",
+      "displayName": "Babatunde Fashola",
+      "avatarUrl": "https://api.dicebear.com/7.x/identicon/svg?seed=fashola_1794610638276%40opinion.ng",
+      "passwordHash": "748b7d2fdcd6310059f51df949e26bfcbee6ddc4bb1ea03f1a73c444473e0b86dd99c3d9ebef792a9b174c3f810cbb81544b666a00066854bf91add1743aa4fa",
+      "passwordSalt": "8e4a6c3df7838426af6d7d9ea615457f",
+      "kycTier": 1,
+      "bvnNinVerified": true,
+      "virtualAccountNumber": "9962553924",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "virtualAccountName": "OPINION-NG / BABATUNDE FASHOLA",
+      "createdAt": "2026-11-13T22:57:18.509Z"
+    },
+    "usr_x_lagos_trader": {
+      "id": "usr_x_lagos_trader",
+      "xHandle": "lagos_trader",
+      "xUserId": "x_lagos_trader",
+      "displayName": "lagos_trader",
+      "avatarUrl": "https://api.dicebear.com/7.x/identicon/svg?seed=lagos_trader",
+      "passwordHash": "fa8449bb0e9dca654c13cab41b4e5eb17395718f9e943df77f7f5888e63c193451004ed36910fd18f0925b58164507ac5138534ec489c7c02c88e3d9e3698147",
+      "passwordSalt": "9464b57c32f78a628a8ff8060021ad58",
+      "kycTier": 1,
+      "bvnNinVerified": true,
+      "virtualAccountNumber": "9963519707",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "virtualAccountName": "OPINION-NG / LAGOS_TRADER",
+      "createdAt": "2026-11-13T22:57:18.647Z"
     }
   },
   "wallets": {
@@ -183,6 +228,36 @@
       "virtualAccountNumber": "9989859949",
       "virtualAccountBank": "Wema Bank (OpinionNG)",
       "updatedAt": "2026-11-13T19:10:35.315Z"
+    },
+    "wlt_usr_mwfkqjpd_for1": {
+      "id": "wlt_usr_mwfkqjpd_for1",
+      "userId": "usr_mwfkqjpd_for1",
+      "availableKobo": 500000,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "virtualAccountNumber": "9968084085",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "updatedAt": "2026-11-13T22:54:28.466Z"
+    },
+    "wlt_usr_mwfku6xq_962u": {
+      "id": "wlt_usr_mwfku6xq_962u",
+      "userId": "usr_mwfku6xq_962u",
+      "availableKobo": 500000,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "virtualAccountNumber": "9962553924",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "updatedAt": "2026-11-13T22:57:18.509Z"
+    },
+    "wlt_usr_x_lagos_trader": {
+      "id": "wlt_usr_x_lagos_trader",
+      "userId": "usr_x_lagos_trader",
+      "availableKobo": 500000,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "virtualAccountNumber": "9963519707",
+      "virtualAccountBank": "Wema Bank (OpinionNG)",
+      "updatedAt": "2026-11-13T22:57:18.647Z"
     }
   },
   "ledgerEntries": [
@@ -578,6 +653,42 @@
         "feeType": "MARKET_CREATION_FEE"
       },
       "createdAt": "2026-11-13T22:41:50.211Z"
+    },
+    {
+      "id": "ldg_welcome_usr_mwfkqjpd_for1",
+      "walletId": "wlt_usr_mwfkqjpd_for1",
+      "amountKobo": 500000,
+      "balanceAfterKobo": 500000,
+      "entryType": "DEPOSIT",
+      "referenceId": "welcome_bonus_usr_mwfkqjpd_for1",
+      "metadata": {
+        "note": "Welcome Bonus Trading Capital (₦5,000)"
+      },
+      "createdAt": "2026-11-13T22:54:28.468Z"
+    },
+    {
+      "id": "ldg_welcome_usr_mwfku6xq_962u",
+      "walletId": "wlt_usr_mwfku6xq_962u",
+      "amountKobo": 500000,
+      "balanceAfterKobo": 500000,
+      "entryType": "DEPOSIT",
+      "referenceId": "welcome_bonus_usr_mwfku6xq_962u",
+      "metadata": {
+        "note": "Welcome Bonus Trading Capital (₦5,000)"
+      },
+      "createdAt": "2026-11-13T22:57:18.510Z"
+    },
+    {
+      "id": "ldg_welcome_usr_x_lagos_trader",
+      "walletId": "wlt_usr_x_lagos_trader",
+      "amountKobo": 500000,
+      "balanceAfterKobo": 500000,
+      "entryType": "DEPOSIT",
+      "referenceId": "welcome_bonus_x_usr_x_lagos_trader",
+      "metadata": {
+        "note": "Welcome Bonus Trading Capital (₦5,000)"
+      },
+      "createdAt": "2026-11-13T22:57:18.647Z"
     }
   ],
   "markets": {
@@ -1010,6 +1121,54 @@
       "userId": "usr_demo_893240",
       "createdAt": "2026-11-13T19:10:35.464Z",
       "expiresAt": "2026-12-13T19:10:35.464Z"
+    },
+    "sess_c345f71fccd2980a23c4e8f83917150d15f9d533864e5a45": {
+      "token": "sess_c345f71fccd2980a23c4e8f83917150d15f9d533864e5a45",
+      "userId": "usr_mwfkqjpd_for1",
+      "createdAt": "2026-11-13T22:54:28.469Z",
+      "expiresAt": "2026-12-13T22:54:28.469Z"
+    },
+    "sess_9003d24e62d009a394192960473b9f877438a76efbe0ad26": {
+      "token": "sess_9003d24e62d009a394192960473b9f877438a76efbe0ad26",
+      "userId": "usr_mwfkqjpd_for1",
+      "createdAt": "2026-11-13T22:54:28.598Z",
+      "expiresAt": "2026-12-13T22:54:28.598Z"
+    },
+    "sess_a9a09734ce70d9a05b8c7058392a13de3c1ce5bb19671514": {
+      "token": "sess_a9a09734ce70d9a05b8c7058392a13de3c1ce5bb19671514",
+      "userId": "usr_mwfku6xq_962u",
+      "createdAt": "2026-11-13T22:57:18.510Z",
+      "expiresAt": "2026-12-13T22:57:18.510Z"
+    },
+    "sess_4f297789a8ad21e3d4a035ffe262b2cdedcd9ee5e06dae4e": {
+      "token": "sess_4f297789a8ad21e3d4a035ffe262b2cdedcd9ee5e06dae4e",
+      "userId": "usr_mwfku6xq_962u",
+      "createdAt": "2026-11-13T22:57:18.559Z",
+      "expiresAt": "2026-12-13T22:57:18.559Z"
+    },
+    "sess_89bc99e525836368762fe7168d2ccc2001fbbdfba73a1756": {
+      "token": "sess_89bc99e525836368762fe7168d2ccc2001fbbdfba73a1756",
+      "userId": "usr_mwfku6xq_962u",
+      "createdAt": "2026-11-13T22:57:18.587Z",
+      "expiresAt": "2026-12-13T22:57:18.587Z"
+    },
+    "sess_5a5c7593a246275f1f6d5529393657a6fd72c626b2c44745": {
+      "token": "sess_5a5c7593a246275f1f6d5529393657a6fd72c626b2c44745",
+      "userId": "usr_mwfku6xq_962u",
+      "createdAt": "2026-11-13T22:57:18.610Z",
+      "expiresAt": "2026-12-13T22:57:18.610Z"
+    },
+    "sess_50fda06541f49ae02f2b220dc29ce39c8ea1880f86269465": {
+      "token": "sess_50fda06541f49ae02f2b220dc29ce39c8ea1880f86269465",
+      "userId": "usr_demo_893240",
+      "createdAt": "2026-11-13T22:57:18.625Z",
+      "expiresAt": "2026-12-13T22:57:18.625Z"
+    },
+    "sess_b00bc65fd3f3ede6108f3309f38cc1a82e8be7fc77ca75fb": {
+      "token": "sess_b00bc65fd3f3ede6108f3309f38cc1a82e8be7fc77ca75fb",
+      "userId": "usr_x_lagos_trader",
+      "createdAt": "2026-11-13T22:57:18.647Z",
+      "expiresAt": "2026-12-13T22:57:18.647Z"
     }
   }
 }

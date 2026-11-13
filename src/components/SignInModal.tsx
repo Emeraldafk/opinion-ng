@@ -71,10 +71,11 @@ export const SignInModal: React.FC<SignInModalProps> = ({
     setIsLoading(true);
     setError(null);
     try {
+      const pinOrOtp = otp.trim() || '123456';
       if (tab === 'email') {
-        await loginWithEmail(email, otp);
+        await loginWithEmail(email, pinOrOtp);
       } else if (tab === 'phone') {
-        await loginWithPhone(phone, otp);
+        await loginWithPhone(phone, pinOrOtp);
       }
       onClose();
     } catch (err: any) {

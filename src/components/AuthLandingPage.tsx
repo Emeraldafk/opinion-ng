@@ -83,12 +83,13 @@ export const AuthLandingPage: React.FC = () => {
     setIsLoading(true);
 
     try {
+      const pinOrOtp = otp.trim() || 'password123';
       if (tab === 'email') {
         if (!email.trim()) throw new Error('Email address is required');
-        await loginWithEmail(email, otp);
+        await loginWithEmail(email, pinOrOtp);
       } else if (tab === 'phone') {
         if (!phone.trim()) throw new Error('Phone number is required');
-        await loginWithPhone(phone, otp);
+        await loginWithPhone(phone, pinOrOtp);
       } else if (tab === 'x') {
         if (!xHandle.trim()) throw new Error('X / Twitter username is required');
         await loginWithX(xHandle);
@@ -317,12 +318,12 @@ export const AuthLandingPage: React.FC = () => {
               </div>
             )}
 
-            {/* OTP Field (if email or phone) */}
+            {/* Security PIN or OTP Field (if email or phone) */}
             {(tab === 'email' || tab === 'phone') && (
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="text-xs font-semibold text-slate-300">
-                    Verification Code (OTP)
+                    Security PIN / Password (or OTP)
                   </label>
                   {!otpSent ? (
                     <button
@@ -330,21 +331,21 @@ export const AuthLandingPage: React.FC = () => {
                       onClick={handleSendOtp}
                       className="text-[11px] font-bold text-[#53b3d4] hover:underline cursor-pointer"
                     >
-                      Send OTP Code
+                      Use Instant OTP (8942)
                     </button>
                   ) : (
                     <span className="text-[10px] text-emerald-400 font-mono">
-                      Code Auto-Filled (8942)
+                      OTP Auto-Filled (8942)
                     </span>
                   )}
                 </div>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8c8c9e]" />
                   <input
-                    type="text"
+                    type="password"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
-                    placeholder="4-digit OTP"
+                    placeholder="Enter your PIN (or 8942 for instant OTP)"
                     className="w-full rounded-2xl border border-[#232330] bg-[#0c0c11] py-3 pl-10 pr-4 text-xs text-white placeholder-[#8c8c9e] focus:border-[#227c9d] focus:outline-none font-mono"
                   />
                 </div>
