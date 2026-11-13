@@ -509,7 +509,7 @@ export const AuthLandingPage: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen w-full bg-[#0b0c10] text-[#f1f1f4] selection:bg-[#227c9d] selection:text-white relative overflow-x-hidden">
+    <div className="h-[100dvh] max-h-[100dvh] lg:h-auto lg:max-h-none lg:min-h-screen w-full bg-[#0b0c10] text-[#f1f1f4] selection:bg-[#227c9d] selection:text-white relative overflow-hidden lg:overflow-x-hidden lg:overflow-y-auto">
       {/* Background Ambience Glows */}
       <div className="absolute -top-40 left-1/4 h-96 w-96 rounded-full bg-[#227c9d]/15 blur-[120px] pointer-events-none" />
       <div className="absolute top-1/2 -right-40 h-96 w-96 rounded-full bg-[#FF6B00]/10 blur-[130px] pointer-events-none" />
@@ -517,24 +517,24 @@ export const AuthLandingPage: React.FC = () => {
 
       {/* =========================================================
        * 1. MOBILE VIEW (Matches user's uploaded reference screen)
-       * Minimal, focused splash with glowing arc, headline, dots & Continue button
+       * Fixed height non-scrollable screen with glowing arc, dots & Continue button
        * ========================================================= */}
-      <div className="lg:hidden flex flex-col justify-between min-h-[100dvh] w-full max-w-md mx-auto px-6 py-8 relative z-10">
+      <div className="lg:hidden flex flex-col justify-between h-[100dvh] max-h-[100dvh] w-full max-w-md mx-auto px-6 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] relative z-10 overflow-hidden select-none">
         {/* Top Minimal Brand Tag */}
-        <div className="flex items-center justify-center gap-2 pt-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-[#227c9d] to-[#53b3d4] shadow-md shadow-[#227c9d]/25 ring-1 ring-[#53b3d4]/30">
-            <Sparkles className="h-4 w-4 text-white" />
+        <div className="flex items-center justify-center gap-2 pt-1 shrink-0">
+          <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-tr from-[#227c9d] to-[#53b3d4] shadow-md shadow-[#227c9d]/25 ring-1 ring-[#53b3d4]/30">
+            <Sparkles className="h-3.5 w-3.5 text-white" />
           </div>
-          <span className="font-fun text-lg font-black tracking-tight text-white">
+          <span className="font-fun text-base sm:text-lg font-black tracking-tight text-white">
             Opinion<span className="text-[#53b3d4]">NG</span>
           </span>
         </div>
 
         {/* Center Artwork & Typography (Exact Match to Reference Image) */}
-        <div className="flex flex-col items-center text-center my-auto py-6">
+        <div className="flex flex-col items-center text-center my-auto px-2 py-2 shrink min-h-0">
           {/* Glowing Arc Illustration with Orbiting Conviction Badge */}
-          <div className="relative mb-8">
-            <svg className="w-52 h-52 sm:w-60 sm:h-60" viewBox="0 0 200 200" fill="none">
+          <div className="relative mb-4 sm:mb-6 flex items-center justify-center shrink">
+            <svg className="w-44 h-44 xs:w-48 xs:h-48 sm:w-56 sm:h-56 max-h-[28vh] shrink-0" viewBox="0 0 200 200" fill="none">
               <defs>
                 <linearGradient id="mobileArcGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#227c9d" stopOpacity="0.1" />
@@ -573,21 +573,21 @@ export const AuthLandingPage: React.FC = () => {
           </div>
 
           {/* Headline & Dynamic Slides */}
-          <h2 className="text-3xl font-black font-fun tracking-tight text-white mb-2">
+          <h2 className="text-2xl sm:text-3xl font-black font-fun tracking-tight text-white mb-1.5">
             {SLIDES[activeSlide].title}
           </h2>
 
-          <p className="text-sm font-semibold text-slate-300 mb-4 font-sans">
+          <p className="text-xs sm:text-sm font-semibold text-slate-300 mb-2 sm:mb-3 font-sans line-clamp-1">
             {SLIDES[activeSlide].subhead}
           </p>
 
-          <p className="text-xs text-[#8c8c9e] max-w-xs leading-relaxed font-sans px-2">
+          <p className="text-[11px] sm:text-xs text-[#8c8c9e] max-w-xs leading-relaxed font-sans px-2 line-clamp-3 sm:line-clamp-none">
             {SLIDES[activeSlide].description}
           </p>
         </div>
 
-        {/* Bottom Section: 3 Dots & Full-Width Continue Pill Button */}
-        <div className="w-full space-y-5 pb-2">
+        {/* Bottom Section: 3 Dots & Full-Width Continue Pill Button (Pinned to bottom, never scrolls) */}
+        <div className="w-full space-y-3.5 sm:space-y-4 shrink-0 pb-1">
           {/* Pagination Dots (● ○ ○) */}
           <div className="flex items-center justify-center gap-2">
             {[0, 1, 2].map((idx) => (
@@ -609,7 +609,7 @@ export const AuthLandingPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsMobileAuthOpen(true)}
-            className="w-full rounded-full bg-white text-[#0c0c11] py-4 text-sm font-black hover:bg-slate-100 active:scale-[0.98] transition shadow-2xl shadow-white/10 font-fun cursor-pointer flex items-center justify-center gap-1.5"
+            className="w-full rounded-full bg-white text-[#0c0c11] py-3.5 sm:py-4 text-sm font-black hover:bg-slate-100 active:scale-[0.98] transition shadow-2xl shadow-white/10 font-fun cursor-pointer flex items-center justify-center gap-1.5 shrink-0"
           >
             <span>Continue</span>
           </button>
