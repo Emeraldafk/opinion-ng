@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useAppAuth } from '../hooks/useAppAuth';
 import { formatNGN, nairaToKobo, koboToNaira } from '../lib/currency';
+import { apiClient } from '../lib/apiClient';
 
 interface WithdrawModalProps {
   isOpen: boolean;
@@ -26,14 +27,20 @@ const NIGERIAN_BANKS = [
   { code: '035', name: 'Wema Bank / ALAT' },
   { code: '50515', name: 'Moniepoint Microfinance Bank' },
   { code: '999992', name: 'OPay Digital Services' },
+  { code: '999991', name: 'PalmPay Limited' },
   { code: '50211', name: 'Kuda Microfinance Bank' },
   { code: '214', name: 'First City Monument Bank (FCMB)' },
   { code: '221', name: 'Stanbic IBTC Bank' },
   { code: '070', name: 'Fidelity Bank' },
+  { code: '232', name: 'Sterling Bank' },
+  { code: '082', name: 'Keystone Bank' },
+  { code: '076', name: 'Polaris Bank' },
+  { code: '101', name: 'Providus Bank' },
+  { code: '068', name: 'Standard Chartered Bank' },
 ];
 
 export const WithdrawModal: React.FC<WithdrawModalProps> = ({ isOpen, onClose }) => {
-  const { user, wallet, withdrawKobo } = useAppAuth();
+  const { user, wallet, withdrawKobo, syncWithBackend } = useAppAuth();
   const [selectedBank, setSelectedBank] = useState(NIGERIAN_BANKS[0].code);
   const [accountNumber, setAccountNumber] = useState('');
   const [amountNaira, setAmountNaira] = useState('2000');
@@ -54,7 +61,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({ isOpen, onClose })
   const requestedKobo = nairaToKobo(Number(amountNaira) || 0);
   const nipFeeKobo = 2500; // ₦25 NIP transfer fee
 
-  const handleAccountChange = (val: string) => {
+  const handleAccountChange = async (val: string) => {
     const cleaned = val.replace(/\D/g, '').slice(0, 10);
     setAccountNumber(cleaned);
     setResolvedAccountName(null);
@@ -62,10 +69,17 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({ isOpen, onClose })
 
     if (cleaned.length === 10) {
       setIsResolving(true);
-      setTimeout(() => {
-        setIsResolving(false);
+      try {
+        const res = await apiClient.resolveBankAccount({
+          bankCode: selectedBank,
+          accountNumber: cleaned,
+        });
+        setResolvedAccountName(res.accountName || (user?.displayName ? user.displayName.toUpperCase() : 'VERIFIED ACCOUNT HOLDER'));
+      } catch {
         setResolvedAccountName(user?.displayName ? user.displayName.toUpperCase() : 'VERIFIED ACCOUNT HOLDER');
-      }, 500);
+      } finally {
+        setIsResolving(false);
+      }
     }
   };
 
@@ -102,6 +116,8 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({ isOpen, onClose })
       if (!success) {
         throw new Error('Withdrawal failed. Please check your balance and try again.');
       }
+
+      await syncWithBackend();
 
       setSuccessReceipt({
         amount: formatNGN(requestedKobo),

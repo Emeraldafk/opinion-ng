@@ -69,12 +69,12 @@
     "wlt_demo_893240": {
       "id": "wlt_demo_893240",
       "userId": "usr_demo_893240",
-      "availableKobo": 1100000,
+      "availableKobo": 4600000,
       "lockedKobo": 0,
       "creatorEarningsKobo": 25000,
       "virtualAccountNumber": "9920194821",
       "virtualAccountBank": "Wema Bank (OpinionNG)",
-      "updatedAt": "2026-11-12T18:28:26.772Z"
+      "updatedAt": "2026-11-13T19:22:35.501Z"
     },
     "wlt_creator_burna": {
       "id": "wlt_creator_burna",
@@ -499,6 +499,58 @@
         "note": "Welcome Bonus Trading Capital (₦5,000)"
       },
       "createdAt": "2026-11-13T19:10:35.315Z"
+    },
+    {
+      "id": "ldg_nip_test_transfer_1794597755448",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 1500000,
+      "balanceAfterKobo": 2600000,
+      "entryType": "DEPOSIT",
+      "referenceId": "nip_test_transfer_1794597755448",
+      "metadata": {
+        "gateway": "MONIEPOINT_NIP",
+        "channel": "DEDICATED_VIRTUAL_ACCOUNT",
+        "senderBank": "Guaranty Trust Bank",
+        "senderName": "Babatunde Fashola",
+        "destinationNuban": "9920194821",
+        "amountNaira": 15000,
+        "status": "SUCCESS"
+      },
+      "createdAt": "2026-11-13T19:22:35.456Z"
+    },
+    {
+      "id": "ldg_pstk_test_1794597755470",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": 2500000,
+      "balanceAfterKobo": 5100000,
+      "entryType": "DEPOSIT",
+      "referenceId": "pstk_test_1794597755470",
+      "metadata": {
+        "gateway": "PAYSTACK",
+        "channel": "card",
+        "customerEmail": "trader@opinion.ng",
+        "currency": "NGN",
+        "amountNaira": 25000,
+        "paidAt": "2026-11-13T19:22:35.479Z",
+        "status": "SUCCESS"
+      },
+      "createdAt": "2026-11-13T19:22:35.479Z"
+    },
+    {
+      "id": "ldg_wth_nip_mwfd62ct_k4ob",
+      "walletId": "wlt_demo_893240",
+      "amountKobo": -500000,
+      "balanceAfterKobo": 4600000,
+      "entryType": "WITHDRAWAL",
+      "referenceId": "wth_nip_mwfd62ct_k4ob",
+      "metadata": {
+        "destinationBank": "Guaranty Trust Bank",
+        "accountNumber": "0123456789",
+        "accountName": "Tunde Afolabi",
+        "nipFeeKobo": 2500,
+        "status": "PROCESSED"
+      },
+      "createdAt": "2026-11-13T19:22:35.501Z"
     }
   ],
   "markets": {

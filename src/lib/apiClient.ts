@@ -375,6 +375,89 @@ class ApiClient {
     }
     return res.json();
   }
+
+  public async getBanks(): Promise<Array<{ code: string; name: string }>> {
+    const res = await fetch('/api/banks', {
+      headers: this.getHeaders(),
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.banks || [];
+  }
+
+  public async resolveBankAccount(params: { bankCode: string; accountNumber: string }) {
+    const res = await fetch('/api/banks/resolve', {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify(params),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to resolve account name');
+    }
+    return res.json();
+  }
+
+  public async simulateMoniepointInflow(params: {
+    accountNumber: string;
+    amountKobo: number;
+    senderBank?: string;
+    senderName?: string;
+  }) {
+    const res = await fetch('/api/webhooks/moniepoint', {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify({
+        accountNumber: params.accountNumber,
+        amountKobo: params.amountKobo,
+        senderBank: params.senderBank || 'Access Bank',
+        senderName: params.senderName || 'Payer Transfer',
+        sessionReference: `nip_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Simulated bank transfer failed');
+    }
+    return res.json();
+  }
+
+  public async simulatePaystackCharge(params: {
+    amountKobo: number;
+    customerEmail?: string;
+    channel?: string;
+  }) {
+    const res = await fetch('/api/webhooks/paystack', {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify({
+        event: 'charge.success',
+        data: {
+          reference: `pstk_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`,
+          amount: params.amountKobo,
+          currency: 'NGN',
+          channel: params.channel || 'card',
+          paid_at: new Date().toISOString(),
+          customer: {
+            email: params.customerEmail || 'trader@opinion.ng',
+          },
+        },
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Paystack payment simulation failed');
+    }
+    return res.json();
+  }
+
+  public async getVirtualAccount() {
+    const res = await fetch('/api/wallet/virtual-account', {
+      headers: this.getHeaders(),
+    });
+    if (!res.ok) return null;
+    return res.json();
+  }
 }
 
 export const apiClient = new ApiClient();

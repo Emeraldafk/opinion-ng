@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useAppAuth } from '../hooks/useAppAuth';
 import { formatNGN, nairaToKobo } from '../lib/currency';
+import { apiClient } from '../lib/apiClient';
 
 interface DepositModalProps {
   isOpen: boolean;
@@ -19,7 +20,7 @@ interface DepositModalProps {
 }
 
 export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) => {
-  const { user, wallet, depositKobo } = useAppAuth();
+  const { user, wallet, syncWithBackend } = useAppAuth();
   const [tab, setTab] = useState<'transfer' | 'card'>('transfer');
   const [customNaira, setCustomNaira] = useState('5000');
   const [copied, setCopied] = useState(false);
@@ -40,17 +41,48 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) =
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleSimulatedTransferInflow = async (amountNaira: number) => {
+    setIsProcessing(true);
+    setSuccessMessage(null);
+    try {
+      const kobo = nairaToKobo(amountNaira);
+      await apiClient.simulateMoniepointInflow({
+        accountNumber: virtualAccount.accountNumber,
+        amountKobo: kobo,
+        senderBank: 'Access Bank NIP',
+        senderName: `${user?.displayName || 'Trader'} Banking App`,
+      });
+      await syncWithBackend();
+      setSuccessMessage(`Instant NIP Bank Transfer confirmed! ${formatNGN(kobo)} credited to your dedicated account.`);
+      setTimeout(() => {
+        setSuccessMessage(null);
+        onClose();
+      }, 2000);
+    } catch (err: any) {
+      setSuccessMessage(`Transfer failed: ${err.message || 'Error processing transfer'}`);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   const handleSimulatedCardDeposit = async (amountNaira: number) => {
     setIsProcessing(true);
     setSuccessMessage(null);
     try {
       const kobo = nairaToKobo(amountNaira);
-      await depositKobo(kobo, `dep_paystack_${Date.now()}`);
-      setSuccessMessage(`Successfully funded ${formatNGN(kobo)} to your OpinionNG wallet!`);
+      await apiClient.simulatePaystackCharge({
+        amountKobo: kobo,
+        customerEmail: user?.email || 'trader@opinion.ng',
+        channel: 'card',
+      });
+      await syncWithBackend();
+      setSuccessMessage(`Paystack payment approved! ${formatNGN(kobo)} deposited to your OpinionNG wallet.`);
       setTimeout(() => {
         setSuccessMessage(null);
         onClose();
-      }, 1500);
+      }, 2000);
+    } catch (err: any) {
+      setSuccessMessage(`Payment failed: ${err.message || 'Error processing card'}`);
     } finally {
       setIsProcessing(false);
     }
@@ -89,11 +121,10 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) =
             <button
               type="button"
               onClick={() => { setTab('transfer'); setSuccessMessage(null); }}
-              className={`flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold transition-all ${
-                tab === 'transfer'
+              className={`flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold transition-all ${tab === 'transfer'
                   ? 'bg-[#227c9d] text-white shadow-md'
                   : 'text-zinc-400 hover:text-zinc-200'
-              }`}
+                }`}
             >
               <Building2 className="w-4 h-4" />
               Bank Transfer (Instant)
@@ -101,11 +132,10 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) =
             <button
               type="button"
               onClick={() => { setTab('card'); setSuccessMessage(null); }}
-              className={`flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold transition-all ${
-                tab === 'card'
+              className={`flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold transition-all ${tab === 'card'
                   ? 'bg-[#227c9d] text-white shadow-md'
                   : 'text-zinc-400 hover:text-zinc-200'
-              }`}
+                }`}
             >
               <CreditCard className="w-4 h-4" />
               Card / Paystack
@@ -156,18 +186,18 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) =
                 </span>
               </div>
 
-              {/* Instant Simulated Transfer for Testing */}
+              {/* Instant Simulated Bank Transfer for Testing */}
               <div className="pt-2">
                 <span className="text-[11px] font-semibold uppercase text-zinc-500 tracking-wider block mb-2">
-                  Test Deposit (One-Click Simulation)
+                  Simulate Bank Transfer Inflow (Moniepoint MFB Webhook)
                 </span>
                 <div className="grid grid-cols-4 gap-2">
-                  {[1000, 5000, 10000, 50000].map((amt) => (
+                  {[2000, 5000, 10000, 50000].map((amt) => (
                     <button
                       key={amt}
-                      onClick={() => handleSimulatedCardDeposit(amt)}
+                      onClick={() => handleSimulatedTransferInflow(amt)}
                       disabled={isProcessing}
-                      className="py-2 rounded-xl bg-[#1b1b28] hover:bg-[#252538] border border-[#2b2b3d] text-xs font-semibold text-zinc-300 hover:text-white transition"
+                      className="py-2 rounded-xl bg-[#1b1b28] hover:bg-[#252538] border border-[#2b2b3d] text-xs font-semibold text-zinc-300 hover:text-white transition active:scale-95"
                     >
                       +₦{amt.toLocaleString()}
                     </button>
@@ -198,11 +228,10 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose }) =
                     key={val}
                     type="button"
                     onClick={() => setCustomNaira(val)}
-                    className={`py-1.5 rounded-lg text-xs font-medium border transition ${
-                      customNaira === val
+                    className={`py-1.5 rounded-lg text-xs font-medium border transition ${customNaira === val
                         ? 'bg-[#227c9d]/30 border-[#227c9d] text-[#53b3d4]'
                         : 'bg-[#181824] border-[#252536] text-zinc-400 hover:text-zinc-200'
-                    }`}
+                      }`}
                   >
                     ₦{Number(val).toLocaleString()}
                   </button>

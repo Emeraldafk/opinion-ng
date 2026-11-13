@@ -39,6 +39,32 @@ export const MARKET_CREATION_FEE_KOBO = 1_000 * KOBO_PER_NAIRA; // 100,000 Kobo 
 export const MIN_MARKET_SEED_KOBO = 5_000 * KOBO_PER_NAIRA; // 500,000 Kobo (₦5,000)
 export const DISPUTE_WINDOW_MS = 2 * 60 * 60 * 1000; // 2 hours dispute window
 
+export interface BankRecord {
+  code: string;
+  name: string;
+}
+
+export const NIGERIAN_BANKS: BankRecord[] = [
+  { code: '058', name: 'Guaranty Trust Bank (GTBank)' },
+  { code: '044', name: 'Access Bank' },
+  { code: '057', name: 'Zenith Bank' },
+  { code: '011', name: 'First Bank of Nigeria' },
+  { code: '033', name: 'United Bank for Africa (UBA)' },
+  { code: '035', name: 'Wema Bank / ALAT' },
+  { code: '50515', name: 'Moniepoint Microfinance Bank' },
+  { code: '999992', name: 'OPay Digital Services' },
+  { code: '999991', name: 'PalmPay Limited' },
+  { code: '50211', name: 'Kuda Microfinance Bank' },
+  { code: '214', name: 'First City Monument Bank (FCMB)' },
+  { code: '221', name: 'Stanbic IBTC Bank' },
+  { code: '070', name: 'Fidelity Bank' },
+  { code: '232', name: 'Sterling Bank' },
+  { code: '082', name: 'Keystone Bank' },
+  { code: '076', name: 'Polaris Bank' },
+  { code: '101', name: 'Providus Bank' },
+  { code: '068', name: 'Standard Chartered Bank' },
+];
+
 export type LedgerEntryType =
   | 'DEPOSIT'
   | 'TRADE_BUY'
@@ -1972,6 +1998,218 @@ export class NgnTradingEngine {
   public getMarketComments(marketId: number): any[] {
     const market = this.state.markets[marketId];
     return market?.comments || [];
+  }
+
+  /**
+   * RESOLVE NIGERIAN BANK ACCOUNT NAME
+   * Simulates NIP Name Inquiry verifying account number format & returning verified name.
+   */
+  public resolveBankAccount(bankCode: string, accountNumber: string, userDisplayName?: string): {
+    bankCode: string;
+    bankName: string;
+    accountNumber: string;
+    accountName: string;
+  } {
+    const cleanAccount = accountNumber.replace(/\D/g, '');
+    if (cleanAccount.length !== 10) {
+      throw new Error('Account number must be exactly 10 digits.');
+    }
+
+    const bank = NIGERIAN_BANKS.find((b) => b.code === bankCode) || NIGERIAN_BANKS[0];
+    const name = userDisplayName ? userDisplayName.toUpperCase() : 'VERIFIED ACCOUNT HOLDER';
+
+    return {
+      bankCode: bank.code,
+      bankName: bank.name,
+      accountNumber: cleanAccount,
+      accountName: name,
+    };
+  }
+
+  /**
+   * PAYSTACK WEBHOOK INGESTION
+   * Handles charge.success events from Paystack (Card, USSD, Bank Transfer).
+   * Idempotently credits the user's available NGN balance and registers double-entry ledger entry.
+   */
+  public async handlePaystackWebhook(payload: any) {
+    const event = payload.event || 'charge.success';
+    if (event !== 'charge.success') {
+      return { status: 'ignored', message: `Unhandled event: ${event}` };
+    }
+
+    const data = payload.data || {};
+    const reference = data.reference || `paystack_${Date.now()}`;
+    const amountKobo = Number(data.amount) || 0; // Paystack sends amounts in integer Kobo
+
+    if (amountKobo <= 0) {
+      throw new Error('Invalid deposit amount from Paystack.');
+    }
+
+    // 1. Idempotency Check
+    const alreadyProcessed = this.state.ledgerEntries.some(
+      (l) => l.referenceId === reference || l.id === `ldg_${reference}`
+    );
+    if (alreadyProcessed) {
+      return { status: 'already_processed', reference };
+    }
+
+    // 2. Resolve User
+    const metaUserId = data.metadata?.userId || data.metadata?.custom_fields?.find((f: any) => f.variable_name === 'userId')?.value;
+    const customerEmail = data.customer?.email?.toLowerCase();
+    const dedicatedNuban = data.authorization?.receiver_bank_account_number || data.dedicated_account_number;
+
+    let targetUser: UserRecord | undefined;
+    if (metaUserId) {
+      targetUser = this.getUser(metaUserId);
+    }
+    if (!targetUser && dedicatedNuban) {
+      targetUser = Object.values(this.state.users).find((u) => u.virtualAccountNumber === dedicatedNuban);
+      if (!targetUser) {
+        const wallet = Object.values(this.state.wallets).find((w) => w.virtualAccountNumber === dedicatedNuban);
+        if (wallet) targetUser = this.getUser(wallet.userId);
+      }
+    }
+    if (!targetUser && customerEmail) {
+      targetUser = Object.values(this.state.users).find((u) => u.email?.toLowerCase() === customerEmail);
+    }
+    if (!targetUser) {
+      targetUser = this.getUser(DEMO_USER_ID);
+    }
+
+    const userId = targetUser!.id;
+    const wallet = this.getWallet(userId);
+    const releaseLock = await this.acquireLock(`wallet:${wallet.id}`);
+
+    try {
+      const timestamp = new Date().toISOString();
+      wallet.availableKobo += amountKobo;
+      wallet.updatedAt = timestamp;
+
+      const ledgerEntry: LedgerEntryRecord = {
+        id: `ldg_${reference}`,
+        walletId: wallet.id,
+        amountKobo,
+        balanceAfterKobo: wallet.availableKobo,
+        entryType: 'DEPOSIT',
+        referenceId: reference,
+        metadata: {
+          gateway: 'PAYSTACK',
+          channel: data.channel || 'card',
+          customerEmail,
+          currency: data.currency || 'NGN',
+          amountNaira: amountKobo / KOBO_PER_NAIRA,
+          paidAt: data.paid_at || timestamp,
+          status: 'SUCCESS',
+        },
+        createdAt: timestamp,
+      };
+
+      this.state.ledgerEntries.push(ledgerEntry);
+      this.persistSync(this.state);
+
+      return {
+        status: 'success',
+        reference,
+        amountKobo,
+        userId,
+        userDisplayName: targetUser!.displayName,
+        userBalanceAfterKobo: wallet.availableKobo,
+        ledgerEntry,
+      };
+    } finally {
+      releaseLock();
+    }
+  }
+
+  /**
+   * MONIEPOINT DEDICATED NUBAN INFLOW WEBHOOK
+   * Simulates/handles automated bank transfer notifications to the user's dedicated NUBAN.
+   * Instantly credits user's OpinionNG account upon bank transfer receipt.
+   */
+  public async handleMoniepointWebhook(payload: any) {
+    const data = payload.data || payload;
+    const targetAccount = data.accountNumber || data.destinationAccountNumber;
+    const amountKobo = data.amountKobo ? Number(data.amountKobo) : (Number(data.amount || 0) * KOBO_PER_NAIRA);
+    const sessionReference = data.sessionReference || data.reference || `nip_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+
+    if (!targetAccount) {
+      throw new Error('Destination account number is required.');
+    }
+    if (amountKobo <= 0) {
+      throw new Error('Deposit amount must be greater than zero.');
+    }
+
+    // 1. Idempotency Check
+    const alreadyProcessed = this.state.ledgerEntries.some(
+      (l) => l.referenceId === sessionReference || l.id === `ldg_${sessionReference}`
+    );
+    if (alreadyProcessed) {
+      return { status: 'already_processed', sessionReference };
+    }
+
+    // 2. Look up user by NUBAN
+    let targetUser = Object.values(this.state.users).find((u) => u.virtualAccountNumber === targetAccount);
+    if (!targetUser) {
+      const wallet = Object.values(this.state.wallets).find((w) => w.virtualAccountNumber === targetAccount);
+      if (wallet) {
+        targetUser = this.getUser(wallet.userId);
+      }
+    }
+    if (!targetUser) {
+      // Fallback: try matching demo or metadata user
+      if (data.userId) {
+        targetUser = this.getUser(data.userId);
+      } else {
+        targetUser = this.getUser(DEMO_USER_ID);
+      }
+    }
+
+    const userId = targetUser!.id;
+    const wallet = this.getWallet(userId);
+    const releaseLock = await this.acquireLock(`wallet:${wallet.id}`);
+
+    try {
+      const timestamp = new Date().toISOString();
+      wallet.availableKobo += amountKobo;
+      wallet.updatedAt = timestamp;
+
+      const senderBank = data.senderBank || data.sender?.bankName || 'Access Bank / GTBank';
+      const senderName = data.senderName || data.sender?.accountName || 'Payer Account';
+
+      const ledgerEntry: LedgerEntryRecord = {
+        id: `ldg_${sessionReference}`,
+        walletId: wallet.id,
+        amountKobo,
+        balanceAfterKobo: wallet.availableKobo,
+        entryType: 'DEPOSIT',
+        referenceId: sessionReference,
+        metadata: {
+          gateway: 'MONIEPOINT_NIP',
+          channel: 'DEDICATED_VIRTUAL_ACCOUNT',
+          senderBank,
+          senderName,
+          destinationNuban: targetAccount,
+          amountNaira: amountKobo / KOBO_PER_NAIRA,
+          status: 'SUCCESS',
+        },
+        createdAt: timestamp,
+      };
+
+      this.state.ledgerEntries.push(ledgerEntry);
+      this.persistSync(this.state);
+
+      return {
+        status: 'success',
+        sessionReference,
+        amountKobo,
+        userId,
+        userDisplayName: targetUser!.displayName,
+        userBalanceAfterKobo: wallet.availableKobo,
+        ledgerEntry,
+      };
+    } finally {
+      releaseLock();
+    }
   }
 }
 

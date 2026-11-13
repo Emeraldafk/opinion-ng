@@ -5,7 +5,7 @@
 
 import { Plugin } from 'vite';
 import { IncomingMessage, ServerResponse } from 'http';
-import { globalNgnEngine, DEMO_USER_ID, MarketSide } from './engine';
+import { globalNgnEngine, DEMO_USER_ID, MarketSide, NIGERIAN_BANKS } from './engine';
 
 function sendJson(res: ServerResponse, statusCode: number, data: any) {
   res.writeHead(statusCode, {
@@ -315,6 +315,48 @@ export function opinionNgApiPlugin(): Plugin {
               accountName: body.accountName || 'Beneficiary Account',
             });
             return sendJson(res, 200, result);
+          }
+
+          // 10d. Nigerian Commercial & Fintech Banks List
+          if (pathname === '/api/banks' && req.method === 'GET') {
+            return sendJson(res, 200, { banks: NIGERIAN_BANKS });
+          }
+
+          // 10e. Bank Account Resolution (NIP Name Enquiry)
+          if (pathname === '/api/banks/resolve' && req.method === 'POST') {
+            const body = await parseJsonBody(req);
+            const user = activeSession?.user || globalNgnEngine.getUser(userId);
+            const result = globalNgnEngine.resolveBankAccount(
+              body.bankCode || '058',
+              body.accountNumber || '',
+              user?.displayName
+            );
+            return sendJson(res, 200, result);
+          }
+
+          // 10f. Paystack Webhook Ingestion (Card, USSD, Transfer)
+          if (pathname === '/api/webhooks/paystack' && req.method === 'POST') {
+            const body = await parseJsonBody(req);
+            const result = await globalNgnEngine.handlePaystackWebhook(body);
+            return sendJson(res, 200, result);
+          }
+
+          // 10g. Moniepoint Dedicated NUBAN Inflow Webhook
+          if (pathname === '/api/webhooks/moniepoint' && req.method === 'POST') {
+            const body = await parseJsonBody(req);
+            const result = await globalNgnEngine.handleMoniepointWebhook(body);
+            return sendJson(res, 200, result);
+          }
+
+          // 10h. Dedicated Virtual Account Detail
+          if (pathname === '/api/wallet/virtual-account' && req.method === 'GET') {
+            const user = activeSession?.user || globalNgnEngine.getUser(userId) || globalNgnEngine.getUser(DEMO_USER_ID);
+            const wallet = globalNgnEngine.getWallet(user?.id || userId);
+            return sendJson(res, 200, {
+              accountNumber: user?.virtualAccountNumber || wallet.virtualAccountNumber || '9920194821',
+              bankName: user?.virtualAccountBank || wallet.virtualAccountBank || 'Wema Bank (OpinionNG)',
+              accountName: user?.virtualAccountName || `OPINION-NG / ${(user?.displayName || 'TRADER').toUpperCase()}`,
+            });
           }
 
           // 11. Resolve Market with 2-Hour Dispute Window
