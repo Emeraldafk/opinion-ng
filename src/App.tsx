@@ -126,6 +126,10 @@ export function App() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(() => getUserProfile(walletAddress));
 
   useEffect(() => {
+    document.title = 'OpinionNG - Trade Nigerian Conviction';
+  }, []);
+
+  useEffect(() => {
     setUserProfile(getUserProfile(walletAddress));
     setLikesMap(dbService.loadLikes(walletAddress));
   }, [walletAddress]);

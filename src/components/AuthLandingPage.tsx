@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Mail,
   Phone,
@@ -27,6 +27,10 @@ export const AuthLandingPage: React.FC = () => {
   const { loginWithEmail, loginWithPhone, loginWithX, signUp, switchUserAccount, loginDemoUser } = useAppAuth();
   const [mode, setMode] = useState<AuthMode>('signin');
   const [tab, setTab] = useState<AuthTab>('email');
+
+  useEffect(() => {
+    document.title = 'OpinionNG - Trade Nigerian Conviction';
+  }, []);
 
   // Sign in fields
   const [email, setEmail] = useState('');
@@ -575,3 +579,4 @@ export const AuthLandingPage: React.FC = () => {
     </div>
   );
 };
+

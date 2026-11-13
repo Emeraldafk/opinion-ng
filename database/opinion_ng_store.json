@@ -139,6 +139,14 @@
       "lockedKobo": 0,
       "creatorEarningsKobo": 0,
       "updatedAt": "2026-11-12T19:06:33.378Z"
+    },
+    "wlt_usr_mwdxj8ld": {
+      "id": "wlt_usr_mwdxj8ld",
+      "userId": "usr_mwdxj8ld",
+      "availableKobo": 500000,
+      "lockedKobo": 0,
+      "creatorEarningsKobo": 0,
+      "updatedAt": "2026-11-12T19:17:38.246Z"
     }
   },
   "ledgerEntries": [
@@ -429,6 +437,20 @@
         "status": "PROCESSED"
       },
       "createdAt": "2026-11-12T18:49:32.651Z"
+    },
+    {
+      "id": "ldg_dep_paystack_1794511058223",
+      "walletId": "wlt_usr_mwdxj8ld",
+      "amountKobo": 500000,
+      "balanceAfterKobo": 500000,
+      "entryType": "DEPOSIT",
+      "referenceId": "dep_paystack_1794511058223",
+      "metadata": {
+        "channel": "BANK_TRANSFER",
+        "amountNaira": 5000,
+        "status": "SUCCESS"
+      },
+      "createdAt": "2026-11-12T19:17:38.246Z"
     }
   ],
   "markets": {
