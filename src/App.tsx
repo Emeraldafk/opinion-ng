@@ -145,8 +145,22 @@ export function App() {
     dbService.loadClaimHistory([])
   );
 
-  // Navigation & Filters
-  const [activeTab, setActiveTab] = useState<TiredFunNavTab>('feed');
+  // Navigation & Filters (Persisted so refreshing page keeps the current view e.g. Portfolio)
+  const [activeTab, setActiveTab] = useState<TiredFunNavTab>(() => {
+    try {
+      const saved = localStorage.getItem('opinion_ng_active_tab_v1');
+      if (saved && ['feed', 'explore', 'portfolio', 'pulse', 'reputation'].includes(saved)) {
+        return saved as TiredFunNavTab;
+      }
+    } catch {}
+    return 'feed';
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('opinion_ng_active_tab_v1', activeTab);
+    } catch {}
+  }, [activeTab]);
   const [selectedCategory, setSelectedCategory] = useState<MarketCategory>('All');
   const [viewLayout, setViewLayout] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<SortOption>('volume');
